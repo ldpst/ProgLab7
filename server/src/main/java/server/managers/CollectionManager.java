@@ -1,10 +1,13 @@
 package server.managers;
 
-import general.objects.*;
+import general.objects.Movie;
+import general.objects.MovieGenre;
+import general.objects.Person;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 
 /**
  * Класс для хранения и управления коллекцией
@@ -16,16 +19,7 @@ public class CollectionManager {
     private final java.time.ZonedDateTime creationTime;
     private int nextId = 1;
 
-//    public CollectionManager(StreamHandler stream) {
-//        CSVManager csvManager = new CSVManager(stream, this);
-//        csvManager.loadFromCSV();
-//        creationTime = java.time.ZonedDateTime.now();
-//    }
-
     public CollectionManager() {
-//        movies.push(new Movie("name1", new Coordinates((float) 1.0, 0), (long) 1, MovieGenre.DRAMA, MpaaRating.G, new Person("oper_name", null, (long) 1, "1234")));
-//        movies.push(new Movie("name1", new Coordinates((float) 1.0, 0), (long) 1, MovieGenre.DRAMA, MpaaRating.G, new Person("oper_name", null, (long) 1, "1234")));
-//        movies.push(new Movie("name1", new Coordinates((float) 1.0, 0), (long) 1, MovieGenre.DRAMA, MpaaRating.G, new Person("oper_name", null, (long) 1, "1234")));
         creationTime = java.time.ZonedDateTime.now();
     }
 
@@ -36,7 +30,7 @@ public class CollectionManager {
      */
     public void add(Movie movie) {
         movies.addLast(movie);
-        Movie.increaseNextId();
+        nextId++;
     }
 
     /**
@@ -53,7 +47,7 @@ public class CollectionManager {
      */
     public void clear() {
         movies = new ArrayDeque<>();
-        Movie.setNextId(1);
+        nextId = 1;
     }
 
     /**
@@ -69,6 +63,16 @@ public class CollectionManager {
             }
         }
         return null;
+    }
+
+    /**
+     * Обновляет значение по айди
+     *
+     * @param id    айди
+     * @param newMovie новое значение
+     */
+    public void updateById(int id, Movie newMovie) {
+        movies = movies.stream().map(movie -> (movie.getId() == id ? newMovie : movie)).collect(Collectors.toCollection(ArrayDeque::new));
     }
 
     /**
@@ -237,5 +241,9 @@ public class CollectionManager {
 
     public int getAndIncreaseNextID() {
         return nextId++;
+    }
+
+    public void setNextId(int id) {
+        nextId = id;
     }
 }

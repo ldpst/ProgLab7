@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
 
 public class UDPClient {
     private final int PACKET_SIZE = ConfigManager.getPacketSize();
@@ -32,7 +31,7 @@ public class UDPClient {
         client.send(dp);
         logger.debug("Запрос отправлен: {}", data);
 
-        byte[] data1 = new byte[ConfigManager.getPacketSize()];
+        byte[] data1 = new byte[PACKET_SIZE];
         DatagramPacket dp1 = new DatagramPacket(data1, data1.length);
         logger.debug("Ожидание ответа от сервера...");
         client.receive(dp1);

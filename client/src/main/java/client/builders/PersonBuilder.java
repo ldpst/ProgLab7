@@ -3,6 +3,7 @@ package client.builders;
 import client.managers.ScannerManager;
 import client.managers.StreamManager;
 import general.objects.Person;
+import org.apache.logging.log4j.Logger;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -14,14 +15,21 @@ public class PersonBuilder extends Builder {
         super(stream, scanner);
     }
 
+    public PersonBuilder(Logger logger, StreamManager stream, ScannerManager scanner) {
+        super(logger, stream, scanner);
+    }
+
     @Override
     public Person build() {
-        return new Person(
+        logger.debug("Заполнение человека...");
+        Person newPerson = new Person(
                 readName(),
                 readBirthday(),
                 readWeight(),
                 readPassportID()
         );
+        logger.debug("Человек заполнен");
+        return newPerson;
     }
 
     /**
@@ -30,6 +38,7 @@ public class PersonBuilder extends Builder {
      * @return Найденная строка
      */
     private String readName() {
+        logger.debug("Заполнение имени");
         while (true) {
             stream.print("> Введите имя человека:\n$ ");
             String name = scanner.nextLine().trim();
@@ -37,6 +46,7 @@ public class PersonBuilder extends Builder {
                 stream.printErr("Имя не должно быть пустым\n");
                 stream.print("* Повторная попытка ввода\n");
             } else {
+                logger.debug("Имя заполнено");
                 return name;
             }
         }
@@ -48,11 +58,13 @@ public class PersonBuilder extends Builder {
      * @return Найденная дата
      */
     private Date readBirthday() {
+        logger.debug("Заполнение дня рождения");
         while (true) {
             String format = "dd:MM:yyyy";
             stream.printf("> Введите дату рождения человека (формата %s):\n$ ", format);
             String res = scanner.nextLine().trim();
             if (res.isEmpty()) {
+                logger.debug("День рождения заполнен");
                 return null;
             }
             String[] split = res.split(":");
@@ -71,7 +83,9 @@ public class PersonBuilder extends Builder {
                     } else {
                         DateFormat dateFormat = new SimpleDateFormat(format);
                         try {
-                            return dateFormat.parse(res);
+                            Date date = dateFormat.parse(res);
+                            logger.debug("День рождения заполнен");
+                            return date;
                         } catch (ParseException e) {
                             stream.printErr("Введенные данные неверного формата\n");
                             stream.print("* Повторная попытка ввода\n");
@@ -92,6 +106,7 @@ public class PersonBuilder extends Builder {
      * @return Найденный вес
      */
     private long readWeight() {
+        logger.debug("Заполнение веса");
         while (true) {
             stream.print("> Введите вес человека:\n$ ");
             String res = scanner.nextLine().trim();
@@ -106,6 +121,7 @@ public class PersonBuilder extends Builder {
                         stream.printErr("Вес должен быть больше 0\n");
                         stream.print("* Повторная попытка ввода\n");
                     } else {
+                        logger.debug("Вес заполнен");
                         return weight;
                     }
                 } catch (NumberFormatException e) {
@@ -122,6 +138,7 @@ public class PersonBuilder extends Builder {
      * @return Найденный паспорт айди
      */
     private String readPassportID() {
+        logger.debug("Ввод айди паспорта");
         while (true) {
             stream.print("> Введите паспорт айди:\n$ ");
             String passportID = scanner.nextLine().trim();
@@ -135,6 +152,7 @@ public class PersonBuilder extends Builder {
                 stream.printErr("Паспорт айди не должен быть больше 25 символов\n");
                 stream.print("* Повторная попытка ввода\n");
             } else {
+                logger.debug("Айди паспорта введен");
                 return passportID;
             }
         }

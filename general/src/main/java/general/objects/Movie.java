@@ -14,7 +14,6 @@ import java.util.Objects;
  */
 public class Movie
         implements Comparable<Movie>, Validatable, Serializable {
-    static long nextId = 1;
 
     private long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
@@ -29,6 +28,20 @@ public class Movie
         this.name = name;
         this.coordinates = coordinates;
         this.creationDate = ZonedDateTime.now();
+        this.oscarsCount = oscarsCount;
+        this.genre = genre;
+        this.mpaaRating = mpaaRating;
+        this.operator = operator;
+        if (!isValid()) {
+            throw new ValidationError("Movie");
+        }
+    }
+
+    public Movie(Integer id, String name, Coordinates coordinates, String creationDate, Long oscarsCount, MovieGenre genre, MpaaRating mpaaRating, Person operator) {
+        this.id = id;
+        this.name = name;
+        this.coordinates = coordinates;
+        this.creationDate = ZonedDateTime.parse(creationDate);
         this.oscarsCount = oscarsCount;
         this.genre = genre;
         this.mpaaRating = mpaaRating;
@@ -162,22 +175,6 @@ public class Movie
      */
     public Person getOperator() {
         return this.operator;
-    }
-
-    /**
-     * Метод, повышающий на 1 значение nextId
-     */
-    public static void increaseNextId() {
-        nextId++;
-    }
-
-    /**
-     * Метод, задающий значение nextId
-     *
-     * @param newId новое значение
-     */
-    public static void setNextId(long newId) {
-        nextId = newId;
     }
 
     @Override

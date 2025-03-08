@@ -3,8 +3,8 @@ package client.builders;
 import client.managers.ScannerManager;
 import client.managers.StreamManager;
 import general.objects.*;
-
-import java.util.Arrays;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Класс для создания объекта Movie
@@ -16,15 +16,22 @@ public class MovieBuilder extends Builder {
         super(stream, scanner);
     }
 
+    public MovieBuilder(Logger logger, StreamManager stream, ScannerManager scanner) {
+        super(logger, stream, scanner);
+    }
+
     @Override
     public Movie build() {
-        return new Movie(
+        logger.debug("Заполнение Movie...");
+        Movie newMovie = new Movie(
                 readName(),
                 readCoordinates(),
                 readOscarCount(),
                 readGenre(),
                 readMpaaRating(),
                 readPerson());
+        logger.debug("Movie заполнен");
+        return newMovie;
     }
 
     /**
@@ -33,6 +40,7 @@ public class MovieBuilder extends Builder {
      * @return Найденная строка
      */
     private String readName() {
+        logger.debug("Заполнение имени...");
         while (true) {
             stream.print("> Введите название фильма:\n$ ");
             String name = scanner.nextLine().trim();
@@ -40,6 +48,7 @@ public class MovieBuilder extends Builder {
                 stream.printErr("Название не должно быть пустым\n");
                 stream.print("* Повторная попытка ввода\n");
             } else {
+                logger.debug("Имя заполнено");
                 return name;
             }
         }
@@ -52,7 +61,7 @@ public class MovieBuilder extends Builder {
      */
     private Coordinates readCoordinates() {
         stream.print("* Ввод координат\n");
-        return new CoordinatesBuilder(stream, scanner).build();
+        return new CoordinatesBuilder(logger, stream, scanner).build();
     }
 
     /**
@@ -61,6 +70,7 @@ public class MovieBuilder extends Builder {
      * @return Найденное количество
      */
     private Long readOscarCount() {
+        logger.debug("Заполнение кол-ва оскаров...");
         while (true) {
             stream.print("> Введите количество оскаров:\n$ ");
             String res = scanner.nextLine().trim();
@@ -71,6 +81,7 @@ public class MovieBuilder extends Builder {
                     stream.printErr("Количество оскаров должно быть больше нуля\n");
                     stream.print("* Повторная попытка ввода\n");
                 } else {
+                    logger.debug("Кол-во оскаров заполнено");
                     return count;
                 }
             } catch (NumberFormatException e) {
@@ -86,7 +97,7 @@ public class MovieBuilder extends Builder {
      * @return Найденный жанр
      */
     private MovieGenre readGenre() {
-        return new GenreBuilder(stream, scanner).build();
+        return new GenreBuilder(logger, stream, scanner).build();
     }
 
     /**
@@ -95,7 +106,7 @@ public class MovieBuilder extends Builder {
      * @return Найденный MpaaRating
      */
     private MpaaRating readMpaaRating() {
-        return new MpaaRatingBuilder(stream, scanner).build();
+        return new MpaaRatingBuilder(logger, stream, scanner).build();
     }
 
     /**
@@ -109,7 +120,7 @@ public class MovieBuilder extends Builder {
             String res = scanner.nextLine().trim().toLowerCase();
             if (res.equals("n") || res.isEmpty() || res.equals("no")) {
                 stream.print("* Ввод оператора\n");
-                return new PersonBuilder(stream, scanner).build();
+                return new PersonBuilder(logger, stream, scanner).build();
             } else if (res.equals("y") || res.equals("yes")) {
                 return null;
             } else {

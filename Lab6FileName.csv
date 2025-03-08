@@ -1,0 +1,5 @@
+id,name,coordinates.x,coordinates.y,creationDate,oscarsCount,genre,mpaaRating,operator.name,operator.birthday,operator.weight,operator.passportID
+1,1,1.0,1,2025-03-08T20:08:55.444097300+03:00[Europe/Moscow],1,DRAMA,G,null,null,null,null
+2,1,1.0,1,2025-03-08T20:09:24.679464100+03:00[Europe/Moscow],1,DRAMA,G,1,Sun Dec 12 00:00:00 MSK 2004,1,1
+3,5,5.0,5,2025-03-08T20:22:43.337829500+03:00[Europe/Moscow],5,HORROR,PG_13,null,null,null,null
+4,4,4.0,4,2025-03-08T20:30:03.327023500+03:00[Europe/Moscow],4,HORROR,PG_13,null,null,null,null

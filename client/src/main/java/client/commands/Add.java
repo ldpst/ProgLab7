@@ -27,9 +27,7 @@ public class Add extends Command {
     @Override
     public void run(String[] args) throws IOException {
         logger.info("Команда выполняется...");
-        logger.debug("Заполнение Movie...");
-        Movie movie = new MovieBuilder(stream, scanner).build();
-        logger.debug("Movie заполнен");
+        Movie movie = new MovieBuilder(logger, stream, scanner).build();
         var data = client.makeRequest(new AddRequest(movie));
         if (data.length == 0) {
             logger.warn("Сервер вернул пустой ответ");
