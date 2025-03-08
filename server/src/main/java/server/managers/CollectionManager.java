@@ -68,11 +68,17 @@ public class CollectionManager {
     /**
      * Обновляет значение по айди
      *
-     * @param id    айди
+     * @param id       айди
      * @param newMovie новое значение
+     * @return Возможна ошибка
      */
-    public void updateById(int id, Movie newMovie) {
+    public String updateById(int id, Movie newMovie) {
+        Deque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id).collect(Collectors.toCollection(ArrayDeque::new));
+        if (checker.isEmpty()) {
+            return "Элемента с данным id не существует";
+        }
         movies = movies.stream().map(movie -> (movie.getId() == id ? newMovie : movie)).collect(Collectors.toCollection(ArrayDeque::new));
+        return "";
     }
 
     /**

@@ -32,7 +32,8 @@ public class Add extends Command {
         if (data.length == 0) {
             logger.warn("Сервер вернул пустой ответ");
         }
-        AddRespond respond = SerializationUtils.deserialize(data);
+//        AddRespond respond = SerializationUtils.deserialize(data);
+        stream.printSuccess("Элемент успешно добавлен");
         logger.info("Команда выполнена");
     }
 }

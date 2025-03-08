@@ -8,9 +8,8 @@ import general.objects.Movie;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import server.requests.AddRequest;
 import server.requests.UpdateRequest;
-import server.responds.AddRespond;
+import server.responds.UpdateRespond;
 
 import java.io.IOException;
 
@@ -33,7 +32,7 @@ public class Update extends Command {
         }
         int id;
         try {
-            id = Integer.parseInt(args[0]);
+            id = Integer.parseInt(args[1]);
         } catch (NumberFormatException e) {
             stream.printErr("Введённый id должен быть целым числом\n");
             return;
@@ -44,8 +43,11 @@ public class Update extends Command {
         if (data.length == 0) {
             logger.warn("Сервер вернул пустой ответ");
         }
-        AddRespond respond = SerializationUtils.deserialize(data);
-        return;
-
+        UpdateRespond respond = SerializationUtils.deserialize(data);
+        if (!respond.getError().isEmpty()) {
+            stream.printErr(respond.getError() + "\n");
+        } else {
+            stream.printSuccess("Элемент успешно изменен\n");
+        }
     }
 }
