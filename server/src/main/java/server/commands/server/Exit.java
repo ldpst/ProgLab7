@@ -24,7 +24,7 @@ public class Exit extends Command {
         logger.info("Команда выполняется");
         // добавить сохранение
         runManager.setRunMode(RunMode.EXIT);
-        stream.print("Программа завершена");
+        stream.print("Программа завершена\n");
         logger.info("Команда выполнена");
     }
 }
