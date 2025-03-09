@@ -35,7 +35,7 @@ public class RemoveGreater extends Command {
             logger.warn("Сервер вернул пустой ответ");
         }
         RemoveGreaterRespond respond = SerializationUtils.deserialize(data);
-        stream.printSuccessf("Удалено %s элементов\n", respond.getError());
+        stream.printSuccessf("Удалено %s элементов\n", respond.getCount());
         logger.info("Команда выполнена");
     }
 }

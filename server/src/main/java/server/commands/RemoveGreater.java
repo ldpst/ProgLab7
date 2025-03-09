@@ -18,6 +18,6 @@ public class RemoveGreater extends Command {
     public Respond execute(Request request) {
         RemoveGreaterRequest req = (RemoveGreaterRequest) request;
         int count = collectionManager.removeGreater(req.getMovie());
-        return new RemoveGreaterRespond(Integer.toString(count));
+        return new RemoveGreaterRespond(count);
     }
 }
