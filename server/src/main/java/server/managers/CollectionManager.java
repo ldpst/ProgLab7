@@ -1,10 +1,12 @@
 package server.managers;
 
-import general.objects.*;
+import general.objects.Movie;
+import general.objects.MovieGenre;
+import general.objects.Person;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.Iterator;
+import java.util.stream.Collectors;
 
 /**
  * Класс для хранения и управления коллекцией
@@ -16,16 +18,7 @@ public class CollectionManager {
     private final java.time.ZonedDateTime creationTime;
     private int nextId = 1;
 
-//    public CollectionManager(StreamHandler stream) {
-//        CSVManager csvManager = new CSVManager(stream, this);
-//        csvManager.loadFromCSV();
-//        creationTime = java.time.ZonedDateTime.now();
-//    }
-
     public CollectionManager() {
-//        movies.push(new Movie("name1", new Coordinates((float) 1.0, 0), (long) 1, MovieGenre.DRAMA, MpaaRating.G, new Person("oper_name", null, (long) 1, "1234")));
-//        movies.push(new Movie("name1", new Coordinates((float) 1.0, 0), (long) 1, MovieGenre.DRAMA, MpaaRating.G, new Person("oper_name", null, (long) 1, "1234")));
-//        movies.push(new Movie("name1", new Coordinates((float) 1.0, 0), (long) 1, MovieGenre.DRAMA, MpaaRating.G, new Person("oper_name", null, (long) 1, "1234")));
         creationTime = java.time.ZonedDateTime.now();
     }
 
@@ -36,7 +29,7 @@ public class CollectionManager {
      */
     public void add(Movie movie) {
         movies.addLast(movie);
-        Movie.increaseNextId();
+        nextId++;
     }
 
     /**
@@ -53,7 +46,7 @@ public class CollectionManager {
      */
     public void clear() {
         movies = new ArrayDeque<>();
-        Movie.setNextId(1);
+        nextId = 1;
     }
 
     /**
@@ -72,6 +65,37 @@ public class CollectionManager {
     }
 
     /**
+     * Обновляет значение по айди
+     *
+     * @param id       айди
+     * @param newMovie новое значение
+     * @return Возможная ошибка
+     */
+    public String updateById(int id, Movie newMovie) {
+        Deque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id).collect(Collectors.toCollection(ArrayDeque::new));
+        if (checker.isEmpty()) {
+            return "Элемента с данным id не существует";
+        }
+        movies = movies.stream().map(movie -> (movie.getId() == id ? newMovie : movie)).collect(Collectors.toCollection(ArrayDeque::new));
+        return "";
+    }
+
+    /**
+     * Удаляет значение по айди
+     *
+     * @param id айди
+     * @return Возможная ошибка
+     */
+    public String removeById(int id) {
+        Deque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id).collect(Collectors.toCollection(ArrayDeque::new));
+        if (checker.isEmpty()) {
+            return "Элемента с данным id не существует";
+        }
+        movies = movies.stream().filter(movie -> movie.getId() != id).collect(Collectors.toCollection(ArrayDeque::new));
+        return "";
+    }
+
+    /**
      * Возвращает первый элемент в коллекции
      *
      * @return первый элемент
@@ -81,6 +105,22 @@ public class CollectionManager {
             return null;
         }
         return movies.getFirst();
+    }
+
+    /**
+     * Добавляет элемент в коллекцию, если он максимален
+     *
+     * @param newMovie добавляемый элемент
+     * @return Возможная ошибка
+     */
+    public String addIfMax(Movie newMovie) {
+        newMovie.setId(nextId);
+        Deque<Movie> checker = movies.stream().filter(movie -> movie.compareTo(newMovie) > 0).collect(Collectors.toCollection(ArrayDeque::new));
+        if (checker.isEmpty()) {
+            add(newMovie);
+            return "";
+        }
+        return "Элемент не был добавлен";
     }
 
     /**
@@ -131,6 +171,7 @@ public class CollectionManager {
      * @return максимальный элемент по полю оператор
      */
     public Movie getMaxByOperator() {
+        if (movies.isEmpty()) return null;
         Movie max = movies.getFirst();
         for (Movie movie : movies) {
             if (max.getOperator() == null || (movie.getOperator() != null && max.getOperator().compareTo(movie.getOperator()) > 0)) {
@@ -147,14 +188,8 @@ public class CollectionManager {
      */
     public int removeGreater(Movie greater) {
         if (greater == null) return 0;
-        int count = 0;
-        Iterator<Movie> iterator = movies.iterator();
-        while (iterator.hasNext()) {
-            if (greater.compareTo(iterator.next()) < 0) {
-                iterator.remove();
-                count++;
-            }
-        }
+        int count = movies.stream().filter(movie -> movie.compareTo(greater) > 0).collect(Collectors.toCollection(ArrayDeque::new)).size();
+        movies = movies.stream().filter(movie -> movie.compareTo(greater) < 0).collect(Collectors.toCollection(ArrayDeque::new));
         return count;
     }
 
@@ -165,13 +200,7 @@ public class CollectionManager {
      * @return количество
      */
     public int countByOperator(Person operator) {
-        int count = 0;
-        for (Movie movie : movies) {
-            if (movie.getOperator() != null && movie.getOperator().equals(operator) || operator == null && movie.getOperator() == null) {
-                count++;
-            }
-        }
-        return count;
+        return (movies.stream().filter(movie -> ((movie.getOperator() == null && operator == null) || (movie.getOperator() != null && movie.getOperator().equals(operator)))).collect(Collectors.toCollection(ArrayDeque::new))).size();
     }
 
     /**
@@ -180,14 +209,8 @@ public class CollectionManager {
      * @param genre значение для проверки
      * @return количество
      */
-    public int countLessTanGenre(MovieGenre genre) {
-        int count = 0;
-        for (Movie movie : movies) {
-            if (movie.getGenre() != null && genre != null && movie.getGenre().compareTo(genre) > 0 || movie.getGenre() == null && genre == null) {
-                count++;
-            }
-        }
-        return count;
+    public int countLessThanGenre(MovieGenre genre) {
+        return (movies.stream().filter(movie -> ((movie.getGenre() == null && genre == null) || (movie.getGenre() != null && genre != null && movie.getGenre().compareTo(genre) < 0))).collect(Collectors.toCollection(ArrayDeque::new))).size();
     }
 
     /**
@@ -237,5 +260,9 @@ public class CollectionManager {
 
     public int getAndIncreaseNextID() {
         return nextId++;
+    }
+
+    public void setNextId(int id) {
+        nextId = id;
     }
 }

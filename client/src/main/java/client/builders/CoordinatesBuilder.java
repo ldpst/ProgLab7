@@ -3,17 +3,24 @@ package client.builders;
 import client.managers.ScannerManager;
 import client.managers.StreamManager;
 import general.objects.Coordinates;
+import org.apache.logging.log4j.Logger;
 
 public class CoordinatesBuilder extends Builder {
     public CoordinatesBuilder(StreamManager stream, ScannerManager scanner) {
         super(stream, scanner);
     }
+    public CoordinatesBuilder(Logger logger, StreamManager stream, ScannerManager scanner) {
+        super(logger, stream, scanner);
+    }
 
     @Override
     public Coordinates build() {
-        return new Coordinates(
+        logger.debug("Заполнение координат...");
+        Coordinates newCoordinates = new Coordinates(
                 readX(),
                 readY());
+        logger.debug("Координаты заполнены");
+        return newCoordinates;
     }
 
     /**
@@ -22,11 +29,14 @@ public class CoordinatesBuilder extends Builder {
      * @return Найденное число
      */
     private Float readX() {
+        logger.debug("Заполнение х...");
         while (true) {
             stream.print("> Введите координату x:\n$ ");
             String res = scanner.nextLine().trim();
             try {
-                return Float.parseFloat(res);
+                Float x = Float.parseFloat(res);
+                logger.debug("х заполнен");
+                return x;
             } catch (NumberFormatException e) {
                 stream.printErr("Координата x должна быть целым или вещественным числом\n");
                 stream.print("* Повторная попытка ввода\n");
@@ -41,11 +51,14 @@ public class CoordinatesBuilder extends Builder {
      * @return Найденное число
      */
     private int readY() {
+        logger.debug("Заполнение y");
         while (true) {
             stream.print("> Введите координату y:\n$ ");
             String res = scanner.nextLine().trim();
             try {
-                return Integer.parseInt(res);
+                int y = Integer.parseInt(res);
+                logger.debug("y заполнен");
+                return y;
             } catch (NumberFormatException e) {
                 stream.printErr("Координата y должна быть целым числом\n");
                 stream.print("* Повторная попытка ввода\n");

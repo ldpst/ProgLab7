@@ -6,6 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import server.commands.server.Command;
 import server.commands.server.Exit;
+import server.commands.server.Help;
+import server.commands.server.Save;
 import server.requests.Request;
 import server.responds.Respond;
 import server.utils.RunMode;
@@ -33,15 +35,18 @@ public class RunManager {
     private CommandManager commandManager;
     private CommandRunManager commandRunManager;
     private final CollectionManager collectionManager = new CollectionManager();
-    ;
 
     private final PrintStream stream = System.out;
     private final Scanner scanner = new Scanner(System.in);
 
-    private final Map<String, Command> commands = new HashMap<>();
+    public final Map<String, Command> commands = new HashMap<>();
 
     public RunManager() {
+        new CSVManager(stream, collectionManager).loadFromCSV();
+
         commands.put("exit", new Exit(this, stream));
+        commands.put("save", new Save(collectionManager, stream));
+        commands.put("help", new Help(stream, this));
     }
 
     public void run() throws IOException {
@@ -128,5 +133,9 @@ public class RunManager {
 
     public void setRunMode(RunMode runMode) {
         this.runMode = runMode;
+    }
+
+    public CollectionManager getCollectionManager() {
+        return collectionManager;
     }
 }

@@ -37,9 +37,7 @@ public class Show extends Command {
         if (data.length == 0) {
             logger.warn("Сервер вернул пустой ответ");
         }
-        logger.debug("Сериализация запроса...");
         ShowRespond respond = SerializationUtils.deserialize(data);
-        logger.debug("Запрос сериализован");
 
         Deque<Movie> movies = respond.getMovies();
         if (movies.isEmpty()) {

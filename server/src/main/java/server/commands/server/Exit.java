@@ -22,7 +22,7 @@ public class Exit extends Command {
     @Override
     public void run(String[] args) {
         logger.info("Команда выполняется");
-        // добавить сохранение
+        new Save(runManager.getCollectionManager(), stream).run(null);
         runManager.setRunMode(RunMode.EXIT);
         stream.print("Программа завершена\n");
         logger.info("Команда выполнена");

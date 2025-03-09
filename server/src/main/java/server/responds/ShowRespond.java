@@ -10,7 +10,7 @@ public class ShowRespond extends Respond {
     private final Deque<Movie> movies;
 
     public ShowRespond(Deque<Movie> movies) {
-        super(Commands.SHOW);
+        super(Commands.SHOW, "");
         this.movies = movies;
     }
 
