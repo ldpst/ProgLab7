@@ -172,6 +172,7 @@ public class CollectionManager {
      * @return максимальный элемент по полю оператор
      */
     public Movie getMaxByOperator() {
+        if (movies.isEmpty()) return null;
         Movie max = movies.getFirst();
         for (Movie movie : movies) {
             if (max.getOperator() == null || (movie.getOperator() != null && max.getOperator().compareTo(movie.getOperator()) > 0)) {
