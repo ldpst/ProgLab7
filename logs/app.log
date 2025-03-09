@@ -130,3 +130,6 @@
 2025-03-09 02:49:56 [main] DEBUG client.commands.Show - Сериализация запроса...
 2025-03-09 02:49:56 [main] DEBUG client.commands.Show - Запрос сериализован
 2025-03-09 02:49:57 [main] INFO  client.commands.Show - Команда выполнена
+2025-03-09 03:04:52 [main] INFO  server.managers.RunManager - Сервер начал слушать на адресе 192.168.0.13 и порту 2909 и обрабатывать запросы
+2025-03-09 03:04:56 [main] INFO  client.client.UDPClient - Запуск клиента...
+2025-03-09 03:04:56 [main] INFO  client.client.UDPClient - Клиент запущен
