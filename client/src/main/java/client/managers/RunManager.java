@@ -2,6 +2,7 @@ package client.managers;
 
 import client.client.UDPClient;
 import client.commands.Command;
+import client.exceptions.ServerIsUnavailableException;
 import client.exceptions.ValidationError;
 import client.utils.InputFormat;
 import client.utils.RunMode;
@@ -46,11 +47,15 @@ public class RunManager {
             } catch (NullPointerException e) {
                 stream.printErr("Команда не распознана\n");
                 throw e;
+            } catch (ServerIsUnavailableException e) {
+                stream.printErr("Сервер в данный момент недоступен. Программа завершена\n");
+                System.exit(1);
             } catch (Exception e) {
                 stream.printErr("Неопознанная ошибка\n");
                 throw new RuntimeException(e);
             }
         }
+        UDPClient.logger.info("Клиент завершил работу");
     }
 
     public void setRunMode(RunMode runMode) {

@@ -4,10 +4,7 @@ import org.apache.commons.lang3.SerializationException;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import server.commands.server.Command;
-import server.commands.server.Exit;
-import server.commands.server.Help;
-import server.commands.server.Save;
+import server.commands.server.*;
 import server.requests.Request;
 import server.responds.Respond;
 import server.utils.RunMode;
@@ -47,9 +44,11 @@ public class RunManager {
         commands.put("exit", new Exit(this, stream));
         commands.put("save", new Save(collectionManager, stream));
         commands.put("help", new Help(stream, this));
+        commands.put("show", new Show(collectionManager, stream));
     }
 
     public void run() throws IOException {
+        logger.info("Запуск сервера...");
         try (Selector selector = Selector.open();
              DatagramChannel channel = DatagramChannel.open()) {
 
@@ -109,6 +108,7 @@ public class RunManager {
         logger.debug("Сервер ожидает пакет...");
         ByteBuffer buffer = ByteBuffer.allocate(ConfigManager.getPacketSize());
         SocketAddress clientAddress = channel.receive(buffer);
+        logger.debug("Клиент с адресом {} подключился", clientAddress);
 
         if (clientAddress != null) {
             buffer.flip();

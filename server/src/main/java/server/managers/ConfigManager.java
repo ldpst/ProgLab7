@@ -71,4 +71,17 @@ public class ConfigManager {
         }
         return size;
     }
+
+    public static int getAttemptMax() {
+        Integer attemptMax = null;
+        try {
+            attemptMax = Integer.parseInt(properties.getProperty("attempt.max"));
+        } catch (NumberFormatException e) {
+            logger.warn("Не удалось получить максимум попыток. Поданное значение не является числом.");
+        }
+        if (attemptMax == null) {
+            logger.warn("Не удалось получить максимум попыток. Значение пустое или отсутствует.");
+        }
+        return attemptMax;
+    }
 }
