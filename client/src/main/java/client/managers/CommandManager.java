@@ -18,6 +18,7 @@ public class CommandManager {
         commands.put("help", new Help(stream, this));
         commands.put("remove_by_id", new RemoveById(client, stream));
         commands.put("clear", new Clear(client, stream));
+        commands.put("head", new Head(client, stream));
     }
 
     public Map<String, Command> getCommands() {
