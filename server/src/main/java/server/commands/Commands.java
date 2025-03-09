@@ -10,4 +10,5 @@ public interface Commands {
     String ADDIFMAX = "add_if_max";
     String REMOVEGREATER = "remove_greater";
     String MAXBYOPERATOR = "max_by_operator";
+    String COUNTBYOPERATOR = "count_by_operator";
 }

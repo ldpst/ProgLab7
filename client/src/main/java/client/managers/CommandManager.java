@@ -22,6 +22,7 @@ public class CommandManager {
         commands.put("add_if_max", new AddIfMax(client, stream, scanner));
         commands.put("remove_greater", new RemoveGreater(client, stream, scanner));
         commands.put("max_by_operator", new MaxByOperator(client, stream));
+        commands.put("count_by_operator", new CountByOperator(client, stream, scanner));
     }
 
     public Map<String, Command> getCommands() {

@@ -201,13 +201,7 @@ public class CollectionManager {
      * @return количество
      */
     public int countByOperator(Person operator) {
-        int count = 0;
-        for (Movie movie : movies) {
-            if (movie.getOperator() != null && movie.getOperator().equals(operator) || operator == null && movie.getOperator() == null) {
-                count++;
-            }
-        }
-        return count;
+        return (movies.stream().filter(movie -> ((movie.getOperator() == null && operator == null) || (movie.getOperator() != null && movie.getOperator().equals(operator)))).collect(Collectors.toCollection(ArrayDeque::new))).size();
     }
 
     /**

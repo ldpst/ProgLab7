@@ -19,6 +19,7 @@ public class CommandManager {
         commands.put("add_if_max", new AddIfMax(collectionManager));
         commands.put("remove_greater", new RemoveGreater(collectionManager));
         commands.put("max_by_operator", new MaxByOperator(collectionManager));
+        commands.put("count_by_operator", new CountByOperator(collectionManager));
         this.collectionManager = collectionManager;
     }
 
