@@ -25,7 +25,7 @@ public class Head extends Command {
 
     @Override
     public void run(String[] args) throws IOException {
-        logger.info("Команда выполняется");
+        logger.info("Команда выполняется...");
 
         byte[] data = client.makeRequest(new HeadRequest());
         if (data.length == 0) {

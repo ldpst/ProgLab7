@@ -26,7 +26,7 @@ public class Update extends Command {
 
     @Override
     public void run(String[] args) throws IOException {
-        logger.info("Команда выполняется");
+        logger.info("Команда выполняется...");
         if (args.length != 2) {
             stream.printErr("Неверный формат команды\n");
             return;
