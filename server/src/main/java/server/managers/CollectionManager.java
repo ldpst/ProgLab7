@@ -6,7 +6,6 @@ import general.objects.Person;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.Iterator;
 import java.util.stream.Collectors;
 
 /**
@@ -210,14 +209,8 @@ public class CollectionManager {
      * @param genre значение для проверки
      * @return количество
      */
-    public int countLessTanGenre(MovieGenre genre) {
-        int count = 0;
-        for (Movie movie : movies) {
-            if (movie.getGenre() != null && genre != null && movie.getGenre().compareTo(genre) > 0 || movie.getGenre() == null && genre == null) {
-                count++;
-            }
-        }
-        return count;
+    public int countLessThanGenre(MovieGenre genre) {
+        return (movies.stream().filter(movie -> ((movie.getGenre() == null && genre == null) || (movie.getGenre() != null && genre != null && movie.getGenre().compareTo(genre) < 0))).collect(Collectors.toCollection(ArrayDeque::new))).size();
     }
 
     /**

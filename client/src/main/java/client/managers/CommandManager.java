@@ -23,6 +23,7 @@ public class CommandManager {
         commands.put("remove_greater", new RemoveGreater(client, stream, scanner));
         commands.put("max_by_operator", new MaxByOperator(client, stream));
         commands.put("count_by_operator", new CountByOperator(client, stream, scanner));
+        commands.put("count_less_than_genre", new CountLessThanGenre(client, stream, scanner));
     }
 
     public Map<String, Command> getCommands() {

@@ -20,6 +20,7 @@ public class CommandManager {
         commands.put("remove_greater", new RemoveGreater(collectionManager));
         commands.put("max_by_operator", new MaxByOperator(collectionManager));
         commands.put("count_by_operator", new CountByOperator(collectionManager));
+        commands.put("count_less_than_genre", new CountLessThanGenre(collectionManager));
         this.collectionManager = collectionManager;
     }
 

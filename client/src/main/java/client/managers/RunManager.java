@@ -45,6 +45,7 @@ public class RunManager {
                 throw e;
             } catch (NullPointerException e) {
                 stream.printErr("Команда не распознана\n");
+                throw e;
             } catch (Exception e) {
                 stream.printErr("Неопознанная ошибка\n");
                 throw new RuntimeException(e);
