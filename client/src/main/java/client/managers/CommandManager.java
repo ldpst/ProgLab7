@@ -15,6 +15,7 @@ public class CommandManager {
         commands.put("execute_script", new ExecuteScript(client, stream));
         commands.put("exit", new Exit(stream, runManager));
         commands.put("update_id", new Update(client, stream, scanner));
+        commands.put("help", new Help(stream, this));
     }
 
     public Map<String, Command> getCommands() {
