@@ -24,6 +24,7 @@ public class RemoveById extends Command {
 
     @Override
     public void run(String[] args) throws IOException {
+        logger.info("Команда выполняется");
         if (args.length != 2) {
             stream.printErr("Неверный формат команды\n");
             return;
@@ -46,5 +47,6 @@ public class RemoveById extends Command {
         } else {
             stream.printSuccess("Элемент успешно удален\n");
         }
+        logger.info("Команда выполнена");
     }
 }

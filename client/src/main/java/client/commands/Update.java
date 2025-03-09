@@ -26,6 +26,7 @@ public class Update extends Command {
 
     @Override
     public void run(String[] args) throws IOException {
+        logger.info("Команда выполняется");
         if (args.length != 2) {
             stream.printErr("Неверный формат команды\n");
             return;
@@ -49,5 +50,6 @@ public class Update extends Command {
         } else {
             stream.printSuccess("Элемент успешно изменен\n");
         }
+        logger.info("Команда выполнена");
     }
 }
