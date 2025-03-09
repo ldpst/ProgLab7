@@ -16,6 +16,7 @@ public class CommandManager {
         commands.put("exit", new Exit(stream, runManager));
         commands.put("update_id", new Update(client, stream, scanner));
         commands.put("help", new Help(stream, this));
+        commands.put("remove_by_id", new RemoveById(client, stream));
     }
 
     public Map<String, Command> getCommands() {

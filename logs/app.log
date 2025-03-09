@@ -133,3 +133,7 @@
 2025-03-09 03:04:52 [main] INFO  server.managers.RunManager - Сервер начал слушать на адресе 192.168.0.13 и порту 2909 и обрабатывать запросы
 2025-03-09 03:04:56 [main] INFO  client.client.UDPClient - Запуск клиента...
 2025-03-09 03:04:56 [main] INFO  client.client.UDPClient - Клиент запущен
+2025-03-09 03:13:29 [main] INFO  server.managers.RunManager - Сервер начал слушать на адресе 192.168.0.13 и порту 2909 и обрабатывать запросы
+2025-03-09 03:37:06 [main] INFO  server.managers.RunManager - Сервер начал слушать на адресе 192.168.0.13 и порту 2909 и обрабатывать запросы
+2025-03-09 03:37:10 [main] INFO  client.client.UDPClient - Запуск клиента...
+2025-03-09 03:37:10 [main] INFO  client.client.UDPClient - Клиент запущен

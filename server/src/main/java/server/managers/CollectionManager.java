@@ -70,7 +70,7 @@ public class CollectionManager {
      *
      * @param id       айди
      * @param newMovie новое значение
-     * @return Возможна ошибка
+     * @return Возможная ошибка
      */
     public String updateById(int id, Movie newMovie) {
         Deque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id).collect(Collectors.toCollection(ArrayDeque::new));
@@ -78,6 +78,21 @@ public class CollectionManager {
             return "Элемента с данным id не существует";
         }
         movies = movies.stream().map(movie -> (movie.getId() == id ? newMovie : movie)).collect(Collectors.toCollection(ArrayDeque::new));
+        return "";
+    }
+
+    /**
+     * Удаляет значение по айди
+     *
+     * @param id айди
+     * @return Возможная ошибка
+     */
+    public String removeById(int id) {
+        Deque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id).collect(Collectors.toCollection(ArrayDeque::new));
+        if (checker.isEmpty()) {
+            return "Элемента с данным id не существует";
+        }
+        movies = movies.stream().filter(movie -> movie.getId() != id).collect(Collectors.toCollection(ArrayDeque::new));
         return "";
     }
 
