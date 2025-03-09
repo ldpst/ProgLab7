@@ -7,4 +7,5 @@ public interface Commands {
     String REMOVEBYID = "remove_by_id";
     String CLEAR = "clear";
     String HEAD = "head";
+    String ADDIFMAX = "add_if_max";
 }

@@ -16,6 +16,7 @@ public class CommandManager {
         commands.put("remove_by_id", new RemoveById(collectionManager));
         commands.put("clear", new Clear(collectionManager));
         commands.put("head", new Head(collectionManager));
+        commands.put("add_if_max", new AddIfMax(collectionManager));
         this.collectionManager = collectionManager;
     }
 

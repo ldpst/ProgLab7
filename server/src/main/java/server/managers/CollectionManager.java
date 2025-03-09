@@ -45,10 +45,9 @@ public class CollectionManager {
     /**
      * Метод для очищения коллекции
      */
-    public String clear() {
+    public void clear() {
         movies = new ArrayDeque<>();
         nextId = 1;
-        return "";
     }
 
     /**
@@ -107,6 +106,22 @@ public class CollectionManager {
             return null;
         }
         return movies.getFirst();
+    }
+
+    /**
+     * Добавляет элемент в коллекцию, если он максимален
+     *
+     * @param newMovie добавляемый элемент
+     * @return Возможная ошибка
+     */
+    public String addIfMax(Movie newMovie) {
+        newMovie.setId(nextId);
+        Deque<Movie> checker = movies.stream().filter(movie -> movie.compareTo(newMovie) > 0).collect(Collectors.toCollection(ArrayDeque::new));
+        if (checker.isEmpty()) {
+            add(newMovie);
+            return "";
+        }
+        return "Элемент не был добавлен";
     }
 
     /**
