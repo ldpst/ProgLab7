@@ -14,6 +14,7 @@ public class CommandManager {
         commands.put("add", new Add(collectionManager));
         commands.put("update", new Update(collectionManager));
         commands.put("remove_by_id", new RemoveById(collectionManager));
+        commands.put("clear", new Clear(collectionManager));
         this.collectionManager = collectionManager;
     }
 

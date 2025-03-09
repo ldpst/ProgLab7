@@ -45,9 +45,10 @@ public class CollectionManager {
     /**
      * Метод для очищения коллекции
      */
-    public void clear() {
+    public String clear() {
         movies = new ArrayDeque<>();
         nextId = 1;
+        return "";
     }
 
     /**

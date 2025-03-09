@@ -5,4 +5,5 @@ public interface Commands {
     String ADD = "add";
     String UPDATE = "update";
     String REMOVEBYID = "remove_by_id";
+    String CLEAR = "clear";
 }
