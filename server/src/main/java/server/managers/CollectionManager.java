@@ -188,14 +188,8 @@ public class CollectionManager {
      */
     public int removeGreater(Movie greater) {
         if (greater == null) return 0;
-        int count = 0;
-        Iterator<Movie> iterator = movies.iterator();
-        while (iterator.hasNext()) {
-            if (greater.compareTo(iterator.next()) < 0) {
-                iterator.remove();
-                count++;
-            }
-        }
+        int count = movies.stream().filter(movie -> movie.compareTo(greater) > 0).collect(Collectors.toCollection(ArrayDeque::new)).size();
+        movies = movies.stream().filter(movie -> movie.compareTo(greater) < 0).collect(Collectors.toCollection(ArrayDeque::new));
         return count;
     }
 

@@ -8,4 +8,5 @@ public interface Commands {
     String CLEAR = "clear";
     String HEAD = "head";
     String ADDIFMAX = "add_if_max";
+    String REMOVEGREATER = "remove_greater";
 }
