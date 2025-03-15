@@ -5,11 +5,9 @@ import client.client.UDPClient;
 import client.managers.ScannerManager;
 import client.managers.StreamManager;
 import general.objects.Movie;
-import org.apache.commons.lang3.SerializationUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import server.requests.AddRequest;
-import server.responds.AddRespond;
 
 import java.io.IOException;
 

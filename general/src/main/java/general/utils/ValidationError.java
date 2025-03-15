@@ -1,4 +1,4 @@
-package server.utils;
+package general.utils;
 
 /**
  * Исключение, вызываемое при необработанном нарушении условий полей.

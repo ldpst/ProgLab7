@@ -1,7 +1,7 @@
 package general.objects;
 
-import server.utils.Validatable;
-import server.utils.ValidationError;
+import general.utils.Validatable;
+import general.utils.ValidationError;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -22,16 +22,16 @@ public class Person implements Validatable, Comparable<Person>, Serializable {
         this.birthday = birthday;
         this.weight = weight;
         this.passportID = passportID;
-        if (!isValid()) {
+        if (isValid()) {
             throw new ValidationError("Person");
         }
     }
 
     @Override
     public boolean isValid() {
-        if (name == null) return false;
-        if (weight <= 0) return false;
-        return passportID != null && !passportID.isEmpty() && passportID.length() <= 25;
+        if (name == null) return true;
+        if (weight <= 0) return true;
+        return passportID == null || passportID.isEmpty() || passportID.length() > 25;
     }
 
     /**
@@ -120,16 +120,5 @@ public class Person implements Validatable, Comparable<Person>, Serializable {
     @Override
     public int compareTo(Person o) {
         return birthday.compareTo(o.getBirthday());
-    }
-
-    /**
-     * Метод для сравнения двух Person
-     *
-     * @param x объект 1
-     * @param y объект 2
-     * @return Результат меньше нуля, если y больше данного x. Результат равен нулю, если элементы равны. Результат больше нуля, если данный x больше y
-     */
-    public int compare(Person x, Person y) {
-        return Long.compare(x.getBirthday().getTime(), y.getBirthday().getTime());
     }
 }

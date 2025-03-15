@@ -3,7 +3,6 @@ package client.builders;
 import client.managers.ScannerManager;
 import client.managers.StreamManager;
 import general.objects.*;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
@@ -12,10 +11,6 @@ import org.apache.logging.log4j.Logger;
  * @author ldpst
  */
 public class MovieBuilder extends Builder {
-    public MovieBuilder(StreamManager stream, ScannerManager scanner) {
-        super(stream, scanner);
-    }
-
     public MovieBuilder(Logger logger, StreamManager stream, ScannerManager scanner) {
         super(logger, stream, scanner);
     }

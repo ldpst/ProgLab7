@@ -1,7 +1,6 @@
 package client.commands;
 
 import client.client.UDPClient;
-import client.managers.CommandManager;
 import client.managers.RunManager;
 import client.managers.ScannerManager;
 import client.managers.StreamManager;
@@ -31,12 +30,13 @@ public class ExecuteScript extends Command {
     @Override
     public void run(String[] args) {
         logger.info("Команда выполняется...");
-        logger.debug("Поиск файла");
+        logger.debug("Поиск пути");
         if (args.length != 2) {
             stream.printErr("Неверный формат команды\n");
             logger.warn("Путь не указан");
             return;
         }
+        logger.debug("Поиск файла по пути {}", args[1]);
         if (RunManager.usedScripts.contains(args[1])) {
             stream.printErr("Запуск скрипта " + args[1] + " вызывает рекурсию\n");
             logger.error("Запуск скрипта {} вызывает рекурсию\n", args[1]);
@@ -55,6 +55,8 @@ public class ExecuteScript extends Command {
         } catch (NullPointerException e) {
             stream.printErr("\nВ скрипте отсутствует команда exit. Программа завершена\n");
             System.exit(0);
+        } catch (ClassCastException e) {
+            logger.warn(e.getMessage());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

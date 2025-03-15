@@ -1,7 +1,7 @@
 package general.objects;
 
-import server.utils.Validatable;
-import server.utils.ValidationError;
+import general.utils.Validatable;
+import general.utils.ValidationError;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -16,13 +16,13 @@ public class Movie
         implements Comparable<Movie>, Validatable, Serializable {
 
     private long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
-    private String name; //Поле не может быть null, Строка не может быть пустой
-    private Coordinates coordinates; //Поле не может быть null
-    private ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
-    private Long oscarsCount; //Значение поля должно быть больше 0, Поле не может быть null
-    private MovieGenre genre; //Поле может быть null
-    private MpaaRating mpaaRating; //Поле может быть null
-    private Person operator; //Поле может быть null
+    private final String name; //Поле не может быть null, Строка не может быть пустой
+    private final Coordinates coordinates; //Поле не может быть null
+    private final ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    private final Long oscarsCount; //Значение поля должно быть больше 0, Поле не может быть null
+    private final MovieGenre genre; //Поле может быть null
+    private final MpaaRating mpaaRating; //Поле может быть null
+    private final Person operator; //Поле может быть null
 
     public Movie(String name, Coordinates coordinates, Long oscarsCount, MovieGenre genre, MpaaRating mpaaRating, Person operator) {
         this.name = name;
@@ -32,7 +32,7 @@ public class Movie
         this.genre = genre;
         this.mpaaRating = mpaaRating;
         this.operator = operator;
-        if (!isValid()) {
+        if (isValid()) {
             throw new ValidationError("Movie");
         }
     }
@@ -46,24 +46,9 @@ public class Movie
         this.genre = genre;
         this.mpaaRating = mpaaRating;
         this.operator = operator;
-        if (!isValid()) {
+        if (isValid()) {
             throw new ValidationError("Movie");
         }
-    }
-
-    /**
-     * Заполняет поля текущего объекта данными из другого объекта
-     *
-     * @param movie другой объект
-     */
-    public void update(Movie movie) {
-        this.name = movie.getName();
-        this.coordinates = movie.getCoordinates();
-        this.creationDate = movie.getCreationDate();
-        this.oscarsCount = movie.getOscarsCount();
-        this.genre = movie.getGenre();
-        this.mpaaRating = movie.getMpaaRating();
-        this.operator = movie.getOperator();
     }
 
     /**
@@ -75,17 +60,6 @@ public class Movie
     @Override
     public int compareTo(Movie other) {
         return Coordinates.compare(getCoordinates(), other.getCoordinates());
-    }
-
-    /**
-     * Метод для сравнения двух Movie
-     *
-     * @param x объект 1
-     * @param y объект 2
-     * @return Результат меньше нуля, если y больше данного x. Результат равен нулю, если элементы равны. Результат больше нуля, если данный x больше y
-     */
-    public static int compare(Movie x, Movie y) {
-        return Coordinates.compare(x.getCoordinates(), y.getCoordinates());
     }
 
     /**
@@ -108,10 +82,10 @@ public class Movie
      */
     @Override
     public boolean isValid() {
-        if (this.name == null || this.name.isEmpty()) return false;
-        if (this.coordinates == null) return false;
-        if (this.creationDate == null) return false;
-        return this.oscarsCount > 0;
+        if (this.name == null || this.name.isEmpty()) return true;
+        if (this.coordinates == null) return true;
+        if (this.creationDate == null) return true;
+        return this.oscarsCount <= 0;
     }
 
     /**

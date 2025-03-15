@@ -7,12 +7,9 @@ import org.apache.commons.lang3.SerializationUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import server.requests.HeadRequest;
-import server.requests.ShowRequest;
 import server.responds.HeadRespond;
-import server.responds.ShowRespond;
 
 import java.io.IOException;
-import java.util.Deque;
 
 public class Head extends Command {
     private final Logger logger = LogManager.getLogger(Head.class);

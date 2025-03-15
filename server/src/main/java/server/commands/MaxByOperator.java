@@ -1,6 +1,5 @@
 package server.commands;
 
-import general.objects.Movie;
 import server.managers.CollectionManager;
 import server.requests.Request;
 import server.responds.MaxByOperatorRespond;

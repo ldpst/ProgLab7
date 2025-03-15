@@ -1,7 +1,6 @@
 package client.managers;
 
-import client.commands.Exit;
-import client.utils.InputFormat;
+import org.jline.reader.LineReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,10 +12,17 @@ import java.io.InputStreamReader;
  * @author ldpst
  */
 public class ScannerManager {
-    private final BufferedReader reader;
+    private final LineReader lineReader;
+    private final BufferedReader bufferedReader;
 
     public ScannerManager(InputStreamReader inputStreamReader) {
-        reader = new BufferedReader(inputStreamReader);
+        this.bufferedReader = new BufferedReader(inputStreamReader);
+        this.lineReader = null;
+    }
+
+    public ScannerManager(LineReader lineReader) {
+        this.lineReader = lineReader;
+        this.bufferedReader = null;
     }
 
     /**
@@ -26,9 +32,15 @@ public class ScannerManager {
      */
     public String nextLine() {
         try {
-            return reader.readLine();
+            if (lineReader != null) {
+                return lineReader.readLine();
+            }
+            if (bufferedReader != null) {
+                return bufferedReader.readLine();
+            }
         } catch (IOException e) {
             return null;
         }
+        return null;
     }
 }

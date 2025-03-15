@@ -1,5 +1,6 @@
 package server.managers;
 
+import general.utils.ValidationError;
 import org.apache.commons.lang3.SerializationException;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.logging.log4j.LogManager;
@@ -8,7 +9,6 @@ import server.commands.server.*;
 import server.requests.Request;
 import server.responds.Respond;
 import server.utils.RunMode;
-import server.utils.ValidationError;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -29,7 +29,6 @@ public class RunManager {
 
     private RunMode runMode = RunMode.RUN;
 
-    private CommandManager commandManager;
     private CommandRunManager commandRunManager;
     private final CollectionManager collectionManager = new CollectionManager();
 
@@ -57,7 +56,7 @@ public class RunManager {
             channel.configureBlocking(false);
             channel.register(selector, SelectionKey.OP_READ);
 
-            commandManager = new CommandManager(collectionManager);
+            CommandManager commandManager = new CommandManager(collectionManager);
             commandRunManager = new CommandRunManager(commandManager);
             logger.info("Сервер начал слушать на адресе {} и порту {} и обрабатывать запросы", ConfigManager.getAddress(), ConfigManager.getPort());
 

@@ -1,7 +1,7 @@
 package general.objects;
 
-import server.utils.Validatable;
-import server.utils.ValidationError;
+import general.utils.Validatable;
+import general.utils.ValidationError;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -17,7 +17,7 @@ public record Coordinates(Float x, int y) implements Validatable, Comparable<Coo
     public Coordinates(Float x, int y) {
         this.x = x;
         this.y = y;
-        if (!isValid()) {
+        if (isValid()) {
             throw new ValidationError("Coordinates");
         }
     }
@@ -48,8 +48,8 @@ public record Coordinates(Float x, int y) implements Validatable, Comparable<Coo
 
     @Override
     public boolean isValid() {
-        if (x == null) return false;
-        return y > -486;
+        if (x == null) return true;
+        return y <= -486;
     }
 
     @Override
