@@ -39,7 +39,6 @@ public class RunManager {
                 throw e;
             } catch (NullPointerException e) {
                 stream.printErr("Команда не распознана\n");
-                throw e;
             } catch (ServerIsUnavailableException e) {
                 stream.printErr("Сервер в данный момент недоступен. Программа завершена\n");
                 System.exit(1);
