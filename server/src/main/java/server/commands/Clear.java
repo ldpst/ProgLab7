@@ -6,7 +6,7 @@ import server.responds.ClearRespond;
 import server.responds.Respond;
 
 public class Clear extends Command {
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
     public Clear(CollectionManager collectionManager) {
         super("clear", "очистить коллекцию");

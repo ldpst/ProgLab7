@@ -2,6 +2,7 @@ package server.commands.server;
 
 import general.objects.Movie;
 import server.managers.CollectionManager;
+import server.managers.ConfigManager;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,8 +30,7 @@ public class Save extends Command {
         String header = countFields(Movie.class, "");
         String[] fieldNames = header.split(",");
         ProcessBuilder processBuilder = new ProcessBuilder();
-//        String filePath = processBuilder.environment().get("Lab6FileName");
-        String filePath = "D:\\Files\\Projects\\java\\ProgLab6\\Lab6FileName.csv";
+        String filePath = processBuilder.environment().get(ConfigManager.getEnvName());
         if (filePath == null) {
             stream.print("Переменная окружения с названием файла Lab5FileName пуста\n");
             return;

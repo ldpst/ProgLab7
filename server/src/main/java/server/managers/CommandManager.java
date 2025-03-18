@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandManager {
-    private final Map<String, Command> commands = new HashMap<String, Command>();
-    private final CollectionManager collectionManager;
+    private final Map<String, Command> commands = new HashMap<>();
 
     public CommandManager(CollectionManager collectionManager) {
         commands.put("show", new Show(collectionManager));
@@ -21,7 +20,6 @@ public class CommandManager {
         commands.put("max_by_operator", new MaxByOperator(collectionManager));
         commands.put("count_by_operator", new CountByOperator(collectionManager));
         commands.put("count_less_than_genre", new CountLessThanGenre(collectionManager));
-        this.collectionManager = collectionManager;
     }
 
     public Map<String, Command> getCommands() {

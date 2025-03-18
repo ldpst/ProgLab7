@@ -11,10 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PersonBuilder extends Builder {
-    public PersonBuilder(StreamManager stream, ScannerManager scanner) {
-        super(stream, scanner);
-    }
-
     public PersonBuilder(Logger logger, StreamManager stream, ScannerManager scanner) {
         super(logger, stream, scanner);
     }

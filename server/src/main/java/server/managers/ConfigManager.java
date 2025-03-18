@@ -59,7 +59,7 @@ public class ConfigManager {
      *
      * @return размер пакета
      */
-    public static int getPacketSize() {
+    public static Integer getPacketSize() {
         Integer size = null;
         try {
             size = Integer.parseInt(properties.getProperty("packet.size"));
@@ -72,7 +72,12 @@ public class ConfigManager {
         return size;
     }
 
-    public static int getAttemptMax() {
+    /**
+     * Возвращает максимум повторных попыток подключения
+     *
+     * @return максимум попыток
+     */
+    public static Integer getAttemptMax() {
         Integer attemptMax = null;
         try {
             attemptMax = Integer.parseInt(properties.getProperty("attempt.max"));
@@ -83,5 +88,18 @@ public class ConfigManager {
             logger.warn("Не удалось получить максимум попыток. Значение пустое или отсутствует.");
         }
         return attemptMax;
+    }
+
+    /**
+     * Возвращает имя переменной окружения
+     *
+     * @return имя переменной
+     */
+    public static String getEnvName() {
+        String envName = properties.getProperty("env.name");
+        if (envName == null || envName.isBlank()) {
+            logger.warn("Не удалось получить имя переменной окружения. Значение пустое или отсутствует.");
+        }
+        return envName;
     }
 }

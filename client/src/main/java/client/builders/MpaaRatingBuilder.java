@@ -8,9 +8,6 @@ import org.apache.logging.log4j.Logger;
 import java.util.Arrays;
 
 public class MpaaRatingBuilder extends Builder {
-    public MpaaRatingBuilder(StreamManager stream, ScannerManager scanner) {
-        super(stream, scanner);
-    }
 
     public MpaaRatingBuilder(Logger logger, StreamManager stream, ScannerManager scanner) {
         super(logger, stream, scanner);

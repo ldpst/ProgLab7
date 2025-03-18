@@ -6,10 +6,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public abstract class Builder {
-    protected StreamManager stream;
-    protected ScannerManager scanner;
+    protected final StreamManager stream;
+    protected final ScannerManager scanner;
 
-    protected Logger logger;
+    protected final Logger logger;
 
     public Builder(StreamManager stream, ScannerManager scanner) {
         this(LogManager.getLogger(Builder.class), stream, scanner);

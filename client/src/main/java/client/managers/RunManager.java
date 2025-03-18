@@ -1,7 +1,6 @@
 package client.managers;
 
 import client.client.UDPClient;
-import client.commands.Command;
 import client.exceptions.ServerIsUnavailableException;
 import client.exceptions.ValidationError;
 import client.utils.InputFormat;
@@ -10,26 +9,20 @@ import client.utils.RunMode;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class RunManager {
     private RunMode runMode = RunMode.RUN;
     private final StreamManager stream;
     private final ScannerManager scanner;
 
-    private final UDPClient client;
     private final CommandManager commandManager;
-
-    private final Map<String, Command> commands;
 
     public static final List<String> usedScripts = new ArrayList<>();
 
     public RunManager(UDPClient client, ScannerManager scanner, InputFormat inputFormat) throws IOException {
-        this.client = client;
         this.scanner = scanner;
         this.stream = new StreamManager(System.out, inputFormat);
         commandManager = new CommandManager(client, stream, scanner, this); // this для возможности выхода в exit
-        commands = commandManager.getCommands();
     }
 
     public void run() {
@@ -41,7 +34,7 @@ public class RunManager {
             }
             String[] splitCommand = nextCommand.split(" ");
             try {
-                commands.get(splitCommand[0]).run(splitCommand);
+                commandManager.getCommands().get(splitCommand[0]).run(splitCommand);
             } catch (ValidationError e) {
                 throw e;
             } catch (NullPointerException e) {

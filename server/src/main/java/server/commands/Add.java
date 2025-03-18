@@ -8,7 +8,7 @@ import server.responds.AddRespond;
 import server.responds.Respond;
 
 public class Add extends Command {
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
     public Add(CollectionManager collectionManager) {
         super("add", "добавить новый элемент в коллекцию");

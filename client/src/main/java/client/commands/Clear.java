@@ -6,7 +6,6 @@ import org.apache.commons.lang3.SerializationUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import server.requests.ClearRequest;
-import server.responds.ClearRespond;
 
 import java.io.IOException;
 
@@ -27,7 +26,7 @@ public class Clear extends Command {
         if (data.length == 0) {
             logger.warn("Сервер вернул пустой ответ");
         }
-        ClearRespond respond = SerializationUtils.deserialize(data);
+        SerializationUtils.deserialize(data);
         stream.printSuccess("Коллекция очищена\n");
         logger.info("Команда выполнена");
     }

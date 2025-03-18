@@ -5,8 +5,6 @@ import client.managers.StreamManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-
 public class Help extends Command {
     private final CommandManager commandManager;
     private final Logger logger = LogManager.getLogger(Help.class);
@@ -17,7 +15,7 @@ public class Help extends Command {
     }
 
     @Override
-    public void run(String[] args) throws IOException {
+    public void run(String[] args) {
         logger.info("Команда выполняется...");
         var commands = commandManager.getCommands();
         stream.printSuccess("Справка по доступным командам:\n");

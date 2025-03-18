@@ -15,11 +15,10 @@ import java.util.stream.Collectors;
  */
 public class CollectionManager {
     private Deque<Movie> movies = new ArrayDeque<>();
-    private final java.time.ZonedDateTime creationTime;
     private int nextId = 1;
 
     public CollectionManager() {
-        creationTime = java.time.ZonedDateTime.now();
+
     }
 
     /**
@@ -33,35 +32,11 @@ public class CollectionManager {
     }
 
     /**
-     * Метод для получения типа коллекции
-     *
-     * @return тип коллекции
-     */
-    public Class<?> getType() {
-        return movies.getClass();
-    }
-
-    /**
      * Метод для очищения коллекции
      */
     public void clear() {
         movies = new ArrayDeque<>();
         nextId = 1;
-    }
-
-    /**
-     * Метод для поиска элемента по id
-     *
-     * @param id айди
-     * @return Movie
-     */
-    public Movie findElemById(long id) {
-        for (Movie movie : movies) {
-            if (movie.getId() == id) {
-                return movie;
-            }
-        }
-        return null;
     }
 
     /**
@@ -124,48 +99,6 @@ public class CollectionManager {
     }
 
     /**
-     * Возвращает последний элемент в коллекции
-     *
-     * @return первый элемент
-     */
-    public Movie getTail() {
-        if (isEmpty()) {
-            return null;
-        }
-        return movies.getLast();
-    }
-
-    /**
-     * Возвращает максимальный элемент коллекции
-     *
-     * @return максимальный элемент
-     */
-    public Movie getMax() {
-        Movie max = movies.getFirst();
-        for (Movie movie : movies) {
-            if (max.compareTo(movie) < 0) {
-                max = movie;
-            }
-        }
-        return max;
-    }
-
-    /**
-     * Возвращает минимальный элемент коллекции
-     *
-     * @return максимальный элемент
-     */
-    public Movie getMin() {
-        Movie min = movies.getFirst();
-        for (Movie movie : movies) {
-            if (min.compareTo(movie) > 0) {
-                min = movie;
-            }
-        }
-        return min;
-    }
-
-    /**
      * Возвращает максимальный элемент по полю оператор
      *
      * @return максимальный элемент по полю оператор
@@ -220,33 +153,6 @@ public class CollectionManager {
      */
     public boolean isEmpty() {
         return movies.isEmpty();
-    }
-
-    /**
-     * Метод для удаления элемента
-     *
-     * @param movie элемент для удаления
-     */
-    public void remove(Movie movie) {
-        movies.remove(movie);
-    }
-
-    /**
-     * Метод, возвращающий размер коллекции
-     *
-     * @return int
-     */
-    public int getSize() {
-        return movies.size();
-    }
-
-    /**
-     * Метод, возвращающий значение поля creationTime
-     *
-     * @return ZonedDateTime
-     */
-    public java.time.ZonedDateTime getCreationTime() {
-        return creationTime;
     }
 
     /**

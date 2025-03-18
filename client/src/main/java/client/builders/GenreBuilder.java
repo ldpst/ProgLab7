@@ -8,10 +8,6 @@ import org.apache.logging.log4j.Logger;
 import java.util.Arrays;
 
 public class GenreBuilder extends Builder {
-    public GenreBuilder(StreamManager stream, ScannerManager scanner) {
-        super(stream, scanner);
-    }
-
     public GenreBuilder(Logger logger, StreamManager stream, ScannerManager scanner) {
         super(logger, stream, scanner);
     }

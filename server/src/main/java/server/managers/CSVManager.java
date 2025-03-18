@@ -115,9 +115,10 @@ public class CSVManager {
      */
     private String loadFileNameFromEnvironment() {
         ProcessBuilder processBuilder = new ProcessBuilder();
-        String filePath = "D:\\Files\\Projects\\java\\ProgLab6\\Lab6FileName.csv";
+        String envName = ConfigManager.getEnvName();
+        String filePath = processBuilder.environment().get(envName);
         if (filePath == null) {
-            stream.print("Переменная окружения с названием файла Lab5FileName пуста\n");
+            stream.print("Переменная окружения с названием файла " + envName + " пуста\n");
             return null;
         }
         return filePath;

@@ -20,7 +20,7 @@ import java.util.Deque;
 public class Show extends Command {
     private final UDPClient client;
 
-    public static Logger logger = LogManager.getLogger(Show.class);
+    public static final Logger logger = LogManager.getLogger(Show.class);
 
     public Show(UDPClient client, StreamManager streamManager) {
         super("show", "вывести в стандартный поток вывода все элементы коллекции в строковом представлении", streamManager);

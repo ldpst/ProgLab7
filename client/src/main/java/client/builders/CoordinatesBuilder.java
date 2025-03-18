@@ -6,9 +6,6 @@ import general.objects.Coordinates;
 import org.apache.logging.log4j.Logger;
 
 public class CoordinatesBuilder extends Builder {
-    public CoordinatesBuilder(StreamManager stream, ScannerManager scanner) {
-        super(stream, scanner);
-    }
     public CoordinatesBuilder(Logger logger, StreamManager stream, ScannerManager scanner) {
         super(logger, stream, scanner);
     }

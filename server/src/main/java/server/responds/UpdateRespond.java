@@ -7,8 +7,4 @@ public class UpdateRespond extends Respond {
     public UpdateRespond(String error) {
         super(Commands.UPDATE, error);
     }
-
-    public UpdateRespond() {
-        this("");
-    }
 }

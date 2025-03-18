@@ -7,7 +7,7 @@ package general.utils;
  * @author ldpst
  */
 public class ValidationError extends RuntimeException {
-    String place;
+    private final String place;
 
     public ValidationError(String place) {
         super();
