@@ -3,13 +3,11 @@ package server.requests;
 import java.io.Serializable;
 
 public class Request implements Serializable {
-    private final String name;
-
-    public Request(String name) {
-        this.name = name;
+    private final String message;
+    public Request(String message) {
+        this.message = message;
     }
-
-    public String getName() {
-        return name;
+    public String getMessage() {
+        return message;
     }
 }

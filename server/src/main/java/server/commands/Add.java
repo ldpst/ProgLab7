@@ -2,10 +2,8 @@ package server.commands;
 
 import general.objects.Movie;
 import server.managers.CollectionManager;
-import server.requests.AddRequest;
 import server.requests.Request;
-import server.responds.AddRespond;
-import server.responds.Respond;
+import server.response.Response;
 
 public class Add extends Command {
     private final CollectionManager collectionManager;
@@ -16,10 +14,10 @@ public class Add extends Command {
     }
 
     @Override
-    public Respond execute(Request request) {
-        Movie movie = ((AddRequest) request).getMovie();
+    public Response execute(String[] args) {
+        Movie movie =
         movie.setId(collectionManager.getAndIncreaseNextID());
         collectionManager.add(movie);
-        return new AddRespond();
+        return new Response("", R)
     }
 }

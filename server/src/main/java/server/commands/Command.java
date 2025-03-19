@@ -1,7 +1,6 @@
 package server.commands;
 
-import server.requests.Request;
-import server.responds.Respond;
+import server.response.Response;
 
 public abstract class Command {
     private final String name;
@@ -12,7 +11,7 @@ public abstract class Command {
         this.description = description;
     }
 
-    public abstract Respond execute(Request request);
+    public abstract Response execute(String[] args);
 
     public String getName() {
         return name;

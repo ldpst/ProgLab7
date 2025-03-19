@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import server.managers.ConfigManager;
 import server.requests.Request;
+import server.response.Response;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -27,13 +28,13 @@ public class UDPClient {
         logger.info("Клиент запущен");
     }
 
-    public byte[] makeRequest(Request request) throws ServerIsUnavailableException, IOException {
+    public Response makeRequest(String request) throws ServerIsUnavailableException, IOException {
         int attempt = 0;
         while (attempt < ConfigManager.getAttemptMax()) {
             attempt++;
             try {
                 logger.debug("Отправка запроса на сервер...");
-                byte[] data = SerializationUtils.serialize(request);
+                byte[] data = SerializationUtils.serialize(new Request(request));
                 DatagramPacket dp = new DatagramPacket(data, data.length, new InetSocketAddress(ConfigManager.getAddress(), ConfigManager.getPort()));
                 client.send(dp);
                 logger.debug("Запрос отправлен: {}", data);
@@ -43,7 +44,7 @@ public class UDPClient {
                 logger.debug("Ожидание ответа от сервера...");
                 client.receive(dp1);
                 logger.debug("Ответ получен: {}", data1);
-                return data1;
+                return SerializationUtils.deserialize(data1);
             } catch (SocketTimeoutException e) {
                 logger.warn("Попытка {}: Таймаут ожидания ответа от сервера.", attempt);
             } catch (IOException e) {
