@@ -12,7 +12,7 @@ public class CommandManager {
     public CommandManager(CollectionManager collectionManager, UDPDatagramChannel channel) {
         commands.put("show", new Show(collectionManager));
         commands.put("add", new Add(collectionManager, channel));
-//        commands.put("update", new Update(collectionManager));
+        commands.put("update", new Update(collectionManager, channel));
 //        commands.put("remove_by_id", new RemoveById(collectionManager));
 //        commands.put("clear", new Clear(collectionManager));
 //        commands.put("head", new Head(collectionManager));

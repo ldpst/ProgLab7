@@ -17,6 +17,10 @@ public class CollectionManager {
     private Deque<Movie> movies = new ArrayDeque<>();
     private int nextId = 1;
 
+    protected static final String RED = "\u001B[31m";
+    protected static final String RESET = "\u001B[0m";
+    protected static final String GREEN = "\u001B[32m";
+
     public CollectionManager() {
 
     }
@@ -44,15 +48,17 @@ public class CollectionManager {
      *
      * @param id       айди
      * @param newMovie новое значение
-     * @return Возможная ошибка
      */
-    public String updateById(int id, Movie newMovie) {
+    public void updateById(int id, Movie newMovie) {
+        movies = movies.stream().map(movie -> (movie.getId() == id ? newMovie : movie)).collect(Collectors.toCollection(ArrayDeque::new));
+    }
+
+    public boolean checkIfIdExists(int id) {
         Deque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id).collect(Collectors.toCollection(ArrayDeque::new));
         if (checker.isEmpty()) {
-            return "Элемента с данным id не существует";
+            return false;
         }
-        movies = movies.stream().map(movie -> (movie.getId() == id ? newMovie : movie)).collect(Collectors.toCollection(ArrayDeque::new));
-        return "";
+        return true;
     }
 
     /**
