@@ -13,8 +13,8 @@ public class CommandManager {
         commands.put("show", new Show(collectionManager));
         commands.put("add", new Add(collectionManager, channel));
         commands.put("update", new Update(collectionManager, channel));
-//        commands.put("remove_by_id", new RemoveById(collectionManager));
-//        commands.put("clear", new Clear(collectionManager));
+        commands.put("remove_by_id", new RemoveById(collectionManager, channel));
+        commands.put("clear", new Clear(collectionManager, channel));
 //        commands.put("head", new Head(collectionManager));
 //        commands.put("add_if_max", new AddIfMax(collectionManager));
 //        commands.put("remove_greater", new RemoveGreater(collectionManager));
