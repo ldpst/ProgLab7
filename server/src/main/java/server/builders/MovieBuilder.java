@@ -55,7 +55,7 @@ public class MovieBuilder extends Builder {
                             String res = request.getMessage();
 
                             if (res.isEmpty()) {
-                                channel.sendData(SerializationUtils.serialize(new Response("Название не должно быть пустым\n* Повторная попытка ввода\n> Введите название фильма:\n", ResponseType.ERROR)), clientAddress);
+                                channel.sendData(SerializationUtils.serialize(new Response(RED + "Название не должно быть пустым\n" + RESET + "* Повторная попытка ввода\n> Введите название фильма:\n", ResponseType.ERROR)), clientAddress);
                             } else {
                                 logger.debug("Название заполнено {}", res);
                                 return res;
@@ -94,13 +94,13 @@ public class MovieBuilder extends Builder {
                             try {
                                 count = Long.parseLong(res);
                                 if (count <= 0) {
-                                    channel.sendData(SerializationUtils.serialize(new Response("Количество оскаров должно быть больше нуля\n* Повторная попытка ввода\n> Введите количество оскаров:\n", ResponseType.ERROR)), clientAddress);
+                                    channel.sendData(SerializationUtils.serialize(new Response(RED + "Количество оскаров должно быть больше нуля\n" + RESET + "* Повторная попытка ввода\n> Введите количество оскаров:\n", ResponseType.ERROR)), clientAddress);
                                 } else {
                                     logger.debug("Кол-во оскаров заполнено {}", count);
                                     return count;
                                 }
                             } catch (NumberFormatException e) {
-                                channel.sendData(SerializationUtils.serialize(new Response("Количество оскаров должно быть целым числом\n* Повторная попытка ввода\n> Введите количество оскаров:\n", ResponseType.ERROR)), clientAddress);
+                                channel.sendData(SerializationUtils.serialize(new Response(RED + "Количество оскаров должно быть целым числом\n" + RESET + "* Повторная попытка ввода\n> Введите количество оскаров:\n", ResponseType.ERROR)), clientAddress);
                             }
 
                         }
@@ -141,7 +141,7 @@ public class MovieBuilder extends Builder {
                             } else if (res.equals("y") || res.equals("yes")) {
                                 return null;
                             } else {
-                                channel.sendData(SerializationUtils.serialize(new Response("Введённая строка не соответствует y или n\n* Повторная попытка ввода\n> Оператор == null? y/n ", ResponseType.ERROR)), clientAddress);
+                                channel.sendData(SerializationUtils.serialize(new Response(RED + "Введённая строка не соответствует y или n" + RESET + "\n* Повторная попытка ввода\n> Оператор == null? y/n ", ResponseType.ERROR)), clientAddress);
                             }
                         }
                     }

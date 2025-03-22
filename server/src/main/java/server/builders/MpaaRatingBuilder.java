@@ -55,7 +55,7 @@ public class MpaaRatingBuilder extends Builder {
                                 logger.debug("Мпаа рейтинг заполнен {}", newMpa);
                                 return newMpa;
                             } catch (IllegalArgumentException e) {
-                                channel.sendData(SerializationUtils.serialize(new Response("Введенный Мпаа рейтинг не является одним из предложенных\n* Повторная попытка ввода\n> Введите Мпаа Рейтинг " + Arrays.toString(MpaaRating.values()) + ":\n", ResponseType.ERROR)), clientAddress);
+                                channel.sendData(SerializationUtils.serialize(new Response(RED + "Введенный Мпаа рейтинг не является одним из предложенных" + RESET + "\n* Повторная попытка ввода\n> Введите Мпаа Рейтинг " + Arrays.toString(MpaaRating.values()) + ":\n", ResponseType.ERROR)), clientAddress);
                             }
                         }
                     }

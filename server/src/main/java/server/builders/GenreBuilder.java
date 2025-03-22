@@ -59,7 +59,7 @@ public class GenreBuilder extends Builder {
                                 logger.debug("Жанр заполнен {}", newMovieGenre);
                                 return newMovieGenre;
                             } catch (IllegalArgumentException e) {
-                                channel.sendData(SerializationUtils.serialize(new Response("Введенный жанр не является одним из предложенных\n* Повторная попытка ввода\n> Введите жанр " + Arrays.toString(MovieGenre.values()) + ":\n", ResponseType.ERROR)), clientAddress);
+                                channel.sendData(SerializationUtils.serialize(new Response(RED + "Введенный жанр не является одним из предложенных\n" + RESET + "* Повторная попытка ввода\n> Введите жанр " + Arrays.toString(MovieGenre.values()) + ":\n", ResponseType.ERROR)), clientAddress);
                             }
                         }
                     }

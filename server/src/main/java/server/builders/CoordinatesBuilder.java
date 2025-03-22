@@ -59,7 +59,7 @@ public class CoordinatesBuilder extends Builder {
                                 logger.debug("х заполнен");
                                 return x;
                             } catch (NumberFormatException e) {
-                                channel.sendData(SerializationUtils.serialize(new Response("Координата x должна быть целым или вещественным числом\n* Повторная попытка ввода\n> Введите координату x:\n", ResponseType.ERROR)), clientAddress);
+                                channel.sendData(SerializationUtils.serialize(new Response(RED + "Координата x должна быть целым или вещественным числом" + RESET + "\n* Повторная попытка ввода\n> Введите координату x:\n", ResponseType.ERROR)), clientAddress);
                             }
                         }
                     }
@@ -98,7 +98,7 @@ public class CoordinatesBuilder extends Builder {
                                 logger.debug("y заполнен");
                                 return y;
                             } catch (NumberFormatException e) {
-                                channel.sendData(SerializationUtils.serialize(new Response("Координата y должна быть целым числом\n* Повторная попытка ввода\n> Введите координату y:\n", ResponseType.ERROR)), clientAddress);
+                                channel.sendData(SerializationUtils.serialize(new Response(RED + "Координата y должна быть целым числом\n" + RESET + "* Повторная попытка ввода\n> Введите координату y:\n", ResponseType.ERROR)), clientAddress);
                             }
                         }
                     }

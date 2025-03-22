@@ -34,6 +34,6 @@ public class Add extends Command {
         Movie movie = new MovieBuilder(channel, request.getClientAddress(), logger).build();
         movie.setId(collectionManager.getAndIncreaseNextID());
         collectionManager.add(movie);
-        return new Response("Элемент успешно добавлен\n", ResponseType.PRINT_MESSAGE);
+        return new Response(GREEN + "Элемент успешно добавлен\n" + RESET, ResponseType.PRINT_MESSAGE);
     }
 }

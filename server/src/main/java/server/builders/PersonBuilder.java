@@ -59,7 +59,7 @@ public class PersonBuilder extends Builder {
                             String res = request.getMessage();
 
                             if (res.isEmpty()) {
-                                channel.sendData(SerializationUtils.serialize(new Response("Имя не должно быть пустым\n* Повторная попытка ввода\n> Введите имя человека:\n", ResponseType.ERROR)), clientAddress);
+                                channel.sendData(SerializationUtils.serialize(new Response(RED + "Имя не должно быть пустым\n" + RESET + "* Повторная попытка ввода\n> Введите имя человека:\n", ResponseType.ERROR)), clientAddress);
                             } else {
                                 logger.debug("Имя заполнено {}", res);
                                 return res;
@@ -108,7 +108,7 @@ public class PersonBuilder extends Builder {
     private Date parseDate(String res) throws IOException {
         String[] split = res.split(":");
         if (split.length != 3) {
-            channel.sendData(SerializationUtils.serialize(new Response("Введенные данные неверного формата\n* Повторная попытка ввода\n> Введите дату рождения человека (формата " + format + "):\n", ResponseType.ERROR)), clientAddress);
+            channel.sendData(SerializationUtils.serialize(new Response(RED + "Введенные данные неверного формата\n" + RESET + "* Повторная попытка ввода\n> Введите дату рождения человека (формата " + format + "):\n", ResponseType.ERROR)), clientAddress);
         } else {
             int day, month, year;
             try {
@@ -116,7 +116,7 @@ public class PersonBuilder extends Builder {
                 month = Integer.parseInt(split[1]);
                 year = Integer.parseInt(split[2]);
                 if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1) {
-                    channel.sendData(SerializationUtils.serialize(new Response("Введена невозможная дата\n* Повторная попытка ввода\n> Введите дату рождения человека (формата " + format + "):\n", ResponseType.ERROR)), clientAddress);
+                    channel.sendData(SerializationUtils.serialize(new Response(RED + "Введена невозможная дата\n" + RESET + "* Повторная попытка ввода\n> Введите дату рождения человека (формата " + format + "):\n", ResponseType.ERROR)), clientAddress);
                 } else {
                     DateFormat dateFormat = new SimpleDateFormat(format);
                     try {
@@ -124,12 +124,12 @@ public class PersonBuilder extends Builder {
                         logger.debug("День рождения заполнен {}", date);
                         return date;
                     } catch (ParseException e) {
-                        channel.sendData(SerializationUtils.serialize(new Response("Введенные данные неверного формата\n* Повторная попытка ввода\n> Введите дату рождения человека (формата " + format + "):\n", ResponseType.ERROR)), clientAddress);
+                        channel.sendData(SerializationUtils.serialize(new Response(RED + "Введенные данные неверного формата\n" + RESET + "* Повторная попытка ввода\n> Введите дату рождения человека (формата " + format + "):\n", ResponseType.ERROR)), clientAddress);
                     }
 
                 }
             } catch (NumberFormatException e) {
-                channel.sendData(SerializationUtils.serialize(new Response("В дате допустимо использование только цифр и символа \":\"\n* Повторная попытка ввода\n> Введите дату рождения человека (формата " + format + "):\n", ResponseType.ERROR)), clientAddress);
+                channel.sendData(SerializationUtils.serialize(new Response(RED + "В дате допустимо использование только цифр и символа \":\"\n" + RESET + "* Повторная попытка ввода\n> Введите дату рождения человека (формата " + format + "):\n", ResponseType.ERROR)), clientAddress);
             }
         }
         return null;
@@ -155,19 +155,19 @@ public class PersonBuilder extends Builder {
                             String res = request.getMessage();
 
                             if (res.isEmpty()) {
-                                channel.sendData(SerializationUtils.serialize(new Response("Вес не должен быть пустым\n* Повторная попытка ввода\n> Введите вес человека:\n", ResponseType.ERROR)), clientAddress);
+                                channel.sendData(SerializationUtils.serialize(new Response(RED + "Вес не должен быть пустым\n" + RESET + "* Повторная попытка ввода\n> Введите вес человека:\n", ResponseType.ERROR)), clientAddress);
                             } else {
                                 long weight;
                                 try {
                                     weight = Long.parseLong(res);
                                     if (weight <= 0) {
-                                        channel.sendData(SerializationUtils.serialize(new Response("Вес должен быть больше 0\n* Повторная попытка ввода\n> Введите вес человека:\n", ResponseType.ERROR)), clientAddress);
+                                        channel.sendData(SerializationUtils.serialize(new Response(RED + "Вес должен быть больше 0\n" + RESET + "* Повторная попытка ввода\n> Введите вес человека:\n", ResponseType.ERROR)), clientAddress);
                                     } else {
                                         logger.debug("Вес заполнен {}", weight);
                                         return weight;
                                     }
                                 } catch (NumberFormatException e) {
-                                    channel.sendData(SerializationUtils.serialize(new Response("Вес должен быть целым числом\n* Повторная попытка ввода\n> Введите вес человека:\n", ResponseType.ERROR)), clientAddress);
+                                    channel.sendData(SerializationUtils.serialize(new Response(RED + "Вес должен быть целым числом\n" + RESET + "* Повторная попытка ввода\n> Введите вес человека:\n", ResponseType.ERROR)), clientAddress);
                                 }
                             }
                         }
@@ -197,11 +197,11 @@ public class PersonBuilder extends Builder {
                             String res = request.getMessage();
 
                             if (res.isEmpty()) {
-                                channel.sendData(SerializationUtils.serialize(new Response("Паспорт айди не может быть пустым\n* Повторная попытка ввода\n> Введите паспорт айди:\n", ResponseType.ERROR)), clientAddress);
+                                channel.sendData(SerializationUtils.serialize(new Response(RED + "Паспорт айди не может быть пустым\n" + RESET + "* Повторная попытка ввода\n> Введите паспорт айди:\n", ResponseType.ERROR)), clientAddress);
                             } else if (!res.matches("\\d+")) {
-                                channel.sendData(SerializationUtils.serialize(new Response("Паспорт айди должен состоять только из цифр\n* Повторная попытка ввода\n> Введите паспорт айди:\n", ResponseType.ERROR)), clientAddress);
+                                channel.sendData(SerializationUtils.serialize(new Response(RED + "Паспорт айди должен состоять только из цифр\n" + RESET + "* Повторная попытка ввода\n> Введите паспорт айди:\n", ResponseType.ERROR)), clientAddress);
                             } else if (res.length() > 25) {
-                                channel.sendData(SerializationUtils.serialize(new Response("Паспорт айди не должен быть больше 25 символов\n* Повторная попытка ввода\n> Введите паспорт айди:\n", ResponseType.ERROR)), clientAddress);
+                                channel.sendData(SerializationUtils.serialize(new Response(RED + "Паспорт айди не должен быть больше 25 символов\n" + RESET + "* Повторная попытка ввода\n> Введите паспорт айди:\n", ResponseType.ERROR)), clientAddress);
                             } else {
                                 logger.debug("Айди паспорта введен {}", res);
                                 return res;
