@@ -1,13 +1,17 @@
-package client.builders;
+package server.builders;
 
-import client.managers.ScannerManager;
-import client.managers.StreamManager;
-import org.apache.logging.log4j.LogManager;
+import org.apache.commons.lang3.SerializationUtils;
 import org.apache.logging.log4j.Logger;
+import server.requests.Request;
 import server.server.UDPDatagramChannel;
+import server.utils.Pair;
 
+import java.io.IOException;
 import java.net.SocketAddress;
-import java.nio.channels.DatagramChannel;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.util.Iterator;
+import java.util.function.Function;
 
 public abstract class Builder {
     protected final UDPDatagramChannel channel;
@@ -26,5 +30,5 @@ public abstract class Builder {
      *
      * @return Заполненный объект
      */
-    abstract public Object build();
+    abstract public Object build() throws IOException;
 }

@@ -15,11 +15,7 @@ import server.utils.RunMode;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.net.DatagramSocket;
-import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.nio.ByteBuffer;
-import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.util.HashMap;
@@ -36,7 +32,7 @@ public class RunManager {
 
     private RunMode runMode = RunMode.RUN;
 
-    private final CommandManager commandManager;
+    private CommandManager commandManager;
     private final CollectionManager collectionManager = new CollectionManager();
 
     private final PrintStream stream = System.out;
@@ -47,8 +43,6 @@ public class RunManager {
     public RunManager() {
         new CSVManager(stream, collectionManager).loadFromCSV();
 
-        this.commandManager = new CommandManager(collectionManager);
-
         commands.put("exit", new Exit(this, stream));
         commands.put("save", new Save(collectionManager, stream));
         commands.put("help", new Help(stream, this));
@@ -57,13 +51,12 @@ public class RunManager {
 
     public void run() throws IOException {
         logger.info("Запуск сервера...");
-        try (Selector selector = Selector.open();
-             UDPDatagramChannel channel = (UDPDatagramChannel) DatagramChannel.open()) {
+        try (Selector selector = Selector.open()) {
+            UDPDatagramChannel channel = new UDPDatagramChannel();
 
-            DatagramSocket socket = channel.socket();
-            socket.bind(new InetSocketAddress(ConfigManager.getAddress(), ConfigManager.getPort()));
-            channel.configureBlocking(false);
-            channel.register(selector, SelectionKey.OP_READ);
+            channel.getChannel().register(selector, SelectionKey.OP_READ);
+
+            commandManager = new CommandManager(collectionManager, channel);
 
 
             logger.info("Сервер начал слушать на адресе {} и порту {} и обрабатывать запросы", ConfigManager.getAddress(), ConfigManager.getPort());
@@ -114,24 +107,30 @@ public class RunManager {
     private void handleClientRequest(UDPDatagramChannel channel) throws IOException {
         Pair<byte[], SocketAddress> data = channel.getData();
         Request request;
-            try {
-                request = SerializationUtils.deserialize(data.first);
-            } catch (SerializationException e) {
-                logger.warn("SerializationException при сериализации запроса");
-                throw e;
-            }
-            Response response = executeCommandFromClient(request);
-            channel.sendData(SerializationUtils.serialize(response), data.second);
+        try {
+            request = SerializationUtils.deserialize(data.first);
+        } catch (SerializationException e) {
+            logger.warn("SerializationException при сериализации запроса");
+            throw e;
         }
+        Response response = executeCommandFromClient(request);
+        channel.sendData(SerializationUtils.serialize(response), data.second);
+    }
 
     private Response executeCommandFromClient(Request request) {
+        if (request.getMessage().isEmpty()) {
+            return new Response("", ResponseType.IGNORE);
+        }
         String[] commandLine = request.getMessage().split(" ");
         try {
-            return commandManager.getCommands().get(commandLine[0]).execute(commandLine);
+            return commandManager.getCommands().get(commandLine[0]).execute(request);
         } catch (NullPointerException e) {
             logger.debug("Команда не распознана");
             String message = RED + "Команда не распознана\n" + RESET;
             return new Response(message, ResponseType.ERROR, null);
+//            throw e;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

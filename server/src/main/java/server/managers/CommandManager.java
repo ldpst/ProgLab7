@@ -1,6 +1,7 @@
 package server.managers;
 
 import server.commands.*;
+import server.server.UDPDatagramChannel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,9 +9,9 @@ import java.util.Map;
 public class CommandManager {
     private final Map<String, Command> commands = new HashMap<>();
 
-    public CommandManager(CollectionManager collectionManager) {
+    public CommandManager(CollectionManager collectionManager, UDPDatagramChannel channel) {
         commands.put("show", new Show(collectionManager));
-//        commands.put("add", new Add(collectionManager));
+        commands.put("add", new Add(collectionManager, channel));
 //        commands.put("update", new Update(collectionManager));
 //        commands.put("remove_by_id", new RemoveById(collectionManager));
 //        commands.put("clear", new Clear(collectionManager));

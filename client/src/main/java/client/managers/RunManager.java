@@ -29,14 +29,14 @@ public class RunManager {
         while (runMode == RunMode.RUN) {
             stream.print("$ ");
             String nextCommand = scanner.nextLine().trim();
-            if (nextCommand.isEmpty()) {
-                continue;
-            }
             try {
                 Response response = client.makeRequest(nextCommand);
                 switch (response.getType()) {
                     case PRINT_MESSAGE, ERROR -> stream.print(response.getMessage());
                     case COLLECTION -> stream.print(ResponseManager.collectionToString(response.getCollection()));
+                    case NEXT_STEP -> {
+                        stream.print(response.getMessage());
+                    }
                 }
             } catch (ServerIsUnavailableException e) {
                 stream.printErr("Сервер в данный момент недоступен. Программа завершена\n");

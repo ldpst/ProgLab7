@@ -4,6 +4,7 @@ public enum ResponseType {
     PRINT_MESSAGE,
     ERROR,
     COLLECTION,
-    NEXT_STEP
+    NEXT_STEP,
+    IGNORE
 
 }

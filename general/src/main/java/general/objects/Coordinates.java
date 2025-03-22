@@ -17,9 +17,9 @@ public record Coordinates(Float x, int y) implements Validatable, Comparable<Coo
     public Coordinates(Float x, int y) {
         this.x = x;
         this.y = y;
-        if (isValid()) {
-            throw new ValidationError("Coordinates");
-        }
+//        if (isValid()) {
+//            throw new ValidationError("Coordinates");
+//        }
     }
 
     /**

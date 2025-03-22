@@ -31,4 +31,8 @@ public class Response implements Serializable {
     public Deque<Movie> getCollection() {
         return collection;
     }
+
+    public String toString() {
+        return "Response{" + "message=\"" + message + '\"' + ", type=" + type + ", collection=" + collection + '}';
+    }
 }
