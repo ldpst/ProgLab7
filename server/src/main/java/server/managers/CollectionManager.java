@@ -55,10 +55,7 @@ public class CollectionManager {
 
     public boolean checkIfIdExists(int id) {
         Deque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id).collect(Collectors.toCollection(ArrayDeque::new));
-        if (checker.isEmpty()) {
-            return false;
-        }
-        return true;
+        return !checker.isEmpty();
     }
 
     /**
@@ -99,9 +96,9 @@ public class CollectionManager {
         Deque<Movie> checker = movies.stream().filter(movie -> movie.compareTo(newMovie) > 0).collect(Collectors.toCollection(ArrayDeque::new));
         if (checker.isEmpty()) {
             add(newMovie);
-            return "";
+            return GREEN + "Элемент успешно добавлен\n" + RESET;
         }
-        return "Элемент не был добавлен";
+        return "Элемент не был добавлен\n";
     }
 
     /**
