@@ -70,10 +70,10 @@ public class CollectionManager {
     public String removeById(int id) {
         Deque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id).collect(Collectors.toCollection(ArrayDeque::new));
         if (checker.isEmpty()) {
-            return "Элемента с данным id не существует";
+            return RED + "Элемента с данным id не существует\n" + RESET;
         }
         movies = movies.stream().filter(movie -> movie.getId() != id).collect(Collectors.toCollection(ArrayDeque::new));
-        return "";
+        return GREEN + "Элемент с id " + id + " успешно удален\n" + RESET;
     }
 
     /**
