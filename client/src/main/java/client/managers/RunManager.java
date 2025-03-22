@@ -1,6 +1,7 @@
 package client.managers;
 
 import client.client.UDPClient;
+import client.commands.ExecuteScript;
 import client.exceptions.ServerIsUnavailableException;
 import client.utils.InputFormat;
 import client.utils.RunMode;
@@ -29,6 +30,10 @@ public class RunManager {
         while (runMode == RunMode.RUN) {
             stream.print("$ ");
             String nextCommand = scanner.nextLine().trim();
+            if (nextCommand.startsWith("execute_script")) {
+                new ExecuteScript(client, stream).execute(nextCommand.split(" "));
+                continue;
+            }
             try {
                 Response response = client.makeRequest(nextCommand);
                 switch (response.getType()) {
@@ -36,6 +41,10 @@ public class RunManager {
                     case COLLECTION -> stream.print(ResponseManager.collectionToString(response.getCollection()));
                     case NEXT_STEP -> {
                         stream.print(response.getMessage());
+                    }
+                    case EXIT -> {
+                        stream.print(response.getMessage());
+                        runMode = RunMode.EXIT;
                     }
                 }
             } catch (ServerIsUnavailableException e) {

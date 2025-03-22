@@ -5,6 +5,7 @@ public enum ResponseType {
     ERROR,
     COLLECTION,
     NEXT_STEP,
-    IGNORE
+    IGNORE,
+    EXIT
 
 }
