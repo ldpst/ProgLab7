@@ -19,7 +19,7 @@ public class CommandManager {
         commands.put("exit", new Exit());
         commands.put("head", new Head(collectionManager));
         commands.put("add_if_max", new AddIfMax(collectionManager, channel));
-//        commands.put("remove_greater", new RemoveGreater(collectionManager));
+        commands.put("remove_greater", new RemoveGreater(collectionManager, channel));
 //        commands.put("max_by_operator", new MaxByOperator(collectionManager));
 //        commands.put("count_by_operator", new CountByOperator(collectionManager));
 //        commands.put("count_less_than_genre", new CountLessThanGenre(collectionManager));
