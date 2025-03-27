@@ -1,7 +1,9 @@
 package server.builders;
 
 import org.apache.logging.log4j.Logger;
+import server.managers.ConfigManager;
 import server.server.UDPDatagramChannel;
+import server.utils.TextColors;
 
 import java.io.IOException;
 import java.net.SocketAddress;
@@ -10,9 +12,9 @@ public abstract class Builder {
     protected final UDPDatagramChannel channel;
     protected final SocketAddress clientAddress;
 
-    protected static final String RED = "\u001B[31m";
-    protected static final String RESET = "\u001B[0m";
-    protected static final String GREEN = "\u001B[32m";
+    protected static final String RED = ConfigManager.getColor(TextColors.RED);
+    protected static final String RESET = ConfigManager.getColor(TextColors.RESET);
+    protected static final String GREEN = ConfigManager.getColor(TextColors.GREEN);
 
     protected final Logger logger;
 

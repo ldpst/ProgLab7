@@ -1,8 +1,8 @@
 package server.builders;
 
-import general.objects.*;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.logging.log4j.Logger;
+import server.object.*;
 import server.requests.Request;
 import server.response.Response;
 import server.response.ResponseType;

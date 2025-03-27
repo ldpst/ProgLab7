@@ -1,6 +1,6 @@
 package server.builders;
 
-import general.objects.Coordinates;
+import server.object.Coordinates;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.logging.log4j.Logger;
 import server.requests.Request;

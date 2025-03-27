@@ -1,6 +1,6 @@
 package server.commands.server;
 
-import general.objects.Movie;
+import server.object.Movie;
 import server.managers.CollectionManager;
 import server.managers.ConfigManager;
 

@@ -1,7 +1,6 @@
 package server.commands;
 
-import general.objects.Movie;
-import org.apache.commons.lang3.SerializationUtils;
+import server.object.Movie;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import server.builders.MovieBuilder;

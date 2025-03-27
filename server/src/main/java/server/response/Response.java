@@ -1,6 +1,6 @@
 package server.response;
 
-import general.objects.Movie;
+import server.object.Movie;
 
 import java.io.Serializable;
 import java.util.Deque;

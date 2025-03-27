@@ -1,14 +1,16 @@
 package client.managers;
 
 import client.client.UDPClient;
-import general.objects.Movie;
+import server.object.Movie;
+import server.managers.ConfigManager;
+import server.utils.TextColors;
 
 import java.util.Deque;
 
 public class ResponseManager {
-    private static final String RED = "\u001B[31m";
-    private static final String RESET = "\u001B[0m";
-    private static final String GREEN = "\u001B[32m";
+    protected static final String RED = ConfigManager.getColor(TextColors.RED);
+    protected static final String RESET = ConfigManager.getColor(TextColors.RESET);
+    protected static final String GREEN = ConfigManager.getColor(TextColors.GREEN);
 
     private final UDPClient client;
 

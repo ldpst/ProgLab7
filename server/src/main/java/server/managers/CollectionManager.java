@@ -1,8 +1,9 @@
 package server.managers;
 
-import general.objects.Movie;
-import general.objects.MovieGenre;
-import general.objects.Person;
+import server.object.Movie;
+import server.object.MovieGenre;
+import server.object.Person;
+import server.utils.TextColors;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -17,9 +18,9 @@ public class CollectionManager {
     private Deque<Movie> movies = new ArrayDeque<>();
     private int nextId = 1;
 
-    protected static final String RED = "\u001B[31m";
-    protected static final String RESET = "\u001B[0m";
-    protected static final String GREEN = "\u001B[32m";
+    protected static final String RED = ConfigManager.getColor(TextColors.RED);
+    protected static final String RESET = ConfigManager.getColor(TextColors.RESET);
+    protected static final String GREEN = ConfigManager.getColor(TextColors.GREEN);
 
     public CollectionManager() {
 

@@ -1,7 +1,6 @@
 package server.builders;
 
-import general.objects.MovieGenre;
-import general.objects.MpaaRating;
+import server.object.MpaaRating;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.logging.log4j.Logger;
 import server.requests.Request;

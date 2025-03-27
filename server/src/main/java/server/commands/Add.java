@@ -1,12 +1,8 @@
 package server.commands;
 
-import general.objects.Coordinates;
-import general.objects.Movie;
-import general.objects.MovieGenre;
+import server.object.Movie;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import server.builders.CoordinatesBuilder;
-import server.builders.GenreBuilder;
 import server.builders.MovieBuilder;
 import server.managers.CollectionManager;
 import server.requests.Request;

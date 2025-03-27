@@ -1,4 +1,4 @@
-package general.utils;
+package server.utils;
 
 /**
  * Интерфейс для проверки валидности полей класса

@@ -1,16 +1,18 @@
-package general.objects;
+package server.object;
 
 import java.io.Serializable;
 
 /**
- * Класс жанра фильма
+ * Класс Мпа рейтинга
  *
  * @author ldpst
  */
-public enum MovieGenre implements Serializable {
-    DRAMA,
-    MUSICAL,
-    HORROR;
+public enum MpaaRating implements Serializable {
+    G,
+    PG,
+    PG_13,
+    R,
+    NC_17;
 
     /**
      * Метод, переводящий строку в верхний регистр и проверяющий на принадлежность к данному enum'у
@@ -18,10 +20,10 @@ public enum MovieGenre implements Serializable {
      * @param s строка
      * @return результат проверки
      */
-    public static MovieGenre checkOf(String s) {
-        MovieGenre genre;
+    public static MpaaRating checkOf(String s) {
+        MpaaRating genre;
         try {
-            genre = MovieGenre.valueOf(s.toUpperCase());
+            genre = MpaaRating.valueOf(s.toUpperCase());
         } catch (IllegalArgumentException e) {
             genre = null;
         }

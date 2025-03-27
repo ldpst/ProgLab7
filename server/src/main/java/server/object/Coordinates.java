@@ -1,7 +1,6 @@
-package general.objects;
+package server.object;
 
-import general.utils.Validatable;
-import general.utils.ValidationError;
+import server.utils.Validatable;
 
 import java.io.Serializable;
 import java.util.Objects;

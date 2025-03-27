@@ -1,6 +1,6 @@
 package server.managers;
 
-import general.utils.ValidationError;
+import server.utils.ValidationError;
 import org.apache.commons.lang3.SerializationException;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.logging.log4j.LogManager;
@@ -12,6 +12,7 @@ import server.response.ResponseType;
 import server.server.UDPDatagramChannel;
 import server.utils.Pair;
 import server.utils.RunMode;
+import server.utils.TextColors;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -24,9 +25,9 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class RunManager {
-    private static final String RED = "\u001B[31m";
-    private static final String RESET = "\u001B[0m";
-    private static final String GREEN = "\u001B[32m";
+    protected static final String RED = ConfigManager.getColor(TextColors.RED);
+    protected static final String RESET = ConfigManager.getColor(TextColors.RESET);
+    protected static final String GREEN = ConfigManager.getColor(TextColors.GREEN);
 
     private final Logger logger = LogManager.getLogger(RunManager.class);
 
