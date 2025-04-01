@@ -21,14 +21,16 @@ import java.io.InputStreamReader;
 public class ExecuteScript extends Command {
     private final UDPClient client;
     private final Logger logger = LogManager.getLogger(this.getClass());
+    private final StreamManager stream;
 
     public ExecuteScript(UDPClient client, StreamManager stream) {
-        super("execute_script file_name", "считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме", stream);
+        super("execute_script file_name", "считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме");
         this.client = client;
+        this.stream = stream;
     }
 
     @Override
-    public void run(String[] args) {
+    public void execute(String[] args) {
         logger.info("Команда выполняется...");
         logger.debug("Поиск пути");
         if (args.length != 2) {

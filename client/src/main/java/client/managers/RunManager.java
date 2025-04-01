@@ -1,10 +1,11 @@
 package client.managers;
 
 import client.client.UDPClient;
+import client.commands.ExecuteScript;
 import client.exceptions.ServerIsUnavailableException;
-import client.exceptions.ValidationError;
 import client.utils.InputFormat;
 import client.utils.RunMode;
+import server.response.Response;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,35 +16,42 @@ public class RunManager {
     private final StreamManager stream;
     private final ScannerManager scanner;
 
-    private final CommandManager commandManager;
+    private final UDPClient client;
 
     public static final List<String> usedScripts = new ArrayList<>();
 
     public RunManager(UDPClient client, ScannerManager scanner, InputFormat inputFormat) throws IOException {
+        this.client = client;
         this.scanner = scanner;
         this.stream = new StreamManager(System.out, inputFormat);
-        commandManager = new CommandManager(client, stream, scanner, this); // this для возможности выхода в exit
     }
 
     public void run() {
         while (runMode == RunMode.RUN) {
             stream.print("$ ");
             String nextCommand = scanner.nextLine().trim();
-            if (nextCommand.isEmpty()) {
+            if (nextCommand.startsWith("execute_script")) {
+                new ExecuteScript(client, stream).execute(nextCommand.split(" "));
                 continue;
             }
-            String[] splitCommand = nextCommand.split(" ");
             try {
-                commandManager.getCommands().get(splitCommand[0]).run(splitCommand);
-            } catch (ValidationError e) {
-                throw e;
-            } catch (NullPointerException e) {
-                stream.printErr("Команда не распознана\n");
+                Response response = client.makeRequest(nextCommand);
+                switch (response.getType()) {
+                    case PRINT_MESSAGE, ERROR -> stream.print(response.getMessage());
+                    case COLLECTION -> stream.print(ResponseManager.collectionToString(response.getCollection()));
+                    case NEXT_STEP -> {
+                        stream.print(response.getMessage());
+                    }
+                    case EXIT -> {
+                        stream.print(response.getMessage());
+                        runMode = RunMode.EXIT;
+                    }
+                }
             } catch (ServerIsUnavailableException e) {
                 stream.printErr("Сервер в данный момент недоступен. Программа завершена\n");
                 System.exit(1);
-            } catch (Exception e) {
-                stream.printErr("Неопознанная ошибка\n");
+            } catch (IOException e) {
+                stream.printErr("Вызвана ошибка ввода/вывода");
                 throw new RuntimeException(e);
             }
         }

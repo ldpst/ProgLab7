@@ -2,6 +2,7 @@ package server.managers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import server.utils.TextColors;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -101,5 +102,14 @@ public class ConfigManager {
             logger.warn("Не удалось получить имя переменной окружения. Значение пустое или отсутствует.");
         }
         return envName;
+    }
+
+    public static String getColor(TextColors textColor) {
+        String colorName = textColor.getColor();
+        String color = properties.getProperty("color." + colorName);
+        if (color == null || color.isBlank()) {
+            logger.warn("Не удалось получить цвет {}. Значение пустое или отсутствует.", colorName);
+        }
+        return color;
     }
 }

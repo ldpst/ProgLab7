@@ -1,25 +1,35 @@
 package server.commands;
 
-import general.objects.Movie;
+import server.object.Movie;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import server.builders.MovieBuilder;
 import server.managers.CollectionManager;
-import server.requests.AddRequest;
 import server.requests.Request;
-import server.responds.AddRespond;
-import server.responds.Respond;
+import server.response.Response;
+import server.response.ResponseType;
+import server.server.UDPDatagramChannel;
+
+import java.io.IOException;
 
 public class Add extends Command {
-    private final CollectionManager collectionManager;
+    private final Logger logger = LogManager.getLogger(Add.class);
 
-    public Add(CollectionManager collectionManager) {
+    private final CollectionManager collectionManager;
+    private final UDPDatagramChannel channel;
+
+
+    public Add(CollectionManager collectionManager, UDPDatagramChannel channel) {
         super("add", "добавить новый элемент в коллекцию");
         this.collectionManager = collectionManager;
+        this.channel = channel;
     }
 
     @Override
-    public Respond execute(Request request) {
-        Movie movie = ((AddRequest) request).getMovie();
+    public Response execute(Request request) throws IOException {
+        Movie movie = new MovieBuilder(channel, request.getClientAddress(), logger).build();
         movie.setId(collectionManager.getAndIncreaseNextID());
         collectionManager.add(movie);
-        return new AddRespond();
+        return new Response(GREEN + "Элемент успешно добавлен\n" + RESET, ResponseType.PRINT_MESSAGE);
     }
 }

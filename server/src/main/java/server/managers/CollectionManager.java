@@ -1,8 +1,9 @@
 package server.managers;
 
-import general.objects.Movie;
-import general.objects.MovieGenre;
-import general.objects.Person;
+import server.object.Movie;
+import server.object.MovieGenre;
+import server.object.Person;
+import server.utils.TextColors;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -16,6 +17,10 @@ import java.util.stream.Collectors;
 public class CollectionManager {
     private Deque<Movie> movies = new ArrayDeque<>();
     private int nextId = 1;
+
+    protected static final String RED = ConfigManager.getColor(TextColors.RED);
+    protected static final String RESET = ConfigManager.getColor(TextColors.RESET);
+    protected static final String GREEN = ConfigManager.getColor(TextColors.GREEN);
 
     public CollectionManager() {
 
@@ -44,15 +49,14 @@ public class CollectionManager {
      *
      * @param id       айди
      * @param newMovie новое значение
-     * @return Возможная ошибка
      */
-    public String updateById(int id, Movie newMovie) {
-        Deque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id).collect(Collectors.toCollection(ArrayDeque::new));
-        if (checker.isEmpty()) {
-            return "Элемента с данным id не существует";
-        }
+    public void updateById(int id, Movie newMovie) {
         movies = movies.stream().map(movie -> (movie.getId() == id ? newMovie : movie)).collect(Collectors.toCollection(ArrayDeque::new));
-        return "";
+    }
+
+    public boolean checkIfIdExists(int id) {
+        Deque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id).collect(Collectors.toCollection(ArrayDeque::new));
+        return !checker.isEmpty();
     }
 
     /**
@@ -64,10 +68,10 @@ public class CollectionManager {
     public String removeById(int id) {
         Deque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id).collect(Collectors.toCollection(ArrayDeque::new));
         if (checker.isEmpty()) {
-            return "Элемента с данным id не существует";
+            return RED + "Элемента с данным id не существует\n" + RESET;
         }
         movies = movies.stream().filter(movie -> movie.getId() != id).collect(Collectors.toCollection(ArrayDeque::new));
-        return "";
+        return GREEN + "Элемент с id " + id + " успешно удален\n" + RESET;
     }
 
     /**
@@ -93,9 +97,9 @@ public class CollectionManager {
         Deque<Movie> checker = movies.stream().filter(movie -> movie.compareTo(newMovie) > 0).collect(Collectors.toCollection(ArrayDeque::new));
         if (checker.isEmpty()) {
             add(newMovie);
-            return "";
+            return GREEN + "Элемент успешно добавлен\n" + RESET;
         }
-        return "Элемент не был добавлен";
+        return "Элемент не был добавлен\n";
     }
 
     /**

@@ -1,6 +1,8 @@
 package client.managers;
 
 import client.utils.InputFormat;
+import server.managers.ConfigManager;
+import server.utils.TextColors;
 
 import java.io.PrintStream;
 
@@ -14,9 +16,9 @@ public class StreamManager {
 
     private final InputFormat inputFormat;
 
-    private static final String RED = "\u001B[31m";
-    private static final String RESET = "\u001B[0m";
-    private static final String GREEN = "\u001B[32m";
+    protected static final String RED = ConfigManager.getColor(TextColors.RED);
+    protected static final String RESET = ConfigManager.getColor(TextColors.RESET);
+    protected static final String GREEN = ConfigManager.getColor(TextColors.GREEN);
 
     public StreamManager(PrintStream stream, InputFormat inputFormat) {
         this.stream = stream;

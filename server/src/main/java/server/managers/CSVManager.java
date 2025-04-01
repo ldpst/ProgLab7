@@ -1,6 +1,6 @@
 package server.managers;
 
-import general.objects.*;
+import server.object.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

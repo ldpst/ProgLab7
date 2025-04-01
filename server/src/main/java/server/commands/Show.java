@@ -2,8 +2,8 @@ package server.commands;
 
 import server.managers.CollectionManager;
 import server.requests.Request;
-import server.responds.Respond;
-import server.responds.ShowRespond;
+import server.response.Response;
+import server.response.ResponseType;
 
 public class Show extends Command {
     private final CollectionManager collectionManager;
@@ -14,7 +14,7 @@ public class Show extends Command {
     }
 
     @Override
-    public Respond execute(Request request) {
-        return new ShowRespond(collectionManager.getMovies());
+    public Response execute(Request request) {
+        return new Response("", ResponseType.COLLECTION, collectionManager.getMovies());
     }
 }

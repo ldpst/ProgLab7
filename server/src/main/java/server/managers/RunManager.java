@@ -1,22 +1,22 @@
 package server.managers;
 
-import general.utils.ValidationError;
+import server.utils.ValidationError;
 import org.apache.commons.lang3.SerializationException;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import server.commands.server.*;
 import server.requests.Request;
-import server.responds.Respond;
+import server.response.Response;
+import server.response.ResponseType;
+import server.server.UDPDatagramChannel;
+import server.utils.Pair;
 import server.utils.RunMode;
+import server.utils.TextColors;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.net.DatagramSocket;
-import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.nio.ByteBuffer;
-import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.util.HashMap;
@@ -25,11 +25,15 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class RunManager {
+    protected static final String RED = ConfigManager.getColor(TextColors.RED);
+    protected static final String RESET = ConfigManager.getColor(TextColors.RESET);
+    protected static final String GREEN = ConfigManager.getColor(TextColors.GREEN);
+
     private final Logger logger = LogManager.getLogger(RunManager.class);
 
     private RunMode runMode = RunMode.RUN;
 
-    private CommandRunManager commandRunManager;
+    private CommandManager commandManager;
     private final CollectionManager collectionManager = new CollectionManager();
 
     private final PrintStream stream = System.out;
@@ -48,16 +52,14 @@ public class RunManager {
 
     public void run() throws IOException {
         logger.info("Запуск сервера...");
-        try (Selector selector = Selector.open();
-             DatagramChannel channel = DatagramChannel.open()) {
+        try (Selector selector = Selector.open()) {
+            UDPDatagramChannel channel = new UDPDatagramChannel();
 
-            DatagramSocket socket = channel.socket();
-            socket.bind(new InetSocketAddress(ConfigManager.getAddress(), ConfigManager.getPort()));
-            channel.configureBlocking(false);
-            channel.register(selector, SelectionKey.OP_READ);
+            channel.getChannel().register(selector, SelectionKey.OP_READ);
 
-            CommandManager commandManager = new CommandManager(collectionManager);
-            commandRunManager = new CommandRunManager(commandManager);
+            commandManager = new CommandManager(collectionManager, channel);
+
+
             logger.info("Сервер начал слушать на адресе {} и порту {} и обрабатывать запросы", ConfigManager.getAddress(), ConfigManager.getPort());
 
             stream.print("$ ");
@@ -76,13 +78,13 @@ public class RunManager {
                     }
                 }
                 if (System.in.available() > 0) {
-                    executeCommand();
+                    executeCommandFromServer();
                 }
             }
         }
     }
 
-    private void executeCommand() {
+    private void executeCommandFromServer() {
         String nextCommand = scanner.nextLine().trim();
         if (nextCommand.isEmpty()) {
             return;
@@ -103,30 +105,33 @@ public class RunManager {
         }
     }
 
-    private void handleClientRequest(DatagramChannel channel) throws IOException {
-        logger.debug("Сервер ожидает пакет...");
-        ByteBuffer buffer = ByteBuffer.allocate(ConfigManager.getPacketSize());
-        SocketAddress clientAddress = channel.receive(buffer);
-        logger.debug("Клиент с адресом {} подключился", clientAddress);
+    private void handleClientRequest(UDPDatagramChannel channel) throws IOException {
+        Pair<byte[], SocketAddress> data = channel.getData();
+        Request request;
+        try {
+            request = SerializationUtils.deserialize(data.first);
+        } catch (SerializationException e) {
+            logger.warn("SerializationException при сериализации запроса");
+            throw e;
+        }
+        Response response = executeCommandFromClient(request);
+        channel.sendData(SerializationUtils.serialize(response), data.second);
+    }
 
-        if (clientAddress != null) {
-            buffer.flip();
-            byte[] data = new byte[buffer.remaining()];
-            buffer.get(data);
-            logger.debug("Сервер получил пакет: {} ", data);
-            Request request;
-            try {
-                request = SerializationUtils.deserialize(data);
-            } catch (SerializationException e) {
-                logger.warn("SerializationException при сериализации запроса");
-                throw e;
-            }
-            Respond respond = commandRunManager.runCommand(request);
-            byte[] data1 = SerializationUtils.serialize(respond);
-            ByteBuffer buffer1 = ByteBuffer.wrap(data1);
-            logger.debug("Сервер отправляет ответ...");
-            channel.send(buffer1, clientAddress);
-            logger.debug("Сервер отправил пакет: {}", data1);
+    private Response executeCommandFromClient(Request request) {
+        if (request.getMessage().isEmpty()) {
+            return new Response("", ResponseType.IGNORE);
+        }
+        String[] commandLine = request.getMessage().split(" ");
+        try {
+            return commandManager.getCommands().get(commandLine[0]).execute(request);
+        } catch (NullPointerException e) {
+            logger.debug("Команда не распознана");
+            String message = RED + "Команда не распознана\n" + RESET;
+            return new Response(message, ResponseType.ERROR, null);
+//            throw e;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

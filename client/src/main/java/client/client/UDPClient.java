@@ -6,12 +6,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import server.managers.ConfigManager;
 import server.requests.Request;
+import server.requests.RequestType;
+import server.response.Response;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetSocketAddress;
-import java.net.SocketTimeoutException;
+import java.net.*;
 
 public class UDPClient {
     private final int PACKET_SIZE = ConfigManager.getPacketSize();
@@ -27,23 +26,23 @@ public class UDPClient {
         logger.info("Клиент запущен");
     }
 
-    public byte[] makeRequest(Request request) throws ServerIsUnavailableException, IOException {
+    public Response makeRequest(String request) throws ServerIsUnavailableException, IOException {
         int attempt = 0;
         while (attempt < ConfigManager.getAttemptMax()) {
             attempt++;
             try {
                 logger.debug("Отправка запроса на сервер...");
-                byte[] data = SerializationUtils.serialize(request);
+                byte[] data = SerializationUtils.serialize(new Request(request, new InetSocketAddress(InetAddress.getLocalHost().getHostAddress(), client.getLocalPort())));
                 DatagramPacket dp = new DatagramPacket(data, data.length, new InetSocketAddress(ConfigManager.getAddress(), ConfigManager.getPort()));
                 client.send(dp);
-                logger.debug("Запрос отправлен: {}", data);
+                logger.debug("Запрос отправлен: {}", SerializationUtils.deserialize(data).toString());
 
                 byte[] data1 = new byte[PACKET_SIZE];
                 DatagramPacket dp1 = new DatagramPacket(data1, data1.length);
                 logger.debug("Ожидание ответа от сервера...");
                 client.receive(dp1);
-                logger.debug("Ответ получен: {}", data1);
-                return data1;
+                logger.debug("Ответ получен: {}", SerializationUtils.deserialize(data1).toString());
+                return SerializationUtils.deserialize(data1);
             } catch (SocketTimeoutException e) {
                 logger.warn("Попытка {}: Таймаут ожидания ответа от сервера.", attempt);
             } catch (IOException e) {
