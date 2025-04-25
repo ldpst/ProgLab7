@@ -32,7 +32,7 @@ public class Save extends Command {
         ProcessBuilder processBuilder = new ProcessBuilder();
         String filePath = processBuilder.environment().get(ConfigManager.getEnvName());
         if (filePath == null) {
-            stream.print("Переменная окружения с названием файла Lab5FileName пуста\n");
+            stream.print("Переменная окружения с названием файла " + ConfigManager.getEnvName() + " пуста\n");
             return;
         }
         try (FileOutputStream fos = new FileOutputStream(filePath)) {
