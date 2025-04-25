@@ -137,7 +137,6 @@ public class RunManager {
             logger.debug("Команда не распознана");
             String message = RED + "Команда не распознана\n" + RESET;
             return new Response(message, ResponseType.ERROR, null);
-//            throw e;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
