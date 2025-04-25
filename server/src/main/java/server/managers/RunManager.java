@@ -1,6 +1,5 @@
 package server.managers;
 
-import server.utils.ValidationError;
 import org.apache.commons.lang3.SerializationException;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.logging.log4j.LogManager;
@@ -13,6 +12,7 @@ import server.server.UDPDatagramChannel;
 import server.utils.Pair;
 import server.utils.RunMode;
 import server.utils.TextColors;
+import server.utils.ValidationError;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -64,25 +64,33 @@ public class RunManager {
 
             stream.print("$ ");
 
-            while (runMode == RunMode.RUN) {
-                if (selector.select(100) > 0) {
-                    Iterator<SelectionKey> keyIterator = selector.selectedKeys().iterator();
+            new Thread(() -> {
+                while (runMode == RunMode.RUN) {
+                    try {
+                        if (selector.select(100) > 0) {
+                            Iterator<SelectionKey> keyIterator = selector.selectedKeys().iterator();
 
-                    while (keyIterator.hasNext()) {
-                        SelectionKey key = keyIterator.next();
-                        keyIterator.remove();
+                            while (keyIterator.hasNext()) {
+                                SelectionKey key = keyIterator.next();
+                                keyIterator.remove();
 
-                        if (key.isReadable()) {
-                            handleClientRequest(channel);
+                                if (key.isReadable()) {
+                                    handleClientRequest(channel);
+                                }
+                            }
                         }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                 }
-                if (System.in.available() > 0) {
-                    executeCommandFromServer();
-                }
+            }).start();
+
+            while (runMode == RunMode.RUN) {
+                executeCommandFromServer();
             }
         }
     }
+
 
     private void executeCommandFromServer() {
         String nextCommand = scanner.nextLine().trim();
