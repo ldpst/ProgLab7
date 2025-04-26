@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class RunManager {
     protected static final String RED = ConfigManager.getColor(TextColors.RED);
@@ -40,6 +42,8 @@ public class RunManager {
     private final Scanner scanner = new Scanner(System.in);
 
     public final Map<String, Command> commands = new HashMap<>();
+
+    private final ExecutorService executorService = Executors.newCachedThreadPool();
 
     public RunManager() {
         new CSVManager(stream, collectionManager).loadFromCSV();
@@ -74,7 +78,13 @@ public class RunManager {
                         keyIterator.remove();
 
                         if (key.isReadable()) {
-                            handleClientRequest(channel);
+                            new Thread(() -> {
+                                try {
+                                    handleClientRequest(channel);
+                                } catch (IOException e) {
+                                    logger.error("Ошибка при обработке клиентского запроса", e);
+                                }
+                            }).start();
                         }
                     }
                 }
@@ -82,6 +92,8 @@ public class RunManager {
                     executeCommandFromServer();
                 }
             }
+        } finally {
+            executorService.shutdown();
         }
     }
 
@@ -109,6 +121,9 @@ public class RunManager {
 
     private void handleClientRequest(UDPDatagramChannel channel) throws IOException {
         Pair<byte[], SocketAddress> data = channel.getData();
+        if (data == null) {
+            return;
+        }
         Request request;
         try {
             request = SerializationUtils.deserialize(data.first);
@@ -116,9 +131,19 @@ public class RunManager {
             logger.warn("SerializationException при сериализации запроса");
             throw e;
         }
-        Response response = executeCommandFromClient(request);
-        channel.sendData(SerializationUtils.serialize(response), data.second);
+        executorService.submit(() -> {
+            Response response = executeCommandFromClient(request);
+
+            new Thread(() -> {
+                try {
+                    channel.sendData(SerializationUtils.serialize(response), data.second);
+                } catch (IOException e) {
+                    logger.error("Ошибка при отправке данных клиенту", e);
+                }
+            }).start();
+        });
     }
+
 
     private Response executeCommandFromClient(Request request) {
         if (request.getMessage().isEmpty()) {
