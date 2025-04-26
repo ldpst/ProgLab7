@@ -1,5 +1,6 @@
 package client.commands;
 
+import client.managers.StreamManager;
 import server.managers.ConfigManager;
 import server.requests.Request;
 import server.response.Response;
@@ -15,9 +16,12 @@ public abstract class Command {
     protected static final String RESET = ConfigManager.getColor(TextColors.RESET);
     protected static final String GREEN = ConfigManager.getColor(TextColors.GREEN);
 
-    public Command(String name, String description) {
+    protected final StreamManager stream;
+
+    public Command(String name, String description, StreamManager stream) {
         this.name = name;
         this.description = description;
+        this.stream = stream;
     }
 
     public abstract void execute(String[] args) throws IOException;

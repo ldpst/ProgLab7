@@ -3,7 +3,6 @@ package server.commands;
 import server.object.MovieGenre;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import server.builders.GenreBuilder;
 import server.managers.CollectionManager;
 import server.requests.Request;
 import server.response.Response;
@@ -26,7 +25,7 @@ public class CountLessThanGenre extends Command {
     @Override
     public Response execute(Request request) throws IOException {
         logger.info("Команда выполняется...");
-        MovieGenre genre = new GenreBuilder(channel, request.getClientAddress(), logger).build();
+        MovieGenre genre = (MovieGenre) request.getData();
         int count = collectionManager.countLessThanGenre(genre);
         logger.info("Команда выполнена");
         return new Response(GREEN + "Элементов с genre меньше заданного: " + count + "\n" + RESET, ResponseType.PRINT_MESSAGE);

@@ -21,12 +21,10 @@ import java.io.InputStreamReader;
 public class ExecuteScript extends Command {
     private final UDPClient client;
     private final Logger logger = LogManager.getLogger(this.getClass());
-    private final StreamManager stream;
 
     public ExecuteScript(UDPClient client, StreamManager stream) {
-        super("execute_script file_name", "считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме");
+        super("execute_script file_name", "считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме", stream);
         this.client = client;
-        this.stream = stream;
     }
 
     @Override

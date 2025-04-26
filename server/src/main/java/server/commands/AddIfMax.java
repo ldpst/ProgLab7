@@ -26,8 +26,9 @@ public class AddIfMax extends Command {
     @Override
     public Response execute(Request request) throws IOException {
         logger.info("Команда выполняется...");
-        Movie movie = new MovieBuilder(channel, request.getClientAddress(), logger).build();
+        Movie movie = (Movie) request.getData();
+        Response response = new Response(collectionManager.addIfMax(movie), ResponseType.PRINT_MESSAGE);
         logger.info("Команда выполнена");
-        return new Response(collectionManager.addIfMax(movie), ResponseType.PRINT_MESSAGE);
+        return response;
     }
 }

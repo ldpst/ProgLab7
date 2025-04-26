@@ -3,7 +3,6 @@ package server.commands;
 import server.object.Movie;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import server.builders.MovieBuilder;
 import server.managers.CollectionManager;
 import server.requests.Request;
 import server.response.Response;
@@ -27,7 +26,7 @@ public class Add extends Command {
 
     @Override
     public Response execute(Request request) throws IOException {
-        Movie movie = new MovieBuilder(channel, request.getClientAddress(), logger).build();
+        Movie movie = (Movie) request.getData();
         movie.setId(collectionManager.getAndIncreaseNextID());
         collectionManager.add(movie);
         return new Response(GREEN + "Элемент успешно добавлен\n" + RESET, ResponseType.PRINT_MESSAGE);

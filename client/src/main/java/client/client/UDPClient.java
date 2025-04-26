@@ -17,7 +17,7 @@ public class UDPClient {
 
     public static final Logger logger = LogManager.getLogger(UDPClient.class);
 
-    private final DatagramSocket client;
+    public final DatagramSocket client;
 
     public UDPClient() throws IOException {
         logger.info("Запуск клиента...");
@@ -26,13 +26,13 @@ public class UDPClient {
         logger.info("Клиент запущен");
     }
 
-    public Response makeRequest(String request) throws ServerIsUnavailableException, IOException {
+    public Response makeRequest(String request, Object object) throws ServerIsUnavailableException, IOException {
         int attempt = 0;
         while (attempt < ConfigManager.getAttemptMax()) {
             attempt++;
             try {
                 logger.debug("Отправка запроса на сервер...");
-                byte[] data = SerializationUtils.serialize(new Request(request, new InetSocketAddress(InetAddress.getLocalHost().getHostAddress(), client.getLocalPort())));
+                byte[] data = SerializationUtils.serialize(new Request(request, new InetSocketAddress(InetAddress.getLocalHost().getHostAddress(), client.getLocalPort()), object));
                 DatagramPacket dp = new DatagramPacket(data, data.length, new InetSocketAddress(ConfigManager.getAddress(), ConfigManager.getPort()));
                 client.send(dp);
                 logger.debug("Запрос отправлен: {}", SerializationUtils.deserialize(data).toString());

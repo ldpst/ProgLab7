@@ -63,6 +63,7 @@ public class RunManager {
             logger.info("Сервер начал слушать на адресе {} и порту {} и обрабатывать запросы", ConfigManager.getAddress(), ConfigManager.getPort());
 
             stream.print("$ ");
+
             while (runMode == RunMode.RUN) {
                 if (selector.select(100) > 0) {
                     Iterator<SelectionKey> keyIterator = selector.selectedKeys().iterator();
@@ -74,11 +75,7 @@ public class RunManager {
 
                         if (key.isReadable()) {
                             handleClientRequest(channel);
-
-
                         }
-
-
                     }
                 }
                 if (System.in.available() > 0) {

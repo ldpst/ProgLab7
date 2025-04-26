@@ -26,7 +26,7 @@ public class CountByOperator extends Command {
     @Override
     public Response execute(Request request) throws IOException {
         logger.info("Команда выполняется...");
-        Person operator = new PersonBuilder(channel, request.getClientAddress(), logger).build();
+        Person operator = (Person) request.getData();
         int count = collectionManager.countByOperator(operator);
         logger.info("Команда выполнена");
         return new Response(GREEN + "Элементов с данным operator: " + count + "\n" + RESET, ResponseType.PRINT_MESSAGE);

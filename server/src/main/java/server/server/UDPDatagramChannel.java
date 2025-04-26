@@ -36,6 +36,7 @@ public class UDPDatagramChannel {
 
     public Pair<byte[], SocketAddress> getData() throws IOException {
         logger.debug("Сервер ожидает пакет...");
+
         ByteBuffer buffer = ByteBuffer.allocate(ConfigManager.getPacketSize());
         SocketAddress clientAddress = channel.receive(buffer);
         logger.debug("Клиент с адресом {} подключился", clientAddress);

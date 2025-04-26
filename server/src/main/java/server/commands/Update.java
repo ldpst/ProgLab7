@@ -34,7 +34,7 @@ public class Update extends Command {
         try {
             int id = Integer.parseInt(message[1]);
             if (collectionManager.checkIfIdExists(id)) {
-                Movie newMovie = new MovieBuilder(channel, request.getClientAddress(), logger).build();
+                Movie newMovie = (Movie) request.getData();
                 collectionManager.updateById(id, newMovie);
                 logger.info("Команда выполнена");
                 return new Response(GREEN + "Элемент с id " + id + " успешно обновлен\n" + RESET, ResponseType.ERROR);

@@ -27,7 +27,7 @@ public class RemoveGreater extends Command {
     @Override
     public Response execute(Request request) throws IOException {
         logger.info("Команда выполняется...");
-        Movie movie = new MovieBuilder(channel, request.getClientAddress(), logger).build();
+        Movie movie = (Movie) request.getData();
         int count = collectionManager.removeGreater(movie);
         logger.info("Команда выполнена");
         return new Response(GREEN + "Удалено " + count + " элементов\n" + RESET, ResponseType.PRINT_MESSAGE);
