@@ -5,7 +5,8 @@ import server.object.Movie;
 import server.managers.ConfigManager;
 import server.utils.TextColors;
 
-import java.util.Deque;
+import java.util.concurrent.LinkedBlockingDeque;
+
 
 public class ResponseManager {
     protected static final String RED = ConfigManager.getColor(TextColors.RED);
@@ -18,7 +19,7 @@ public class ResponseManager {
         this.client = client;
     }
 
-    public static String collectionToString(Deque<Movie> movies) {
+    public static String collectionToString(LinkedBlockingDeque<Movie> movies) {
         StringBuilder message;
         if (movies.isEmpty()) {
             message = new StringBuilder(GREEN + "Коллекция пуста\n" + RESET);

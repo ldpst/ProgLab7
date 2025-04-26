@@ -5,8 +5,7 @@ import server.object.MovieGenre;
 import server.object.Person;
 import server.utils.TextColors;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.util.stream.Collectors;
 
 /**
@@ -15,7 +14,7 @@ import java.util.stream.Collectors;
  * @author ldpst
  */
 public class CollectionManager {
-    private Deque<Movie> movies = new ArrayDeque<>();
+    private LinkedBlockingDeque<Movie> movies = new LinkedBlockingDeque<>();
     private int nextId = 1;
 
     protected static final String RED = ConfigManager.getColor(TextColors.RED);
@@ -40,7 +39,7 @@ public class CollectionManager {
      * Метод для очищения коллекции
      */
     public void clear() {
-        movies = new ArrayDeque<>();
+        movies = new LinkedBlockingDeque<>();
         nextId = 1;
     }
 
@@ -51,11 +50,11 @@ public class CollectionManager {
      * @param newMovie новое значение
      */
     public void updateById(int id, Movie newMovie) {
-        movies = movies.stream().map(movie -> (movie.getId() == id ? newMovie : movie)).collect(Collectors.toCollection(ArrayDeque::new));
+        movies = movies.stream().map(movie -> (movie.getId() == id ? newMovie : movie)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
     }
 
     public boolean checkIfIdExists(int id) {
-        Deque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id).collect(Collectors.toCollection(ArrayDeque::new));
+        LinkedBlockingDeque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id).collect(Collectors.toCollection(LinkedBlockingDeque::new));
         return !checker.isEmpty();
     }
 
@@ -66,11 +65,11 @@ public class CollectionManager {
      * @return Возможная ошибка
      */
     public String removeById(int id) {
-        Deque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id).collect(Collectors.toCollection(ArrayDeque::new));
+        LinkedBlockingDeque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id).collect(Collectors.toCollection(LinkedBlockingDeque::new));
         if (checker.isEmpty()) {
             return RED + "Элемента с данным id не существует\n" + RESET;
         }
-        movies = movies.stream().filter(movie -> movie.getId() != id).collect(Collectors.toCollection(ArrayDeque::new));
+        movies = movies.stream().filter(movie -> movie.getId() != id).collect(Collectors.toCollection(LinkedBlockingDeque::new));
         return GREEN + "Элемент с id " + id + " успешно удален\n" + RESET;
     }
 
@@ -94,7 +93,7 @@ public class CollectionManager {
      */
     public String addIfMax(Movie newMovie) {
         newMovie.setId(nextId);
-        Deque<Movie> checker = movies.stream().filter(movie -> movie.compareTo(newMovie) > 0).collect(Collectors.toCollection(ArrayDeque::new));
+        LinkedBlockingDeque<Movie> checker = movies.stream().filter(movie -> movie.compareTo(newMovie) > 0).collect(Collectors.toCollection(LinkedBlockingDeque::new));
         if (checker.isEmpty()) {
             add(newMovie);
             return GREEN + "Элемент успешно добавлен\n" + RESET;
@@ -125,8 +124,8 @@ public class CollectionManager {
      */
     public int removeGreater(Movie greater) {
         if (greater == null) return 0;
-        int count = movies.stream().filter(movie -> movie.compareTo(greater) > 0).collect(Collectors.toCollection(ArrayDeque::new)).size();
-        movies = movies.stream().filter(movie -> movie.compareTo(greater) < 0).collect(Collectors.toCollection(ArrayDeque::new));
+        int count = movies.stream().filter(movie -> movie.compareTo(greater) > 0).collect(Collectors.toCollection(LinkedBlockingDeque::new)).size();
+        movies = movies.stream().filter(movie -> movie.compareTo(greater) < 0).collect(Collectors.toCollection(LinkedBlockingDeque::new));
         return count;
     }
 
@@ -137,7 +136,7 @@ public class CollectionManager {
      * @return количество
      */
     public int countByOperator(Person operator) {
-        return (movies.stream().filter(movie -> ((movie.getOperator() == null && operator == null) || (movie.getOperator() != null && movie.getOperator().equals(operator)))).collect(Collectors.toCollection(ArrayDeque::new))).size();
+        return (movies.stream().filter(movie -> ((movie.getOperator() == null && operator == null) || (movie.getOperator() != null && movie.getOperator().equals(operator)))).collect(Collectors.toCollection(LinkedBlockingDeque::new))).size();
     }
 
     /**
@@ -147,7 +146,7 @@ public class CollectionManager {
      * @return количество
      */
     public int countLessThanGenre(MovieGenre genre) {
-        return (movies.stream().filter(movie -> ((movie.getGenre() == null && genre == null) || (movie.getGenre() != null && genre != null && movie.getGenre().compareTo(genre) < 0))).collect(Collectors.toCollection(ArrayDeque::new))).size();
+        return (movies.stream().filter(movie -> ((movie.getGenre() == null && genre == null) || (movie.getGenre() != null && genre != null && movie.getGenre().compareTo(genre) < 0))).collect(Collectors.toCollection(LinkedBlockingDeque::new))).size();
     }
 
     /**
@@ -162,9 +161,9 @@ public class CollectionManager {
     /**
      * Метод, возвращающий содержимое коллекции
      *
-     * @return Deque[Movie]
+     * @return LinkedBlockingDeque[Movie]
      */
-    public Deque<Movie> getMovies() {
+    public LinkedBlockingDeque<Movie> getMovies() {
         return movies;
     }
 
