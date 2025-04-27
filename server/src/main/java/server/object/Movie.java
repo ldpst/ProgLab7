@@ -4,6 +4,8 @@ import server.utils.Validatable;
 import server.utils.ValidationError;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
@@ -37,11 +39,11 @@ public class Movie
         }
     }
 
-    public Movie(Integer id, String name, Coordinates coordinates, String creationDate, Long oscarsCount, MovieGenre genre, MpaaRating mpaaRating, Person operator) {
+    public Movie(Integer id, String name, Coordinates coordinates, Timestamp creationDate, Long oscarsCount, MovieGenre genre, MpaaRating mpaaRating, Person operator) {
         this.id = id;
         this.name = name;
         this.coordinates = coordinates;
-        this.creationDate = ZonedDateTime.parse(creationDate);
+        this.creationDate = creationDate.toInstant().atZone(ZoneId.of("Europe/Moscow"));
         this.oscarsCount = oscarsCount;
         this.genre = genre;
         this.mpaaRating = mpaaRating;

@@ -46,7 +46,7 @@ public class RunManager {
     private final ExecutorService executorService = Executors.newCachedThreadPool();
 
     public RunManager() {
-        new CSVManager(stream, collectionManager).loadFromCSV();
+        new PSQLManager(collectionManager).loadFromDB();
 
         commands.put("exit", new Exit(this, stream));
         commands.put("save", new Save(collectionManager, stream));
@@ -78,13 +78,16 @@ public class RunManager {
                         keyIterator.remove();
 
                         if (key.isReadable()) {
-                            new Thread(() -> {
-                                try {
-                                    handleClientRequest(channel);
-                                } catch (IOException e) {
-                                    logger.error("Ошибка при обработке клиентского запроса", e);
-                                }
-                            }).start();
+                            Pair<byte[], SocketAddress> data = channel.getData();
+                            if (data != null) {
+                                new Thread(() -> {
+                                    try {
+                                        handleClientRequest(channel, data);
+                                    } catch (IOException e) {
+                                        logger.error("Ошибка при обработке клиентского запроса", e);
+                                    }
+                                }).start();
+                            }
                         }
                     }
                 }
@@ -119,11 +122,7 @@ public class RunManager {
         }
     }
 
-    private void handleClientRequest(UDPDatagramChannel channel) throws IOException {
-        Pair<byte[], SocketAddress> data = channel.getData();
-        if (data == null) {
-            return;
-        }
+    private void handleClientRequest(UDPDatagramChannel channel, Pair<byte[], SocketAddress> data) throws IOException {
         Request request;
         try {
             request = SerializationUtils.deserialize(data.first);

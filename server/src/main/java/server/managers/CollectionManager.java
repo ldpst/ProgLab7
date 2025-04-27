@@ -31,8 +31,13 @@ public class CollectionManager {
      * @param movie элемент для добавления
      */
     public void add(Movie movie) {
+        PSQLManager.insertMovie(movie);
         movies.addLast(movie);
         nextId++;
+    }
+
+    public void addFromDB(Movie movie) {
+        movies.addLast(movie);
     }
 
     /**
@@ -173,5 +178,15 @@ public class CollectionManager {
 
     public void setNextId(int id) {
         nextId = id;
+    }
+
+    public void fixNextId() {
+        long max_id = 0;
+        for (var i : movies) {
+            if (i.getId() > max_id) {
+                max_id = i.getId();
+            }
+        }
+        setNextId((int) max_id + 1);
     }
 }

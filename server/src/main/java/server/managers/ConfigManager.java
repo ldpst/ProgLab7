@@ -112,4 +112,20 @@ public class ConfigManager {
         }
         return color;
     }
+
+    public static String getPgpassPath() {
+        String pgpassPath = properties.getProperty("pgpass.path");
+        if (pgpassPath == null || pgpassPath.isBlank()) {
+            logger.warn("Не удалось получить путь до pgpass. Значение пустое или отсутствует.");
+        }
+        return pgpassPath;
+    }
+
+    public static String getHeliospassPath() {
+        String heliospassPath = properties.getProperty("heliospass.path");
+        if (heliospassPath == null || heliospassPath.isBlank()) {
+            logger.warn("Не удалось получить путь до heliospass. Значение пустое или отсутствует.");
+        }
+        return heliospassPath;
+    }
 }

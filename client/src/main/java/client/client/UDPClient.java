@@ -22,7 +22,7 @@ public class UDPClient {
     public UDPClient() throws IOException {
         logger.info("Запуск клиента...");
         client = new DatagramSocket();
-        client.setSoTimeout(100);
+        client.setSoTimeout(1000);
         logger.info("Клиент запущен");
     }
 
