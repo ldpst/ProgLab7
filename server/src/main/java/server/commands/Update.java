@@ -1,9 +1,9 @@
 package server.commands;
 
-import server.object.Movie;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import server.managers.CollectionManager;
+import server.object.Movie;
 import server.requests.Request;
 import server.response.Response;
 import server.response.ResponseType;
@@ -34,9 +34,13 @@ public class Update extends Command {
             int id = Integer.parseInt(message[1]);
             if (collectionManager.checkIfIdExists(id)) {
                 Movie newMovie = (Movie) request.getData();
-                collectionManager.updateById(id, newMovie);
+                boolean f = collectionManager.updateById(id, newMovie, request.getLogin());
                 logger.info("Команда выполнена");
-                return new Response(GREEN + "Элемент с id " + id + " успешно обновлен\n" + RESET, ResponseType.ERROR);
+                if (f) {
+                    return new Response(GREEN + "Элемент с id " + id + " успешно обновлен\n" + RESET, ResponseType.PRINT_MESSAGE);
+                } else {
+                    return new Response(RED + "У вас нет прав для редактирования элемента с id " + id + "\n" + RESET, ResponseType.ERROR);
+                }
             } else {
                 return new Response(RED + "Элемента с данным id не существует\n" + RESET, ResponseType.ERROR);
             }

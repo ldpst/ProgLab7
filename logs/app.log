@@ -2462,3 +2462,1119 @@ Caused by: java.net.BindException: Address already in use: bind
 2025-04-27 15:46:27 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="[32mЭлемент успешно добавлен
 [0m", type=PRINT_MESSAGE, collection=null}
 2025-04-27 15:46:27 [main] INFO  client.commands.buildcommands.Add - Команда выполнена
+2025-04-27 16:52:22 [main] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 16:52:23 [main] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 16:52:23 [main] DEBUG server.managers.PSQLManager - Выгрузка данных с БД...
+2025-04-27 16:52:23 [main] DEBUG server.managers.PSQLManager - Данные с БД выгружены
+2025-04-27 16:52:23 [main] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 16:52:23 [main] INFO  server.managers.RunManager - Запуск сервера...
+2025-04-27 16:52:23 [main] INFO  server.managers.RunManager - Сервер начал слушать на адресе 192.168.0.13 и порту 2909 и обрабатывать запросы
+2025-04-27 16:52:25 [main] INFO  client.client.UDPClient - Запуск клиента...
+2025-04-27 16:52:25 [main] INFO  client.client.UDPClient - Клиент запущен
+2025-04-27 16:52:38 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 16:52:38 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 16:52:38 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:63891 подключился
+2025-04-27 16:52:38 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:63891"}
+2025-04-27 16:52:38 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 16:52:38 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:63891"} 
+2025-04-27 16:52:38 [pool-2-thread-1] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 16:52:38 [pool-2-thread-1] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 16:52:38 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при проверке на уникальность логина в БД
+org.postgresql.util.PSQLException: Индекс колонки вне диапазона: 1. Допустимые значения: 1..0
+	at org.postgresql.core.v3.SimpleParameterList.bind(SimpleParameterList.java:70) ~[postgresql-42.7.1.jar:42.7.1]
+	at org.postgresql.core.v3.SimpleParameterList.setStringParameter(SimpleParameterList.java:133) ~[postgresql-42.7.1.jar:42.7.1]
+	at org.postgresql.jdbc.PgPreparedStatement.bindString(PgPreparedStatement.java:1100) ~[postgresql-42.7.1.jar:42.7.1]
+	at org.postgresql.jdbc.PgPreparedStatement.setString(PgPreparedStatement.java:387) ~[postgresql-42.7.1.jar:42.7.1]
+	at org.postgresql.jdbc.PgPreparedStatement.setString(PgPreparedStatement.java:373) ~[postgresql-42.7.1.jar:42.7.1]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:203) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+2025-04-27 16:52:39 [main] WARN  client.client.UDPClient - Попытка 1: Таймаут ожидания ответа от сервера.
+2025-04-27 16:52:39 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 16:52:39 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 16:52:39 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:63891"}
+2025-04-27 16:52:39 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:63891 подключился
+2025-04-27 16:52:39 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 16:52:39 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:63891"} 
+2025-04-27 16:52:39 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 16:52:40 [main] WARN  client.client.UDPClient - Попытка 2: Таймаут ожидания ответа от сервера.
+2025-04-27 16:52:40 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 16:52:40 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 16:52:40 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:63891 подключился
+2025-04-27 16:52:40 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:63891"}
+2025-04-27 16:52:40 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 16:52:40 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:63891"} 
+2025-04-27 16:52:40 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 16:52:41 [main] WARN  client.client.UDPClient - Попытка 3: Таймаут ожидания ответа от сервера.
+2025-04-27 16:52:41 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 16:52:41 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 16:52:41 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:63891"}
+2025-04-27 16:52:41 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:63891 подключился
+2025-04-27 16:52:41 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 16:52:41 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:63891"} 
+2025-04-27 16:52:41 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 16:52:42 [main] WARN  client.client.UDPClient - Попытка 4: Таймаут ожидания ответа от сервера.
+2025-04-27 16:52:42 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 16:52:42 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 16:52:42 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:63891"}
+2025-04-27 16:52:42 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:63891 подключился
+2025-04-27 16:52:42 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 16:52:42 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:63891"} 
+2025-04-27 16:52:42 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 16:52:43 [main] WARN  client.client.UDPClient - Попытка 5: Таймаут ожидания ответа от сервера.
+2025-04-27 16:52:43 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 16:52:43 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 16:52:43 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:63891 подключился
+2025-04-27 16:52:43 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:63891"}
+2025-04-27 16:52:43 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 16:52:43 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:63891"} 
+2025-04-27 16:52:43 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 16:52:44 [main] WARN  client.client.UDPClient - Попытка 6: Таймаут ожидания ответа от сервера.
+2025-04-27 16:52:44 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 16:52:44 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 16:52:44 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:63891 подключился
+2025-04-27 16:52:44 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:63891"}
+2025-04-27 16:52:44 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 16:52:44 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:63891"} 
+2025-04-27 16:52:44 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 16:52:45 [main] WARN  client.client.UDPClient - Попытка 7: Таймаут ожидания ответа от сервера.
+2025-04-27 16:52:45 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 16:52:45 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 16:52:45 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:63891"}
+2025-04-27 16:52:45 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 16:52:45 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:63891 подключился
+2025-04-27 16:52:45 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:63891"} 
+2025-04-27 16:52:45 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 16:52:46 [main] WARN  client.client.UDPClient - Попытка 8: Таймаут ожидания ответа от сервера.
+2025-04-27 16:52:46 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 16:52:46 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 16:52:46 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:63891 подключился
+2025-04-27 16:52:46 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:63891"}
+2025-04-27 16:52:46 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 16:52:46 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:63891"} 
+2025-04-27 16:52:46 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 16:52:47 [main] WARN  client.client.UDPClient - Попытка 9: Таймаут ожидания ответа от сервера.
+2025-04-27 16:52:47 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 16:52:47 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 16:52:47 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:63891 подключился
+2025-04-27 16:52:47 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:63891"}
+2025-04-27 16:52:47 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 16:52:47 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:63891"} 
+2025-04-27 16:52:47 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 16:52:48 [main] WARN  client.client.UDPClient - Попытка 10: Таймаут ожидания ответа от сервера.
+2025-04-27 16:52:48 [main] ERROR client.client.UDPClient - Сервер недоступен. Завершение программы
+2025-04-27 16:56:45 [main] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 16:56:46 [main] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 16:56:46 [main] DEBUG server.managers.PSQLManager - Выгрузка данных с БД...
+2025-04-27 16:56:46 [main] DEBUG server.managers.PSQLManager - Данные с БД выгружены
+2025-04-27 16:56:46 [main] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 16:56:46 [main] INFO  server.managers.RunManager - Запуск сервера...
+2025-04-27 16:56:46 [main] INFO  server.managers.RunManager - Сервер начал слушать на адресе 192.168.0.13 и порту 2909 и обрабатывать запросы
+2025-04-27 16:56:47 [main] INFO  client.client.UDPClient - Запуск клиента...
+2025-04-27 16:56:47 [main] INFO  client.client.UDPClient - Клиент запущен
+2025-04-27 16:58:35 [main] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 16:58:35 [main] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 16:58:35 [main] DEBUG server.managers.PSQLManager - Выгрузка данных с БД...
+2025-04-27 16:58:35 [main] DEBUG server.managers.PSQLManager - Данные с БД выгружены
+2025-04-27 16:58:35 [main] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 16:58:35 [main] INFO  server.managers.RunManager - Запуск сервера...
+2025-04-27 16:58:35 [main] INFO  server.managers.RunManager - Сервер начал слушать на адресе 192.168.0.13 и порту 2909 и обрабатывать запросы
+2025-04-27 16:58:36 [main] INFO  client.client.UDPClient - Запуск клиента...
+2025-04-27 16:58:36 [main] INFO  client.client.UDPClient - Клиент запущен
+2025-04-27 16:58:47 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 16:58:47 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 16:58:47 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:56878 подключился
+2025-04-27 16:58:47 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:56878"}
+2025-04-27 16:58:47 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 16:58:47 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:56878"} 
+2025-04-27 16:58:48 [pool-2-thread-1] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 16:58:48 [pool-2-thread-1] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 16:58:48 [pool-2-thread-1] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 16:58:48 [Thread-7] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 16:58:48 [Thread-7] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="[32mРегистрация прошла успешно
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 16:58:48 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="[32mРегистрация прошла успешно
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 16:59:29 [main] INFO  client.client.UDPClient - Запуск клиента...
+2025-04-27 16:59:29 [main] INFO  client.client.UDPClient - Клиент запущен
+2025-04-27 16:59:38 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 16:59:38 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 16:59:38 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:64889 подключился
+2025-04-27 16:59:38 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="log_in", clientAddress="/192.168.0.13:64889"} 
+2025-04-27 16:59:38 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="log_in", clientAddress="/192.168.0.13:64889"}
+2025-04-27 16:59:38 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 16:59:38 [pool-2-thread-1] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 16:59:38 [pool-2-thread-1] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 16:59:38 [pool-2-thread-1] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 16:59:38 [Thread-12] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 16:59:38 [Thread-12] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="[31mНеверный логин или пароль
+[0m", type=ERROR, collection=null}
+2025-04-27 16:59:38 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="[31mНеверный логин или пароль
+[0m", type=ERROR, collection=null}
+2025-04-27 16:59:49 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 16:59:49 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 16:59:49 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="log_in", clientAddress="/192.168.0.13:64889"}
+2025-04-27 16:59:49 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:64889 подключился
+2025-04-27 16:59:49 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 16:59:49 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="log_in", clientAddress="/192.168.0.13:64889"} 
+2025-04-27 16:59:49 [pool-2-thread-1] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 16:59:49 [pool-2-thread-1] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 16:59:49 [pool-2-thread-1] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 16:59:49 [Thread-17] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 16:59:49 [Thread-17] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="[32mАвторизация прошла успешно
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 16:59:49 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="[32mАвторизация прошла успешно
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 17:00:01 [main] INFO  client.client.UDPClient - Запуск клиента...
+2025-04-27 17:00:01 [main] INFO  client.client.UDPClient - Клиент запущен
+2025-04-27 17:00:15 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:00:15 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 17:00:15 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:62797 подключился
+2025-04-27 17:00:15 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:62797"} 
+2025-04-27 17:00:15 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:62797"}
+2025-04-27 17:00:15 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:00:15 [pool-2-thread-1] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 17:00:16 [pool-2-thread-1] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 17:00:16 [Thread-22] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 17:00:16 [Thread-22] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="[31mПользователь с таким логином уже существует
+[0m", type=ERROR, collection=null}
+2025-04-27 17:00:16 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="[31mПользователь с таким логином уже существует
+[0m", type=ERROR, collection=null}
+2025-04-27 17:00:38 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:00:38 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 17:00:38 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:62797"}
+2025-04-27 17:00:38 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:62797 подключился
+2025-04-27 17:00:38 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:00:38 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:62797"} 
+2025-04-27 17:00:38 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 17:00:39 [main] WARN  client.client.UDPClient - Попытка 1: Таймаут ожидания ответа от сервера.
+2025-04-27 17:00:39 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:00:39 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 17:00:39 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:62797 подключился
+2025-04-27 17:00:39 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:62797"}
+2025-04-27 17:00:39 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:00:39 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:62797"} 
+2025-04-27 17:00:39 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 17:00:40 [main] WARN  client.client.UDPClient - Попытка 2: Таймаут ожидания ответа от сервера.
+2025-04-27 17:00:40 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:00:40 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 17:00:40 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:62797 подключился
+2025-04-27 17:00:40 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:62797"}
+2025-04-27 17:00:40 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:00:40 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:62797"} 
+2025-04-27 17:00:40 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 17:00:41 [main] WARN  client.client.UDPClient - Попытка 3: Таймаут ожидания ответа от сервера.
+2025-04-27 17:00:41 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:00:41 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 17:00:41 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:62797"}
+2025-04-27 17:00:41 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:62797 подключился
+2025-04-27 17:00:41 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:00:41 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:62797"} 
+2025-04-27 17:00:41 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 17:00:42 [main] WARN  client.client.UDPClient - Попытка 4: Таймаут ожидания ответа от сервера.
+2025-04-27 17:00:42 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:00:42 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 17:00:42 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:62797 подключился
+2025-04-27 17:00:42 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:62797"}
+2025-04-27 17:00:42 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:00:42 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:62797"} 
+2025-04-27 17:00:43 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 17:00:43 [main] WARN  client.client.UDPClient - Попытка 5: Таймаут ожидания ответа от сервера.
+2025-04-27 17:00:43 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:00:43 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 17:00:43 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:62797"}
+2025-04-27 17:00:43 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:62797 подключился
+2025-04-27 17:00:43 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:00:43 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:62797"} 
+2025-04-27 17:00:43 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 17:00:44 [main] WARN  client.client.UDPClient - Попытка 6: Таймаут ожидания ответа от сервера.
+2025-04-27 17:00:44 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:00:44 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 17:00:44 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:62797"}
+2025-04-27 17:00:44 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:62797 подключился
+2025-04-27 17:00:44 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:00:44 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:62797"} 
+2025-04-27 17:00:45 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 17:00:45 [main] WARN  client.client.UDPClient - Попытка 7: Таймаут ожидания ответа от сервера.
+2025-04-27 17:00:45 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:00:45 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 17:00:45 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:62797"}
+2025-04-27 17:00:45 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:62797 подключился
+2025-04-27 17:00:45 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:00:45 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:62797"} 
+2025-04-27 17:00:46 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 17:00:46 [main] WARN  client.client.UDPClient - Попытка 8: Таймаут ожидания ответа от сервера.
+2025-04-27 17:00:46 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:00:46 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 17:00:46 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:62797"}
+2025-04-27 17:00:46 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:62797 подключился
+2025-04-27 17:00:46 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:00:46 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:62797"} 
+2025-04-27 17:00:47 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 17:00:47 [main] WARN  client.client.UDPClient - Попытка 9: Таймаут ожидания ответа от сервера.
+2025-04-27 17:00:47 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:00:47 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 17:00:47 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:62797"}
+2025-04-27 17:00:47 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:62797 подключился
+2025-04-27 17:00:47 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:00:47 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:62797"} 
+2025-04-27 17:00:48 [pool-2-thread-1] ERROR server.managers.PSQLManager - Ошибка при подключении SSH
+com.jcraft.jsch.JSchException: PortForwardingL: local port 127.0.0.1:5433 cannot be bound.
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:158) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.PortWatcher.addPort(PortWatcher.java:110) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1847) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1828) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1809) ~[jsch-0.1.55.jar:?]
+	at com.jcraft.jsch.Session.setPortForwardingL(Session.java:1792) ~[jsch-0.1.55.jar:?]
+	at server.managers.PSQLManager.connect(PSQLManager.java:56) ~[classes/:?]
+	at server.managers.PSQLManager.signIn(PSQLManager.java:200) ~[classes/:?]
+	at server.commands.SignIn.execute(SignIn.java:25) ~[classes/:?]
+	at server.managers.RunManager.lambda$handleClientRequest$2(RunManager.java:138) ~[classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:565) ~[?:?]
+	at sun.nio.ch.Net.bind(Net.java:554) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636) ~[?:?]
+	at java.net.ServerSocket.bind(ServerSocket.java:391) ~[?:?]
+	at java.net.ServerSocket.<init>(ServerSocket.java:278) ~[?:?]
+	at com.jcraft.jsch.PortWatcher.<init>(PortWatcher.java:150) ~[jsch-0.1.55.jar:?]
+	... 14 more
+2025-04-27 17:00:48 [main] WARN  client.client.UDPClient - Попытка 10: Таймаут ожидания ответа от сервера.
+2025-04-27 17:00:48 [main] ERROR client.client.UDPClient - Сервер недоступен. Завершение программы
+2025-04-27 17:02:09 [main] INFO  client.client.UDPClient - Запуск клиента...
+2025-04-27 17:02:09 [main] INFO  client.client.UDPClient - Клиент запущен
+2025-04-27 17:02:13 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:02:13 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:55767"}
+2025-04-27 17:02:13 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:02:14 [main] WARN  client.client.UDPClient - Попытка 1: Таймаут ожидания ответа от сервера.
+2025-04-27 17:02:14 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:02:14 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:55767"}
+2025-04-27 17:02:14 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:02:15 [main] WARN  client.client.UDPClient - Попытка 2: Таймаут ожидания ответа от сервера.
+2025-04-27 17:02:15 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:02:15 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:55767"}
+2025-04-27 17:02:15 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:02:16 [main] WARN  client.client.UDPClient - Попытка 3: Таймаут ожидания ответа от сервера.
+2025-04-27 17:02:16 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:02:16 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:55767"}
+2025-04-27 17:02:16 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:02:17 [main] WARN  client.client.UDPClient - Попытка 4: Таймаут ожидания ответа от сервера.
+2025-04-27 17:02:17 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:02:17 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:55767"}
+2025-04-27 17:02:17 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:02:18 [main] WARN  client.client.UDPClient - Попытка 5: Таймаут ожидания ответа от сервера.
+2025-04-27 17:02:18 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:02:18 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:55767"}
+2025-04-27 17:02:18 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:02:19 [main] WARN  client.client.UDPClient - Попытка 6: Таймаут ожидания ответа от сервера.
+2025-04-27 17:02:19 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:02:19 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:55767"}
+2025-04-27 17:02:19 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:02:20 [main] WARN  client.client.UDPClient - Попытка 7: Таймаут ожидания ответа от сервера.
+2025-04-27 17:02:20 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:02:20 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:55767"}
+2025-04-27 17:02:20 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:02:21 [main] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 17:02:21 [main] WARN  client.client.UDPClient - Попытка 8: Таймаут ожидания ответа от сервера.
+2025-04-27 17:02:21 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:02:21 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:55767"}
+2025-04-27 17:02:21 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:02:21 [main] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 17:02:21 [main] DEBUG server.managers.PSQLManager - Выгрузка данных с БД...
+2025-04-27 17:02:21 [main] DEBUG server.managers.PSQLManager - Данные с БД выгружены
+2025-04-27 17:02:21 [main] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 17:02:21 [main] INFO  server.managers.RunManager - Запуск сервера...
+2025-04-27 17:02:21 [main] INFO  server.managers.RunManager - Сервер начал слушать на адресе 192.168.0.13 и порту 2909 и обрабатывать запросы
+2025-04-27 17:02:22 [main] WARN  client.client.UDPClient - Попытка 9: Таймаут ожидания ответа от сервера.
+2025-04-27 17:02:22 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:02:22 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 17:02:22 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="sign_in", clientAddress="/192.168.0.13:55767"}
+2025-04-27 17:02:22 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:02:22 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:55767 подключился
+2025-04-27 17:02:22 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="sign_in", clientAddress="/192.168.0.13:55767"} 
+2025-04-27 17:02:22 [pool-2-thread-1] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 17:02:22 [pool-2-thread-1] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 17:02:22 [pool-2-thread-1] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 17:02:22 [Thread-7] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 17:02:22 [Thread-7] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="[32mРегистрация прошла успешно
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 17:02:22 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="[32mРегистрация прошла успешно
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 17:20:04 [main] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 17:20:05 [main] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 17:20:05 [main] DEBUG server.managers.PSQLManager - Выгрузка данных с БД...
+2025-04-27 17:20:05 [main] DEBUG server.managers.PSQLManager - Данные с БД выгружены
+2025-04-27 17:20:05 [main] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 17:20:05 [main] INFO  server.managers.RunManager - Запуск сервера...
+2025-04-27 17:20:05 [main] INFO  server.managers.RunManager - Сервер начал слушать на адресе 192.168.0.13 и порту 2909 и обрабатывать запросы
+2025-04-27 17:20:07 [main] INFO  client.client.UDPClient - Запуск клиента...
+2025-04-27 17:20:07 [main] INFO  client.client.UDPClient - Клиент запущен
+2025-04-27 17:20:10 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:20:10 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 17:20:10 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:61003 подключился
+2025-04-27 17:20:10 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="log_in", clientAddress="/192.168.0.13:61003"}
+2025-04-27 17:20:10 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:20:10 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="log_in", clientAddress="/192.168.0.13:61003"} 
+2025-04-27 17:20:10 [pool-2-thread-1] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 17:20:10 [pool-2-thread-1] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 17:20:11 [pool-2-thread-1] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 17:20:11 [Thread-7] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 17:20:11 [Thread-7] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="[32mАвторизация прошла успешно
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 17:20:11 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="[32mАвторизация прошла успешно
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 17:20:14 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 17:20:14 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 17:20:14 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="show", clientAddress="/192.168.0.13:61003"}
+2025-04-27 17:20:14 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:61003 подключился
+2025-04-27 17:20:14 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 17:20:14 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="show", clientAddress="/192.168.0.13:61003"} 
+2025-04-27 17:20:14 [Thread-9] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 17:20:14 [Thread-9] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="", type=COLLECTION, collection=[{id=1, name='1', Coordinates={x=1.0, y=1}, creationDate='2025-04-27T14:14:12.736177+03:00[Europe/Moscow]', oscarsCount=1, genre='DRAMA', mpaaRating='G', operator={name='1', birthday='2004-12-12', weight=1, passportID='1'}}, {id=2, name='1', Coordinates={x=1.0, y=1}, creationDate='2025-04-27T14:14:12.736177+03:00[Europe/Moscow]', oscarsCount=1, genre='DRAMA', mpaaRating='G', operator={name='1', birthday='2004-12-12', weight=1, passportID='1'}}, {id=3, name='1', Coordinates={x=1.0, y=1}, creationDate='2025-04-27T14:14:12.736177+03:00[Europe/Moscow]', oscarsCount=1, genre='DRAMA', mpaaRating='G', operator={name='1', birthday='2004-12-12', weight=1, passportID='1'}}, {id=4, name='2', Coordinates={x=2.0, y=2}, creationDate='2025-04-27T14:39:10.769924+03:00[Europe/Moscow]', oscarsCount=2, genre='MUSICAL', mpaaRating='PG', operator=null}, {id=5, name='2', Coordinates={x=2.0, y=2}, creationDate='2025-04-27T14:39:10.769924+03:00[Europe/Moscow]', oscarsCount=2, genre='MUSICAL', mpaaRating='PG', operator=null}, {id=6, name='3', Coordinates={x=3.0, y=3}, creationDate='2025-04-27T15:08:48.709252+03:00[Europe/Moscow]', oscarsCount=3, genre='HORROR', mpaaRating='PG_13', operator=null}, {id=8, name='4', Coordinates={x=4.0, y=4}, creationDate='2025-04-27T15:43:42.248725+03:00[Europe/Moscow]', oscarsCount=4, genre='DRAMA', mpaaRating='G', operator=null}, {id=9, name='5', Coordinates={x=5.0, y=5}, creationDate='2025-04-27T15:46:26.219933+03:00[Europe/Moscow]', oscarsCount=5, genre='DRAMA', mpaaRating='G', operator=null}]}
+2025-04-27 17:20:14 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="", type=COLLECTION, collection=[{id=1, name='1', Coordinates={x=1.0, y=1}, creationDate='2025-04-27T14:14:12.736177+03:00[Europe/Moscow]', oscarsCount=1, genre='DRAMA', mpaaRating='G', operator={name='1', birthday='2004-12-12', weight=1, passportID='1'}}, {id=2, name='1', Coordinates={x=1.0, y=1}, creationDate='2025-04-27T14:14:12.736177+03:00[Europe/Moscow]', oscarsCount=1, genre='DRAMA', mpaaRating='G', operator={name='1', birthday='2004-12-12', weight=1, passportID='1'}}, {id=3, name='1', Coordinates={x=1.0, y=1}, creationDate='2025-04-27T14:14:12.736177+03:00[Europe/Moscow]', oscarsCount=1, genre='DRAMA', mpaaRating='G', operator={name='1', birthday='2004-12-12', weight=1, passportID='1'}}, {id=4, name='2', Coordinates={x=2.0, y=2}, creationDate='2025-04-27T14:39:10.769924+03:00[Europe/Moscow]', oscarsCount=2, genre='MUSICAL', mpaaRating='PG', operator=null}, {id=5, name='2', Coordinates={x=2.0, y=2}, creationDate='2025-04-27T14:39:10.769924+03:00[Europe/Moscow]', oscarsCount=2, genre='MUSICAL', mpaaRating='PG', operator=null}, {id=6, name='3', Coordinates={x=3.0, y=3}, creationDate='2025-04-27T15:08:48.709252+03:00[Europe/Moscow]', oscarsCount=3, genre='HORROR', mpaaRating='PG_13', operator=null}, {id=8, name='4', Coordinates={x=4.0, y=4}, creationDate='2025-04-27T15:43:42.248725+03:00[Europe/Moscow]', oscarsCount=4, genre='DRAMA', mpaaRating='G', operator=null}, {id=9, name='5', Coordinates={x=5.0, y=5}, creationDate='2025-04-27T15:46:26.219933+03:00[Europe/Moscow]', oscarsCount=5, genre='DRAMA', mpaaRating='G', operator=null}]}
+2025-04-27 18:06:40 [main] INFO  client.client.UDPClient - Запуск клиента...
+2025-04-27 18:06:40 [main] INFO  client.client.UDPClient - Клиент запущен
+2025-04-27 18:06:43 [main] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 18:06:45 [main] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 18:06:45 [main] DEBUG server.managers.PSQLManager - Выгрузка данных с БД...
+2025-04-27 18:06:45 [main] DEBUG server.managers.PSQLManager - Данные с БД выгружены
+2025-04-27 18:06:45 [main] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 18:06:45 [main] INFO  server.managers.RunManager - Запуск сервера...
+2025-04-27 18:06:45 [main] INFO  server.managers.RunManager - Сервер начал слушать на адресе 192.168.0.13 и порту 2909 и обрабатывать запросы
+2025-04-27 18:06:48 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 18:06:48 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 18:06:48 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:58647 подключился
+2025-04-27 18:06:48 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="log_in", clientAddress="/192.168.0.13:58647"}
+2025-04-27 18:06:48 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 18:06:48 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="log_in", clientAddress="/192.168.0.13:58647"} 
+2025-04-27 18:06:49 [pool-2-thread-1] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 18:06:49 [pool-2-thread-1] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 18:06:49 [pool-2-thread-1] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 18:06:49 [Thread-7] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 18:06:49 [Thread-7] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="[32mАвторизация прошла успешно
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 18:06:49 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="[32mАвторизация прошла успешно
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 18:06:51 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 18:06:51 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 18:06:51 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:58647 подключился
+2025-04-27 18:06:51 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="show", clientAddress="/192.168.0.13:58647"}
+2025-04-27 18:06:51 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 18:06:51 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="show", clientAddress="/192.168.0.13:58647"} 
+2025-04-27 18:06:51 [Thread-9] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 18:06:51 [Thread-9] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="", type=COLLECTION, collection=[{id=1, name='1', Coordinates={x=1.0, y=1}, creationDate='2025-04-27T14:14:12.736177+03:00[Europe/Moscow]', oscarsCount=1, genre='DRAMA', mpaaRating='G', operator={name='1', birthday='2004-12-12', weight=1, passportID='1'}}, {id=2, name='1', Coordinates={x=1.0, y=1}, creationDate='2025-04-27T14:14:12.736177+03:00[Europe/Moscow]', oscarsCount=1, genre='DRAMA', mpaaRating='G', operator={name='1', birthday='2004-12-12', weight=1, passportID='1'}}, {id=3, name='1', Coordinates={x=1.0, y=1}, creationDate='2025-04-27T14:14:12.736177+03:00[Europe/Moscow]', oscarsCount=1, genre='DRAMA', mpaaRating='G', operator={name='1', birthday='2004-12-12', weight=1, passportID='1'}}, {id=4, name='2', Coordinates={x=2.0, y=2}, creationDate='2025-04-27T14:39:10.769924+03:00[Europe/Moscow]', oscarsCount=2, genre='MUSICAL', mpaaRating='PG', operator=null}, {id=5, name='2', Coordinates={x=2.0, y=2}, creationDate='2025-04-27T14:39:10.769924+03:00[Europe/Moscow]', oscarsCount=2, genre='MUSICAL', mpaaRating='PG', operator=null}, {id=6, name='3', Coordinates={x=3.0, y=3}, creationDate='2025-04-27T15:08:48.709252+03:00[Europe/Moscow]', oscarsCount=3, genre='HORROR', mpaaRating='PG_13', operator=null}, {id=8, name='4', Coordinates={x=4.0, y=4}, creationDate='2025-04-27T15:43:42.248725+03:00[Europe/Moscow]', oscarsCount=4, genre='DRAMA', mpaaRating='G', operator=null}, {id=9, name='5', Coordinates={x=5.0, y=5}, creationDate='2025-04-27T15:46:26.219933+03:00[Europe/Moscow]', oscarsCount=5, genre='DRAMA', mpaaRating='G', operator=null}]}
+2025-04-27 18:06:51 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="", type=COLLECTION, collection=[{id=1, name='1', Coordinates={x=1.0, y=1}, creationDate='2025-04-27T14:14:12.736177+03:00[Europe/Moscow]', oscarsCount=1, genre='DRAMA', mpaaRating='G', operator={name='1', birthday='2004-12-12', weight=1, passportID='1'}}, {id=2, name='1', Coordinates={x=1.0, y=1}, creationDate='2025-04-27T14:14:12.736177+03:00[Europe/Moscow]', oscarsCount=1, genre='DRAMA', mpaaRating='G', operator={name='1', birthday='2004-12-12', weight=1, passportID='1'}}, {id=3, name='1', Coordinates={x=1.0, y=1}, creationDate='2025-04-27T14:14:12.736177+03:00[Europe/Moscow]', oscarsCount=1, genre='DRAMA', mpaaRating='G', operator={name='1', birthday='2004-12-12', weight=1, passportID='1'}}, {id=4, name='2', Coordinates={x=2.0, y=2}, creationDate='2025-04-27T14:39:10.769924+03:00[Europe/Moscow]', oscarsCount=2, genre='MUSICAL', mpaaRating='PG', operator=null}, {id=5, name='2', Coordinates={x=2.0, y=2}, creationDate='2025-04-27T14:39:10.769924+03:00[Europe/Moscow]', oscarsCount=2, genre='MUSICAL', mpaaRating='PG', operator=null}, {id=6, name='3', Coordinates={x=3.0, y=3}, creationDate='2025-04-27T15:08:48.709252+03:00[Europe/Moscow]', oscarsCount=3, genre='HORROR', mpaaRating='PG_13', operator=null}, {id=8, name='4', Coordinates={x=4.0, y=4}, creationDate='2025-04-27T15:43:42.248725+03:00[Europe/Moscow]', oscarsCount=4, genre='DRAMA', mpaaRating='G', operator=null}, {id=9, name='5', Coordinates={x=5.0, y=5}, creationDate='2025-04-27T15:46:26.219933+03:00[Europe/Moscow]', oscarsCount=5, genre='DRAMA', mpaaRating='G', operator=null}]}
+2025-04-27 18:07:05 [main] INFO  client.commands.buildcommands.Update - Команда выполняется...
+2025-04-27 18:07:05 [main] DEBUG client.commands.buildcommands.Update - Заполнение Movie...
+2025-04-27 18:07:05 [main] DEBUG client.commands.buildcommands.Update - Заполнение имени...
+2025-04-27 18:07:08 [main] DEBUG client.commands.buildcommands.Update - Имя заполнено
+2025-04-27 18:07:08 [main] DEBUG client.commands.buildcommands.Update - Заполнение координат...
+2025-04-27 18:07:08 [main] DEBUG client.commands.buildcommands.Update - Заполнение х...
+2025-04-27 18:07:08 [main] DEBUG client.commands.buildcommands.Update - х заполнен
+2025-04-27 18:07:08 [main] DEBUG client.commands.buildcommands.Update - Заполнение y
+2025-04-27 18:07:09 [main] DEBUG client.commands.buildcommands.Update - y заполнен
+2025-04-27 18:07:09 [main] DEBUG client.commands.buildcommands.Update - Координаты заполнены
+2025-04-27 18:07:09 [main] DEBUG client.commands.buildcommands.Update - Заполнение кол-ва оскаров...
+2025-04-27 18:07:09 [main] DEBUG client.commands.buildcommands.Update - Кол-во оскаров заполнено
+2025-04-27 18:07:09 [main] DEBUG client.commands.buildcommands.Update - Заполнение жанра...
+2025-04-27 18:07:10 [main] DEBUG client.commands.buildcommands.Update - Жанр заполнен
+2025-04-27 18:07:10 [main] DEBUG client.commands.buildcommands.Update - Заполнение мпаа рейтинга...
+2025-04-27 18:07:10 [main] DEBUG client.commands.buildcommands.Update - Мпаа рейтинг заполнен
+2025-04-27 18:07:12 [main] DEBUG client.commands.buildcommands.Update - Movie заполнен
+2025-04-27 18:07:12 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 18:07:12 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 18:07:12 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:58647 подключился
+2025-04-27 18:07:12 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="update 2", clientAddress="/192.168.0.13:58647"}
+2025-04-27 18:07:12 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 18:07:12 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="update 2", clientAddress="/192.168.0.13:58647"} 
+2025-04-27 18:07:12 [pool-2-thread-1] INFO  server.commands.Update - Выполнение команды...
+2025-04-27 18:07:12 [pool-2-thread-1] DEBUG server.managers.RunManager - Команда не распознана
+2025-04-27 18:07:12 [Thread-11] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 18:07:12 [Thread-11] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="[31mКоманда не распознана
+[0m", type=ERROR, collection=null}
+2025-04-27 18:07:12 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="[31mКоманда не распознана
+[0m", type=ERROR, collection=null}
+2025-04-27 18:07:12 [main] INFO  client.commands.buildcommands.Update - Команда выполнена
+2025-04-27 18:09:32 [main] INFO  client.client.UDPClient - Запуск клиента...
+2025-04-27 18:09:32 [main] INFO  client.client.UDPClient - Клиент запущен
+2025-04-27 18:09:35 [main] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 18:09:36 [main] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 18:09:36 [main] DEBUG server.managers.PSQLManager - Выгрузка данных с БД...
+2025-04-27 18:09:36 [main] DEBUG server.managers.PSQLManager - Данные с БД выгружены
+2025-04-27 18:09:36 [main] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 18:09:36 [main] INFO  server.managers.RunManager - Запуск сервера...
+2025-04-27 18:09:36 [main] INFO  server.managers.RunManager - Сервер начал слушать на адресе 192.168.0.13 и порту 2909 и обрабатывать запросы
+2025-04-27 18:09:38 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 18:09:38 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 18:09:38 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:53577 подключился
+2025-04-27 18:09:38 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="log_in", clientAddress="/192.168.0.13:53577"}
+2025-04-27 18:09:38 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 18:09:38 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="log_in", clientAddress="/192.168.0.13:53577"} 
+2025-04-27 18:09:38 [pool-2-thread-1] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 18:09:38 [pool-2-thread-1] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 18:09:38 [pool-2-thread-1] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 18:09:38 [Thread-7] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 18:09:38 [Thread-7] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="[32mАвторизация прошла успешно
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 18:09:38 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="[32mАвторизация прошла успешно
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 18:09:40 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 18:09:40 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 18:09:40 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:53577 подключился
+2025-04-27 18:09:40 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="show", clientAddress="/192.168.0.13:53577"}
+2025-04-27 18:09:40 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 18:09:40 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="show", clientAddress="/192.168.0.13:53577"} 
+2025-04-27 18:09:40 [Thread-9] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 18:09:40 [Thread-9] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="", type=COLLECTION, collection=[]}
+2025-04-27 18:09:40 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="", type=COLLECTION, collection=[]}
+2025-04-27 18:09:43 [main] INFO  client.commands.buildcommands.Add - Команда выполняется...
+2025-04-27 18:09:43 [main] DEBUG client.commands.buildcommands.Add - Заполнение Movie...
+2025-04-27 18:09:43 [main] DEBUG client.commands.buildcommands.Add - Заполнение имени...
+2025-04-27 18:09:44 [main] DEBUG client.commands.buildcommands.Add - Имя заполнено
+2025-04-27 18:09:44 [main] DEBUG client.commands.buildcommands.Add - Заполнение координат...
+2025-04-27 18:09:44 [main] DEBUG client.commands.buildcommands.Add - Заполнение х...
+2025-04-27 18:09:45 [main] DEBUG client.commands.buildcommands.Add - х заполнен
+2025-04-27 18:09:45 [main] DEBUG client.commands.buildcommands.Add - Заполнение y
+2025-04-27 18:09:45 [main] DEBUG client.commands.buildcommands.Add - y заполнен
+2025-04-27 18:09:45 [main] DEBUG client.commands.buildcommands.Add - Координаты заполнены
+2025-04-27 18:09:45 [main] DEBUG client.commands.buildcommands.Add - Заполнение кол-ва оскаров...
+2025-04-27 18:09:45 [main] DEBUG client.commands.buildcommands.Add - Кол-во оскаров заполнено
+2025-04-27 18:09:45 [main] DEBUG client.commands.buildcommands.Add - Заполнение жанра...
+2025-04-27 18:09:46 [main] DEBUG client.commands.buildcommands.Add - Жанр заполнен
+2025-04-27 18:09:46 [main] DEBUG client.commands.buildcommands.Add - Заполнение мпаа рейтинга...
+2025-04-27 18:09:46 [main] DEBUG client.commands.buildcommands.Add - Мпаа рейтинг заполнен
+2025-04-27 18:09:47 [main] DEBUG client.commands.buildcommands.Add - Movie заполнен
+2025-04-27 18:09:47 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 18:09:47 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 18:09:47 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:53577 подключился
+2025-04-27 18:09:47 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="add", clientAddress="/192.168.0.13:53577"}
+2025-04-27 18:09:47 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 18:09:47 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="add", clientAddress="/192.168.0.13:53577"} 
+2025-04-27 18:09:47 [pool-2-thread-1] DEBUG server.managers.PSQLManager - Добавление данных в БД: {id=1, name='1', Coordinates={x=1.0, y=1}, creationDate='2025-04-27T18:09:47.918901+03:00[Europe/Moscow]', oscarsCount=1, genre='DRAMA', mpaaRating='G', operator=null}...
+2025-04-27 18:09:48 [pool-2-thread-1] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 18:09:48 [pool-2-thread-1] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 18:09:48 [pool-2-thread-1] DEBUG server.managers.PSQLManager - Данные в БД добавлены
+2025-04-27 18:09:48 [pool-2-thread-1] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 18:09:48 [Thread-14] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 18:09:48 [Thread-14] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="[32mЭлемент успешно добавлен
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 18:09:48 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="[32mЭлемент успешно добавлен
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 18:09:48 [main] INFO  client.commands.buildcommands.Add - Команда выполнена
+2025-04-27 18:09:50 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 18:09:50 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 18:09:50 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="show", clientAddress="/192.168.0.13:53577"}
+2025-04-27 18:09:50 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 18:09:50 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:53577 подключился
+2025-04-27 18:09:50 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="show", clientAddress="/192.168.0.13:53577"} 
+2025-04-27 18:09:50 [Thread-16] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 18:09:50 [Thread-16] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="", type=COLLECTION, collection=[{id=1, name='1', Coordinates={x=1.0, y=1}, creationDate='2025-04-27T18:09:47.918901+03:00[Europe/Moscow]', oscarsCount=1, genre='DRAMA', mpaaRating='G', operator=null}]}
+2025-04-27 18:09:50 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="", type=COLLECTION, collection=[{id=1, name='1', Coordinates={x=1.0, y=1}, creationDate='2025-04-27T18:09:47.918901+03:00[Europe/Moscow]', oscarsCount=1, genre='DRAMA', mpaaRating='G', operator=null}]}
+2025-04-27 18:09:57 [main] INFO  client.commands.buildcommands.Update - Команда выполняется...
+2025-04-27 18:09:57 [main] DEBUG client.commands.buildcommands.Update - Заполнение Movie...
+2025-04-27 18:09:57 [main] DEBUG client.commands.buildcommands.Update - Заполнение имени...
+2025-04-27 18:10:01 [main] DEBUG client.commands.buildcommands.Update - Имя заполнено
+2025-04-27 18:10:01 [main] DEBUG client.commands.buildcommands.Update - Заполнение координат...
+2025-04-27 18:10:01 [main] DEBUG client.commands.buildcommands.Update - Заполнение х...
+2025-04-27 18:10:02 [main] DEBUG client.commands.buildcommands.Update - х заполнен
+2025-04-27 18:10:02 [main] DEBUG client.commands.buildcommands.Update - Заполнение y
+2025-04-27 18:10:02 [main] DEBUG client.commands.buildcommands.Update - y заполнен
+2025-04-27 18:10:02 [main] DEBUG client.commands.buildcommands.Update - Координаты заполнены
+2025-04-27 18:10:02 [main] DEBUG client.commands.buildcommands.Update - Заполнение кол-ва оскаров...
+2025-04-27 18:10:02 [main] DEBUG client.commands.buildcommands.Update - Кол-во оскаров заполнено
+2025-04-27 18:10:02 [main] DEBUG client.commands.buildcommands.Update - Заполнение жанра...
+2025-04-27 18:10:03 [main] DEBUG client.commands.buildcommands.Update - Жанр заполнен
+2025-04-27 18:10:03 [main] DEBUG client.commands.buildcommands.Update - Заполнение мпаа рейтинга...
+2025-04-27 18:10:03 [main] DEBUG client.commands.buildcommands.Update - Мпаа рейтинг заполнен
+2025-04-27 18:10:05 [main] DEBUG client.commands.buildcommands.Update - Movie заполнен
+2025-04-27 18:10:05 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 18:10:05 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 18:10:05 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:53577 подключился
+2025-04-27 18:10:05 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="update 1", clientAddress="/192.168.0.13:53577"}
+2025-04-27 18:10:05 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 18:10:05 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="update 1", clientAddress="/192.168.0.13:53577"} 
+2025-04-27 18:10:05 [pool-2-thread-1] INFO  server.commands.Update - Выполнение команды...
+2025-04-27 18:10:05 [pool-2-thread-1] INFO  server.commands.Update - Команда выполнена
+2025-04-27 18:10:05 [Thread-18] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 18:10:05 [Thread-18] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="[31mУ вас нет прав для редактирования элемента с id 1
+[0m", type=ERROR, collection=null}
+2025-04-27 18:10:05 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="[31mУ вас нет прав для редактирования элемента с id 1
+[0m", type=ERROR, collection=null}
+2025-04-27 18:10:05 [main] INFO  client.commands.buildcommands.Update - Команда выполнена
+2025-04-27 18:12:41 [main] INFO  client.client.UDPClient - Запуск клиента...
+2025-04-27 18:12:41 [main] INFO  client.client.UDPClient - Клиент запущен
+2025-04-27 18:12:44 [main] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 18:12:45 [main] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 18:12:45 [main] DEBUG server.managers.PSQLManager - Выгрузка данных с БД...
+2025-04-27 18:12:45 [main] DEBUG server.managers.PSQLManager - Данные с БД выгружены
+2025-04-27 18:12:45 [main] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 18:12:45 [main] INFO  server.managers.RunManager - Запуск сервера...
+2025-04-27 18:12:45 [main] INFO  server.managers.RunManager - Сервер начал слушать на адресе 192.168.0.13 и порту 2909 и обрабатывать запросы
+2025-04-27 18:12:47 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 18:12:47 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 18:12:47 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:61386 подключился
+2025-04-27 18:12:47 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="log_in", clientAddress="/192.168.0.13:61386"}
+2025-04-27 18:12:47 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 18:12:47 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="log_in", clientAddress="/192.168.0.13:61386"} 
+2025-04-27 18:12:47 [pool-2-thread-1] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 18:12:47 [pool-2-thread-1] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 18:12:47 [pool-2-thread-1] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 18:12:47 [Thread-7] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 18:12:47 [Thread-7] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="[32mАвторизация прошла успешно
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 18:12:47 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="[32mАвторизация прошла успешно
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 18:13:17 [main] INFO  client.commands.buildcommands.Update - Команда выполняется...
+2025-04-27 18:13:17 [main] DEBUG client.commands.buildcommands.Update - Заполнение Movie...
+2025-04-27 18:13:17 [main] DEBUG client.commands.buildcommands.Update - Заполнение имени...
+2025-04-27 18:13:20 [main] DEBUG client.commands.buildcommands.Update - Имя заполнено
+2025-04-27 18:13:20 [main] DEBUG client.commands.buildcommands.Update - Заполнение координат...
+2025-04-27 18:13:20 [main] DEBUG client.commands.buildcommands.Update - Заполнение х...
+2025-04-27 18:13:20 [main] DEBUG client.commands.buildcommands.Update - х заполнен
+2025-04-27 18:13:20 [main] DEBUG client.commands.buildcommands.Update - Заполнение y
+2025-04-27 18:13:21 [main] DEBUG client.commands.buildcommands.Update - y заполнен
+2025-04-27 18:13:21 [main] DEBUG client.commands.buildcommands.Update - Координаты заполнены
+2025-04-27 18:13:21 [main] DEBUG client.commands.buildcommands.Update - Заполнение кол-ва оскаров...
+2025-04-27 18:13:21 [main] DEBUG client.commands.buildcommands.Update - Кол-во оскаров заполнено
+2025-04-27 18:13:21 [main] DEBUG client.commands.buildcommands.Update - Заполнение жанра...
+2025-04-27 18:13:21 [main] DEBUG client.commands.buildcommands.Update - Жанр заполнен
+2025-04-27 18:13:21 [main] DEBUG client.commands.buildcommands.Update - Заполнение мпаа рейтинга...
+2025-04-27 18:13:22 [main] DEBUG client.commands.buildcommands.Update - Мпаа рейтинг заполнен
+2025-04-27 18:13:24 [main] DEBUG client.commands.buildcommands.Update - Movie заполнен
+2025-04-27 18:13:24 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 18:13:24 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 18:13:24 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:61386 подключился
+2025-04-27 18:13:24 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="update 1", clientAddress="/192.168.0.13:61386"}
+2025-04-27 18:13:24 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 18:13:24 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="update 1", clientAddress="/192.168.0.13:61386"} 
+2025-04-27 18:13:24 [pool-2-thread-1] INFO  server.commands.Update - Выполнение команды...
+2025-04-27 18:13:24 [pool-2-thread-1] INFO  server.commands.Update - Команда выполнена
+2025-04-27 18:13:24 [Thread-9] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 18:13:24 [Thread-9] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="[31mУ вас нет прав для редактирования элемента с id 1
+[0m", type=ERROR, collection=null}
+2025-04-27 18:13:24 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="[31mУ вас нет прав для редактирования элемента с id 1
+[0m", type=ERROR, collection=null}
+2025-04-27 18:13:24 [main] INFO  client.commands.buildcommands.Update - Команда выполнена
+2025-04-27 18:16:28 [main] INFO  client.client.UDPClient - Запуск клиента...
+2025-04-27 18:16:28 [main] INFO  client.client.UDPClient - Клиент запущен
+2025-04-27 18:16:31 [main] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 18:16:31 [main] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 18:16:31 [main] DEBUG server.managers.PSQLManager - Выгрузка данных с БД...
+2025-04-27 18:16:32 [main] DEBUG server.managers.PSQLManager - Данные с БД выгружены
+2025-04-27 18:16:32 [main] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 18:16:32 [main] INFO  server.managers.RunManager - Запуск сервера...
+2025-04-27 18:16:32 [main] INFO  server.managers.RunManager - Сервер начал слушать на адресе 192.168.0.13 и порту 2909 и обрабатывать запросы
+2025-04-27 18:16:34 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 18:16:34 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 18:16:34 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:57784 подключился
+2025-04-27 18:16:34 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="log_in", clientAddress="/192.168.0.13:57784"}
+2025-04-27 18:16:34 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 18:16:34 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="log_in", clientAddress="/192.168.0.13:57784"} 
+2025-04-27 18:16:34 [pool-2-thread-1] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-27 18:16:35 [pool-2-thread-1] INFO  server.managers.PSQLManager - БД подключена
+2025-04-27 18:16:35 [pool-2-thread-1] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-27 18:16:35 [Thread-7] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 18:16:35 [Thread-7] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="[32mАвторизация прошла успешно
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 18:16:35 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="[32mАвторизация прошла успешно
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 18:16:38 [main] INFO  client.commands.buildcommands.Update - Команда выполняется...
+2025-04-27 18:16:38 [main] DEBUG client.commands.buildcommands.Update - Заполнение Movie...
+2025-04-27 18:16:38 [main] DEBUG client.commands.buildcommands.Update - Заполнение имени...
+2025-04-27 18:16:39 [main] DEBUG client.commands.buildcommands.Update - Имя заполнено
+2025-04-27 18:16:39 [main] DEBUG client.commands.buildcommands.Update - Заполнение координат...
+2025-04-27 18:16:39 [main] DEBUG client.commands.buildcommands.Update - Заполнение х...
+2025-04-27 18:16:39 [main] DEBUG client.commands.buildcommands.Update - х заполнен
+2025-04-27 18:16:39 [main] DEBUG client.commands.buildcommands.Update - Заполнение y
+2025-04-27 18:16:40 [main] DEBUG client.commands.buildcommands.Update - y заполнен
+2025-04-27 18:16:40 [main] DEBUG client.commands.buildcommands.Update - Координаты заполнены
+2025-04-27 18:16:40 [main] DEBUG client.commands.buildcommands.Update - Заполнение кол-ва оскаров...
+2025-04-27 18:16:40 [main] DEBUG client.commands.buildcommands.Update - Кол-во оскаров заполнено
+2025-04-27 18:16:40 [main] DEBUG client.commands.buildcommands.Update - Заполнение жанра...
+2025-04-27 18:16:41 [main] DEBUG client.commands.buildcommands.Update - Жанр заполнен
+2025-04-27 18:16:41 [main] DEBUG client.commands.buildcommands.Update - Заполнение мпаа рейтинга...
+2025-04-27 18:16:41 [main] DEBUG client.commands.buildcommands.Update - Мпаа рейтинг заполнен
+2025-04-27 18:16:43 [main] DEBUG client.commands.buildcommands.Update - Movie заполнен
+2025-04-27 18:16:43 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 18:16:43 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 18:16:43 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:57784 подключился
+2025-04-27 18:16:43 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="update 1", clientAddress="/192.168.0.13:57784"}
+2025-04-27 18:16:43 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 18:16:43 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="update 1", clientAddress="/192.168.0.13:57784"} 
+2025-04-27 18:16:43 [pool-2-thread-1] INFO  server.commands.Update - Выполнение команды...
+2025-04-27 18:16:43 [pool-2-thread-1] INFO  server.commands.Update - Команда выполнена
+2025-04-27 18:16:43 [Thread-9] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 18:16:43 [Thread-9] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="[32mЭлемент с id 1 успешно обновлен
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 18:16:43 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="[32mЭлемент с id 1 успешно обновлен
+[0m", type=PRINT_MESSAGE, collection=null}
+2025-04-27 18:16:43 [main] INFO  client.commands.buildcommands.Update - Команда выполнена
+2025-04-27 18:16:45 [main] DEBUG client.client.UDPClient - Отправка запроса на сервер...
+2025-04-27 18:16:45 [main] DEBUG server.server.UDPDatagramChannel - Сервер ожидает пакет...
+2025-04-27 18:16:45 [main] DEBUG server.server.UDPDatagramChannel - Клиент с адресом /192.168.0.13:57784 подключился
+2025-04-27 18:16:45 [main] DEBUG client.client.UDPClient - Запрос отправлен: Request{message="show", clientAddress="/192.168.0.13:57784"}
+2025-04-27 18:16:45 [main] DEBUG client.client.UDPClient - Ожидание ответа от сервера...
+2025-04-27 18:16:45 [main] DEBUG server.server.UDPDatagramChannel - Сервер получил пакет: Request{message="show", clientAddress="/192.168.0.13:57784"} 
+2025-04-27 18:16:45 [Thread-11] DEBUG server.server.UDPDatagramChannel - Сервер отправляет ответ...
+2025-04-27 18:16:45 [Thread-11] DEBUG server.server.UDPDatagramChannel - Сервер отправил пакет: Response{message="", type=COLLECTION, collection=[{id=1, name='2', Coordinates={x=2.0, y=2}, creationDate='2025-04-27T18:16:43.711757+03:00[Europe/Moscow]', oscarsCount=2, genre='MUSICAL', mpaaRating='PG', operator=null}]}
+2025-04-27 18:16:45 [main] DEBUG client.client.UDPClient - Ответ получен: Response{message="", type=COLLECTION, collection=[{id=1, name='2', Coordinates={x=2.0, y=2}, creationDate='2025-04-27T18:16:43.711757+03:00[Europe/Moscow]', oscarsCount=2, genre='MUSICAL', mpaaRating='PG', operator=null}]}

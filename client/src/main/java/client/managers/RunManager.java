@@ -39,6 +39,8 @@ public class RunManager {
     }
 
     public void run() {
+        authorize();
+
         while (runMode == RunMode.RUN) {
             stream.print("$ ");
             String nextCommand = scanner.nextLine().trim();
@@ -54,7 +56,7 @@ public class RunManager {
                 //
             }
             try {
-                Response response = client.makeRequest(nextCommand, null);
+                Response response = client.makeRequest(nextCommand, client.getLogin(), client.getPassword());
                 switch (response.getType()) {
                     case PRINT_MESSAGE, ERROR -> stream.print(response.getMessage());
                     case COLLECTION -> stream.print(ResponseManager.collectionToString(response.getCollection()));
@@ -79,5 +81,76 @@ public class RunManager {
 
     public void setRunMode(RunMode runMode) {
         this.runMode = runMode;
+    }
+
+    private void authorize() {
+        while (true) {
+            stream.print("> Выберите [log in/sign in]\n");
+            String res = scanner.nextLine().trim();
+            if (res.equals("log in") || res.equals("1")) {
+                logIn();
+                break;
+            } else if (res.equals("sign in") || res.equals("2")) {
+                signIn();
+                break;
+            }
+        }
+    }
+
+    private void logIn() {
+        String login, password;
+        stream.print("> Введите логин\n");
+        login = scanner.nextLine().trim();
+        stream.print("> Введите пароль\n");
+        password = scanner.nextLine().trim();
+        String hashPassword = MD2Manager.getHash(password);
+        try {
+            Response response = client.makeRequest("log_in", login, hashPassword);
+            parseLogInSignInResponse(response, login, hashPassword);
+        } catch (ServerIsUnavailableException e) {
+            stream.printErr("Сервер в данный момент недоступен. Программа завершена\n");
+            System.exit(1);
+        } catch (IOException e) {
+            stream.printErr("Вызвана ошибка ввода/вывода");
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void signIn() {
+        String login, password;
+        while (true) {
+            stream.print("> Введите логин\n");
+            login = scanner.nextLine().trim();
+            if (login.length() > 16) {
+                stream.print("> Логин не может быть длиннее 16ти символов\n* Повторная попытка ввода");
+            } else break;
+        }
+        stream.print("> Введите пароль\n");
+        password = scanner.nextLine().trim();
+        String hashPassword = MD2Manager.getHash(password);
+        try {
+            Response response = client.makeRequest("sign_in", login, hashPassword);
+            parseLogInSignInResponse(response, login, hashPassword);
+        } catch (ServerIsUnavailableException e) {
+            stream.printErr("Сервер в данный момент недоступен. Программа завершена\n");
+            System.exit(1);
+        } catch (IOException e) {
+            stream.printErr("Вызвана ошибка ввода/вывода");
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void parseLogInSignInResponse(Response response, String login, String hashPassword) {
+        switch (response.getType()) {
+            case PRINT_MESSAGE -> {
+                stream.print(response.getMessage());
+                client.setLoginAndPassword(login, hashPassword);
+            }
+            case ERROR -> {
+                stream.print(response.getMessage());
+                stream.print("* Повторная попытка авторизации\n");
+                authorize();
+            }
+        }
     }
 }

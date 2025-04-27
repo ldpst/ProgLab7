@@ -38,9 +38,9 @@ public class Update extends Command {
             stream.printErr("Введённый id должен быть целым числом\n");
             return;
         }
-        Movie newMovie = new MovieBuilder(logger, stream, scanner).build();
+        Movie newMovie = new MovieBuilder(logger, stream, scanner, client).build();
         newMovie.setId(id);
-        Response response = client.makeRequest("update " + id, newMovie);
+        Response response = client.makeRequest("update " + id, newMovie, client.getLogin(), client.getPassword());
         stream.print(response.getMessage());
         logger.info("Команда выполнена");
     }

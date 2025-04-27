@@ -34,6 +34,6 @@ public class RemoveById extends Command {
             return new Response(RED + "Введённый id должен быть целым числом\n" + RESET, ResponseType.ERROR);
         }
         logger.info("Команда выполнена");
-        return new Response(collectionManager.removeById(id), ResponseType.PRINT_MESSAGE);
+        return new Response(collectionManager.removeById(id, request.getLogin()), ResponseType.PRINT_MESSAGE);
     }
 }

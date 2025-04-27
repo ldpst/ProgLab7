@@ -1,5 +1,6 @@
 package client.builders;
 
+import client.client.UDPClient;
 import client.managers.ScannerManager;
 import client.managers.StreamManager;
 import org.apache.logging.log4j.Logger;
@@ -11,12 +12,16 @@ import server.object.*;
  * @author ldpst
  */
 public class MovieBuilder extends Builder {
-    public MovieBuilder(StreamManager stream, ScannerManager scanner) {
+    private final UDPClient client;
+
+    public MovieBuilder(StreamManager stream, ScannerManager scanner, UDPClient client) {
         super(stream, scanner);
+        this.client = client;
     }
 
-    public MovieBuilder(Logger logger, StreamManager stream, ScannerManager scanner) {
+    public MovieBuilder(Logger logger, StreamManager stream, ScannerManager scanner, UDPClient client) {
         super(logger, stream, scanner);
+        this.client = client;
     }
 
     @Override
@@ -28,7 +33,8 @@ public class MovieBuilder extends Builder {
                 readOscarCount(),
                 readGenre(),
                 readMpaaRating(),
-                readPerson());
+                readPerson(),
+                client.getLogin());
         logger.debug("Movie заполнен");
         return newMovie;
     }

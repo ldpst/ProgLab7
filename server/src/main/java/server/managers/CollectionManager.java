@@ -43,8 +43,8 @@ public class CollectionManager {
     /**
      * Метод для очищения коллекции
      */
-    public void clear() {
-        movies = new LinkedBlockingDeque<>();
+    public void clear(String owner) {
+        movies = movies.stream().filter(movie -> !movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
         nextId = 1;
     }
 
@@ -54,8 +54,11 @@ public class CollectionManager {
      * @param id       айди
      * @param newMovie новое значение
      */
-    public void updateById(int id, Movie newMovie) {
-        movies = movies.stream().map(movie -> (movie.getId() == id ? newMovie : movie)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
+    public boolean updateById(int id, Movie newMovie, String owner) {
+        LinkedBlockingDeque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id && movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
+        if (checker.isEmpty()) return false;
+        movies = movies.stream().map(movie -> ((movie.getId() == id && movie.getOwner().equals(owner)) ? newMovie : movie)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
+        return true;
     }
 
     public boolean checkIfIdExists(int id) {
@@ -69,12 +72,12 @@ public class CollectionManager {
      * @param id айди
      * @return Возможная ошибка
      */
-    public String removeById(int id) {
-        LinkedBlockingDeque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id).collect(Collectors.toCollection(LinkedBlockingDeque::new));
+    public String removeById(int id, String owner) {
+        LinkedBlockingDeque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id && movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
         if (checker.isEmpty()) {
-            return RED + "Элемента с данным id не существует\n" + RESET;
+            return RED + "Элемента с данным id не существует или у Вас нет прав для его удаления\n" + RESET;
         }
-        movies = movies.stream().filter(movie -> movie.getId() != id).collect(Collectors.toCollection(LinkedBlockingDeque::new));
+        movies = movies.stream().filter(movie -> movie.getId() != id || !movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
         return GREEN + "Элемент с id " + id + " успешно удален\n" + RESET;
     }
 
@@ -127,10 +130,10 @@ public class CollectionManager {
      *
      * @return количество удаленных элементов
      */
-    public int removeGreater(Movie greater) {
+    public int removeGreater(Movie greater, String owner) {
         if (greater == null) return 0;
-        int count = movies.stream().filter(movie -> movie.compareTo(greater) > 0).collect(Collectors.toCollection(LinkedBlockingDeque::new)).size();
-        movies = movies.stream().filter(movie -> movie.compareTo(greater) < 0).collect(Collectors.toCollection(LinkedBlockingDeque::new));
+        int count = movies.stream().filter(movie -> movie.compareTo(greater) > 0 && movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new)).size();
+        movies = movies.stream().filter(movie -> movie.compareTo(greater) < 0 || !movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
         return count;
     }
 

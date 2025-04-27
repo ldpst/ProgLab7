@@ -8,6 +8,8 @@ public class Request implements Serializable {
     private final SocketAddress clientAddress;
     private final Object data;
 
+    private String login, password;
+
     public Request(String message) {
         this(message, null, null);
     }
@@ -16,11 +18,20 @@ public class Request implements Serializable {
     }
 
     public Request(String message, SocketAddress clientAddress, Object data) {
+        this(message, clientAddress, data, "", "");
+    }
+
+    public Request(String message, SocketAddress clientAddress, String login, String password) {
+        this(message, clientAddress, null, login, password);
+    }
+
+    public Request(String message, SocketAddress clientAddress, Object data, String login, String password) {
         this.message = message;
         this.clientAddress = clientAddress;
         this.data = data;
+        this.login = login;
+        this.password = password;
     }
-
 
 
     public String getMessage() {
@@ -37,5 +48,13 @@ public class Request implements Serializable {
 
     public Object getData() {
         return data;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

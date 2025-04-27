@@ -25,8 +25,9 @@ public class Movie
     private final MovieGenre genre; //Поле может быть null
     private final MpaaRating mpaaRating; //Поле может быть null
     private final Person operator; //Поле может быть null
+    private final String owner;
 
-    public Movie(String name, Coordinates coordinates, Long oscarsCount, MovieGenre genre, MpaaRating mpaaRating, Person operator) {
+    public Movie(String name, Coordinates coordinates, Long oscarsCount, MovieGenre genre, MpaaRating mpaaRating, Person operator, String owner) {
         this.name = name;
         this.coordinates = coordinates;
         this.creationDate = ZonedDateTime.now();
@@ -34,12 +35,13 @@ public class Movie
         this.genre = genre;
         this.mpaaRating = mpaaRating;
         this.operator = operator;
+        this.owner = owner;
         if (isValid()) {
             throw new ValidationError("Movie");
         }
     }
 
-    public Movie(Integer id, String name, Coordinates coordinates, Timestamp creationDate, Long oscarsCount, MovieGenre genre, MpaaRating mpaaRating, Person operator) {
+    public Movie(Integer id, String name, Coordinates coordinates, Timestamp creationDate, Long oscarsCount, MovieGenre genre, MpaaRating mpaaRating, Person operator, String owner) {
         this.id = id;
         this.name = name;
         this.coordinates = coordinates;
@@ -48,6 +50,7 @@ public class Movie
         this.genre = genre;
         this.mpaaRating = mpaaRating;
         this.operator = operator;
+        this.owner = owner;
         if (isValid()) {
             throw new ValidationError("Movie");
         }
@@ -151,6 +154,10 @@ public class Movie
      */
     public Person getOperator() {
         return this.operator;
+    }
+
+    public String getOwner() {
+        return owner;
     }
 
     @Override

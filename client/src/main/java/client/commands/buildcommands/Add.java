@@ -30,7 +30,7 @@ public class Add extends Command {
     @Override
     public void execute(String[] args) throws IOException {
         logger.info("Команда выполняется...");
-        Movie movie = new MovieBuilder(logger, stream, scanner).build();
+        Movie movie = new MovieBuilder(logger, stream, scanner, client).build();
         Response response = client.makeRequest("add", movie);
         stream.printSuccess("Элемент успешно добавлен\n");
         logger.info("Команда выполнена");

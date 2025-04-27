@@ -27,7 +27,7 @@ public class RemoveGreater extends Command {
     public Response execute(Request request) throws IOException {
         logger.info("Команда выполняется...");
         Movie movie = (Movie) request.getData();
-        int count = collectionManager.removeGreater(movie);
+        int count = collectionManager.removeGreater(movie, request.getLogin());
         logger.info("Команда выполнена");
         return new Response(GREEN + "Удалено " + count + " элементов\n" + RESET, ResponseType.PRINT_MESSAGE);
     }

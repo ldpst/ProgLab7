@@ -27,8 +27,8 @@ public class RemoveGreater extends Command {
     @Override
     public void execute(String[] args) throws IOException {
         logger.info("Команда выполняется...");
-        Movie movie = new MovieBuilder(logger, stream, scanner).build();
-        Response response = client.makeRequest("remove_greater", movie);
+        Movie movie = new MovieBuilder(logger, stream, scanner, client).build();
+        Response response = client.makeRequest("remove_greater", movie, client.getLogin(), client.getPassword());
         stream.printSuccessf(response.getMessage());
         logger.info("Команда выполнена");
     }
