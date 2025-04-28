@@ -51,7 +51,6 @@ public class RunManager {
         new PSQLManager(collectionManager).loadFromDB();
 
         commands.put("exit", new Exit(this, stream));
-        commands.put("save", new Save(collectionManager, stream));
         commands.put("help", new Help(stream, this));
         commands.put("show", new Show(collectionManager, stream));
     }
