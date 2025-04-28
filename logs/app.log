@@ -112,3 +112,10 @@ com.jcraft.jsch.JSchException: Session.connect: java.net.SocketException: Socket
 2025-04-28 20:05:37 [main] INFO  server.managers.RunManager - Сервер начал слушать на адресе 192.168.0.13 и порту 2909 и обрабатывать запросы
 2025-04-28 20:05:42 [main] INFO  server.commands.server.Exit - Команда выполняется
 2025-04-28 20:05:42 [main] INFO  server.commands.server.Exit - Команда выполнена
+2025-04-28 20:05:46 [main] INFO  server.managers.PSQLManager - SSH туннель установлен
+2025-04-28 20:05:47 [main] INFO  server.managers.PSQLManager - БД подключена
+2025-04-28 20:05:47 [main] DEBUG server.managers.PSQLManager - Выгрузка данных с БД...
+2025-04-28 20:05:47 [main] DEBUG server.managers.PSQLManager - Данные с БД выгружены
+2025-04-28 20:05:47 [main] DEBUG server.managers.PSQLManager - Отключение от БД
+2025-04-28 20:05:47 [main] INFO  server.managers.RunManager - Запуск сервера...
+2025-04-28 20:05:47 [main] INFO  server.managers.RunManager - Сервер начал слушать на адресе 192.168.0.13 и порту 2909 и обрабатывать запросы
