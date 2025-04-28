@@ -5,6 +5,7 @@ import server.object.MovieGenre;
 import server.object.Person;
 import server.utils.TextColors;
 
+import java.util.Objects;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.stream.Collectors;
 
@@ -44,8 +45,12 @@ public class CollectionManager {
      * Метод для очищения коллекции
      */
     public void clear(String owner) {
+        LinkedBlockingDeque<Movie> checker = movies.stream().filter(movie -> movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
+        for (Movie movie : checker) {
+            PSQLManager.deleteMovie(movie);
+        }
         movies = movies.stream().filter(movie -> !movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
-        nextId = 1;
+        fixNextId();
     }
 
     /**
@@ -57,6 +62,9 @@ public class CollectionManager {
     public boolean updateById(int id, Movie newMovie, String owner) {
         LinkedBlockingDeque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id && movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
         if (checker.isEmpty()) return false;
+        LinkedBlockingDeque<Movie> removable = movies.stream().filter(movie -> movie.getId() == id && movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
+        PSQLManager.deleteMovie(Objects.requireNonNull(removable.poll()));
+        PSQLManager.insertMovie(newMovie);
         movies = movies.stream().map(movie -> ((movie.getId() == id && movie.getOwner().equals(owner)) ? newMovie : movie)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
         return true;
     }
@@ -77,6 +85,7 @@ public class CollectionManager {
         if (checker.isEmpty()) {
             return RED + "Элемента с данным id не существует или у Вас нет прав для его удаления\n" + RESET;
         }
+        PSQLManager.deleteMovie(checker.poll());
         movies = movies.stream().filter(movie -> movie.getId() != id || !movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
         return GREEN + "Элемент с id " + id + " успешно удален\n" + RESET;
     }

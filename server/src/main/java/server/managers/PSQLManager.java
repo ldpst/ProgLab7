@@ -229,4 +229,45 @@ public class PSQLManager {
             throw new RuntimeException(e);
         }
     }
+
+    public static void deleteMovie(Movie movie) {
+        connect();
+        int c_id = -1;
+        int o_id = -1;
+        try (PreparedStatement statement = connection.prepareStatement("SELECT coordinates_id, operator_id FROM movies WHERE id=?")) {
+            statement.setInt(1, (int) movie.getId());
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                c_id = rs.getInt("coordinates_id");
+                o_id = rs.getInt("operator_id");
+            }
+        } catch (SQLException e) {
+            logger.error("Ошибка при поиске c_id и o_id из БД", e);
+        }
+        if (o_id != -1) {
+            try (PreparedStatement statement = connection.prepareStatement("DELETE FROM operators WHERE id=?")) {
+                statement.setInt(1, o_id);
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                logger.error("Ошибка при удалении из operators в БД", e);
+            }
+        }
+        if (c_id != -1) {
+            try (PreparedStatement statement = connection.prepareStatement("DELETE FROM coordinates WHERE id=?")) {
+                statement.setInt(1, c_id);
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                logger.error("Ошибка при удалении из coordinates в БД", e);
+            }
+        }
+
+        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM movies WHERE id=?")) {
+            statement.setInt(1, (int) movie.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Ошибка при удалении из movies в БД", e);
+        }
+
+        disconnect();
+    }
 }
