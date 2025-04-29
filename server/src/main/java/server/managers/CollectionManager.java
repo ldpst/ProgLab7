@@ -7,6 +7,7 @@ import server.utils.TextColors;
 
 import java.util.Objects;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
  */
 public class CollectionManager {
     private LinkedBlockingDeque<Movie> movies = new LinkedBlockingDeque<>();
-    private int nextId = 1;
+    private volatile AtomicInteger nextId = new AtomicInteger(1);
 
     protected static final String RED = ConfigManager.getColor(TextColors.RED);
     protected static final String RESET = ConfigManager.getColor(TextColors.RESET);
@@ -32,9 +33,11 @@ public class CollectionManager {
      * @param movie элемент для добавления
      */
     public void add(Movie movie) {
-        PSQLManager.insertMovie(movie);
+        synchronized (this) {
+            PSQLManager.insertMovie(movie);
+        }
         movies.addLast(movie);
-        nextId++;
+        nextId.incrementAndGet();
     }
 
     public void addFromDB(Movie movie) {
@@ -47,7 +50,9 @@ public class CollectionManager {
     public void clear(String owner) {
         LinkedBlockingDeque<Movie> checker = movies.stream().filter(movie -> movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
         for (Movie movie : checker) {
-            PSQLManager.deleteMovie(movie);
+            synchronized (this) {
+                PSQLManager.deleteMovie(movie);
+            }
         }
         movies = movies.stream().filter(movie -> !movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
         fixNextId();
@@ -63,8 +68,10 @@ public class CollectionManager {
         LinkedBlockingDeque<Movie> checker = movies.stream().filter(movie -> movie.getId() == id && movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
         if (checker.isEmpty()) return false;
         LinkedBlockingDeque<Movie> removable = movies.stream().filter(movie -> movie.getId() == id && movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
-        PSQLManager.deleteMovie(Objects.requireNonNull(removable.poll()));
-        PSQLManager.insertMovie(newMovie);
+        synchronized (this) {
+            PSQLManager.deleteMovie(Objects.requireNonNull(removable.poll()));
+            PSQLManager.insertMovie(newMovie);
+        }
         movies = movies.stream().map(movie -> ((movie.getId() == id && movie.getOwner().equals(owner)) ? newMovie : movie)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
         return true;
     }
@@ -85,7 +92,9 @@ public class CollectionManager {
         if (checker.isEmpty()) {
             return RED + "Элемента с данным id не существует или у Вас нет прав для его удаления\n" + RESET;
         }
-        PSQLManager.deleteMovie(checker.poll());
+        synchronized (this) {
+            PSQLManager.deleteMovie(Objects.requireNonNull(checker.poll()));
+        }
         movies = movies.stream().filter(movie -> movie.getId() != id || !movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
         return GREEN + "Элемент с id " + id + " успешно удален\n" + RESET;
     }
@@ -109,7 +118,7 @@ public class CollectionManager {
      * @return Возможная ошибка
      */
     public String addIfMax(Movie newMovie) {
-        newMovie.setId(nextId);
+        newMovie.setId(nextId.get());
         LinkedBlockingDeque<Movie> checker = movies.stream().filter(movie -> movie.compareTo(newMovie) > 0).collect(Collectors.toCollection(LinkedBlockingDeque::new));
         if (checker.isEmpty()) {
             add(newMovie);
@@ -141,8 +150,14 @@ public class CollectionManager {
      */
     public int removeGreater(Movie greater, String owner) {
         if (greater == null) return 0;
-        int count = movies.stream().filter(movie -> movie.compareTo(greater) > 0 && movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new)).size();
+        LinkedBlockingDeque<Movie> onRemove = movies.stream().filter(movie -> movie.compareTo(greater) > 0 && movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
+        int count = onRemove.size();
         movies = movies.stream().filter(movie -> movie.compareTo(greater) < 0 || !movie.getOwner().equals(owner)).collect(Collectors.toCollection(LinkedBlockingDeque::new));
+        for (var i : onRemove) {
+            synchronized (this) {
+                PSQLManager.deleteMovie(i);
+            }
+        }
         return count;
     }
 
@@ -185,11 +200,11 @@ public class CollectionManager {
     }
 
     public int getAndIncreaseNextID() {
-        return nextId++;
+        return nextId.incrementAndGet();
     }
 
     public void setNextId(int id) {
-        nextId = id;
+        nextId.set(id);
     }
 
     public void fixNextId() {
